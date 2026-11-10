@@ -1,0 +1,2840 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kader Posyandu - GO-Positif Gonoharjo</title>
+
+    <!-- Favicon Logo Tab Browser -->
+    <link rel="icon" type="image/png" href="https://lh3.googleusercontent.com/d/1r5Z3o71WH4mpF5qn1Dfeav_V7qNnYldv">
+
+    <!-- CDN Dependencies -->
+    
+    <!-- 1. Letakkan Skrip Pengamanan di Bagian Sini (Head) -->
+    <script>
+        // Mencegah Klik Kanan
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+
+        // Mencegah Shortcut Tombol Inspeksi (F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U)
+        document.addEventListener('keydown', function(e) {
+            if (
+                e.key === 'F12' || 
+                (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) || 
+                (e.ctrlKey && e.key === 'U')
+            ) {
+                e.preventDefault();
+                return false;
+            }
+        });
+    </script>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Quicksand:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'base-cream': '#FAF7F0',
+                        'olive-green': '#7C9246',
+                        'sun-yellow': '#F3A94B',
+                        'deep-green': '#1E4620',
+                        'earth-brown': '#5A3B21',
+                        'soft-green': '#EBF2DF',
+                        'soft-yellow': '#FEF4E6',
+                        'calm-blue': '#E8F4F8',
+                        'bg-pastel': '#F4F7F4',       
+                        'primary-teal': '#5C9E89',    
+                        'hover-teal': '#4A8572',      
+                        'secondary-coral': '#F0A884', 
+                        'dark-teal': '#264036',       
+                        'soft-teal': '#E8F2EE',       
+                        'soft-coral': '#FDF2EC',      
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        heading: ['Quicksand', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        :root {
+            --bg-base: #FAF7F0;
+            --olive-green: #7C9246;
+            --sun-yellow: #F3A94B;
+            --deep-green: #1E4620;
+            --earth-brown: #5A3B21;
+            --primary-teal: #5C9E89;
+            --secondary-coral: #F0A884;
+            --dark-teal: #264036;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-base);
+            color: var(--deep-green);
+            overflow-x: hidden;
+            position: relative;
+            transition: font-size 0.2s ease, background-color 0.2s ease;
+        }
+
+        /* Tekstur Organic Grain */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 999;
+            opacity: 0.02;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        h1, h2, h3, .font-heading {
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        .white-card {
+            background-color: #FFFFFF;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px -2px rgba(30, 70, 32, 0.05), 0 2px 6px -1px rgba(30, 70, 32, 0.03);
+            border: 1px solid rgba(124, 146, 70, 0.12);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .white-card:hover {
+            box-shadow: 0 10px 25px -3px rgba(30, 70, 32, 0.08), 0 4px 10px -2px rgba(30, 70, 32, 0.04);
+        }
+
+        .btn-primary {
+            background-color: var(--deep-green);
+            color: #FFFFFF;
+            border-radius: 12px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #143216;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(30, 70, 32, 0.25);
+        }
+
+        .btn-brown {
+            background-color: var(--earth-brown);
+            color: #FFFFFF;
+            border-radius: 12px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-brown:hover {
+            background-color: #422a17;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(90, 59, 33, 0.25);
+        }
+
+        .btn-olive {
+            background-color: var(--olive-green);
+            color: #FFFFFF;
+            border-radius: 12px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-olive:hover {
+            background-color: #687b38;
+            transform: translateY(-1px);
+        }
+
+        .btn-coral {
+            background-color: var(--secondary-coral);
+            color: #FFFFFF;
+            border-radius: 12px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-coral:hover {
+            background-color: #DE936F;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(240, 168, 132, 0.4);
+        }
+
+        .nav-tab {
+            padding: 8px 16px;
+            border-radius: 9999px;
+            font-weight: 700;
+            font-size: 0.875rem;
+            color: var(--earth-brown);
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .nav-tab.active {
+            background-color: var(--deep-green);
+            color: #FFFFFF;
+            box-shadow: 0 2px 8px rgba(30, 70, 32, 0.2);
+        }
+
+        /* Mode Ramah Lansia */
+        body.mode-lansia {
+            font-size: 1.125rem;
+            line-height: 1.75;
+        }
+
+        body.mode-lansia h1 { font-size: 2.25rem !important; }
+        body.mode-lansia h2 { font-size: 1.875rem !important; }
+        body.mode-lansia h3 { font-size: 1.5rem !important; }
+        body.mode-lansia p, body.mode-lansia button, body.mode-lansia span, body.mode-lansia td, body.mode-lansia th { font-size: 1rem !important; }
+        body.mode-lansia .white-card {
+            border: 2px solid var(--deep-green);
+        }
+
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #FAF7F0; }
+        ::-webkit-scrollbar-thumb { background: #C5D1AA; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #7C9246; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.98); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .website-field-hp {
+            display: none !important;
+            opacity: 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 0;
+            width: 0;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between antialiased bg-[#FAF7F0]">
+
+    <!-- TOAST NOTIFICATION -->
+    <div id="toast-notification" class="fixed top-5 right-5 z-50 transform translate-x-full transition-transform duration-300 ease-in-out max-w-sm">
+        <div class="white-card p-4 flex items-center space-x-3 shadow-xl border-l-4 border-olive-green">
+            <div id="toast-icon" class="w-8 h-8 rounded-full bg-soft-green text-deep-green flex items-center justify-center font-bold flex-shrink-0">
+                <i class="fa-solid fa-check"></i>
+            </div>
+            <p id="toast-text" class="text-xs font-semibold text-deep-green">Pemberitahuan Sistem Kader</p>
+        </div>
+    </div>
+
+    <!-- ================= HALAMAN OTENTIKASI KADER (LOGIN PAGE PERBAIKAN SCROLL HP/TABLET) ================= -->
+    <div id="login-screen" class="fixed inset-0 z-50 w-full h-full overflow-y-auto bg-slate-950 flex flex-col items-center justify-start p-4 sm:p-6 lg:p-8 transition-all duration-500">
+        
+        <div class="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950"></div>
+            <div class="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-15"></div>
+            <div class="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-teal-600/20 rounded-full mix-blend-screen filter blur-[128px] animate-pulse"></div>
+            <div class="absolute bottom-[-10%] right-[-10%] w-[500px] h-[500px] bg-emerald-600/20 rounded-full mix-blend-screen filter blur-[128px] animate-pulse" style="animation-delay: 2s"></div>
+        </div>
+
+        <div class="relative z-10 w-full max-w-5xl my-auto flex flex-col lg:flex-row rounded-3xl overflow-hidden shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9)] bg-cover bg-center bg-no-repeat border border-white/20 ring-1 ring-white/10 transition-all duration-300 my-8"
+             style="background-image: url('https://lh3.googleusercontent.com/d/1yOv-ZTQCz28vlNUF8a7wD1NnlA8uMcwr');">
+            
+            <div class="absolute inset-0 bg-slate-950/20 z-0 pointer-events-none"></div>
+
+            <!-- SISI KIRI: BRANDING & LOGO -->
+            <div class="w-full lg:w-5/12 relative p-6 sm:p-8 lg:p-10 flex flex-col justify-between text-white z-10 bg-black/20">
+                <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-black/70 z-0 pointer-events-none"></div>
+                
+                <div class="relative z-10 space-y-6">
+                    <!-- LOGO & POSYANDU DESA GONOHARJO -->
+                    <div class="inline-flex items-center gap-3">
+                        <img src="https://lh3.googleusercontent.com/d/1Pu9EO5ArNXsAwCYr7mRLfeVc0OV3L5_w" alt="Logo Posyandu" class="w-9 h-9 sm:w-10 sm:h-10 object-contain drop-shadow-[0_3px_6px_rgba(0,0,0,0.9)]">
+                        <span class="font-extrabold tracking-wider text-sm sm:text-base text-teal-200 uppercase drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)]">POSYANDU DESA GONOHARJO</span>
+                    </div>
+
+                    <!-- BRANDING UTAMA -->
+                    <div class="space-y-4 pt-2">
+                        <div class="flex items-center gap-4 sm:gap-5">
+                            <img src="https://lh3.googleusercontent.com/d/1r5Z3o71WH4mpF5qn1Dfeav_V7qNnYldv" alt="Logo Go-Positif" class="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 object-contain drop-shadow-[0_5px_15px_rgba(0,0,0,0.9)] flex-shrink-0">
+                            <h1 class="text-4xl sm:text-5xl lg:text-5xl font-black leading-none text-white tracking-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.9)]">
+                                GO-<br>
+                                <span class="text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-emerald-300 to-amber-200">POSITIF</span>
+                            </h1>
+                        </div>
+
+                        <div>
+                            <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[9px] sm:text-[10px] font-semibold tracking-wide text-teal-200 bg-black/50 border border-teal-400/30 shadow-sm">
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
+                                PORTAL KADER POSYANDU DESA GONOHARJO
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="relative z-10 mt-8 lg:mt-12">
+                    <p class="text-slate-100 text-xs sm:text-sm leading-relaxed font-medium mb-4 drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]">
+                        Platform Pelayanan Kesehatan Ibu, Anak, Remaja, Usia Produktif dan Lansia Terpadu Berbasis Digital.
+                    </p>
+                    <div class="flex gap-1.5 mb-5">
+                        <span class="h-1 w-16 bg-emerald-400 rounded-full shadow-md"></span>
+                        <span class="h-1 w-12 bg-emerald-400 rounded-full shadow-md"></span>
+                        <span class="h-1 w-8 bg-white/50 rounded-full"></span>
+                        <span class="h-1 w-6 bg-white/50 rounded-full"></span>
+                    </div>
+                    <div class="flex flex-wrap gap-2 text-[10px] font-bold text-slate-100">
+                        <span class="px-2.5 py-1 rounded-lg bg-black/50 border border-white/20 flex items-center gap-1.5 shadow-md drop-shadow"><i class="fas fa-shield-alt text-teal-400"></i> Aman</span>
+                        <span class="px-2.5 py-1 rounded-lg bg-black/50 border border-white/20 flex items-center gap-1.5 shadow-md drop-shadow"><i class="fas fa-bolt text-emerald-400"></i> Cepat</span>
+                        <span class="px-2.5 py-1 rounded-lg bg-black/50 border border-white/20 flex items-center gap-1.5 shadow-md drop-shadow"><i class="fas fa-link text-indigo-300"></i> Terpadu</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SISI KANAN: FORM LOGIN -->
+            <div class="w-full lg:w-7/12 relative p-6 sm:p-8 lg:p-10 flex flex-col justify-center text-white z-10 bg-black/20">
+                <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-black/70 z-0 pointer-events-none"></div>
+
+                <div class="relative z-10 max-w-md mx-auto w-full space-y-6">
+                    <div class="text-center space-y-2">
+                        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-black/40 border border-white/20 shadow-md text-teal-200 text-xs font-extrabold tracking-wider uppercase mb-1">
+                            <i class="fas fa-user-lock text-emerald-400"></i> OTENTIKASI KADER
+                        </div>
+                        <h2 class="text-2xl sm:text-3xl font-black text-white tracking-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">Selamat Datang</h2>
+                        <p class="text-slate-100 text-xs sm:text-sm font-medium drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">Silakan masuk untuk mengelola data Posyandu</p>
+                    </div>
+
+                    <form onsubmit="handleKaderLogin(event)" class="space-y-4 sm:space-y-5">
+                        <div class="space-y-1.5">
+                            <label class="block text-xs font-extrabold text-slate-100 uppercase tracking-wider drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">Username / ID Kader</label>
+                            <div class="relative group">
+                                <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-teal-300">
+                                    <i class="far fa-user text-sm"></i>
+                                </div>
+                                <input type="text" id="login-username" value="kader.gonoharjo" placeholder="Masukkan username" class="block w-full pl-10 pr-4 py-3 sm:py-3.5 bg-black/50 border border-white/30 rounded-2xl text-white text-xs sm:text-sm font-semibold focus:bg-black/70 focus:ring-2 focus:ring-teal-400 focus:border-teal-300 transition-all placeholder-slate-300 focus:outline-none shadow-lg" required>
+                            </div>
+                        </div>
+
+                        <div class="space-y-1.5">
+                            <label class="block text-xs font-extrabold text-slate-100 uppercase tracking-wider drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">Kata Sandi</label>
+                            <div class="relative group">
+                                <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-teal-300">
+                                    <i class="fas fa-lock text-sm"></i>
+                                </div>
+                                <input type="password" id="login-password" value="kader123" placeholder="Masukkan kata sandi" class="block w-full pl-10 pr-10 py-3 sm:py-3.5 bg-black/50 border border-white/30 rounded-2xl text-white text-xs sm:text-sm font-semibold focus:bg-black/70 focus:ring-2 focus:ring-teal-400 focus:border-teal-300 transition-all placeholder-slate-300 focus:outline-none shadow-lg" required>
+                                <button type="button" class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-300 hover:text-white transition-colors" onclick="toggleLoginPassword()">
+                                    <i class="fas fa-eye" id="togglePasswordIcon"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="space-y-1.5">
+                            <label class="block text-xs font-extrabold text-slate-100 uppercase tracking-wider drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">Posyandu Bertugas</label>
+                            <div class="relative group">
+                                <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-teal-300">
+                                    <i class="fas fa-location-dot text-sm"></i>
+                                </div>
+                                <select id="login-posyandu" class="block w-full pl-10 pr-8 py-3 sm:py-3.5 bg-black/50 border border-white/30 rounded-2xl text-white text-xs sm:text-sm font-semibold focus:bg-black/70 focus:ring-2 focus:ring-teal-400 focus:border-teal-300 transition-all appearance-none cursor-pointer focus:outline-none shadow-lg">
+                                    <option value="Posyandu 1 (Dusun Gonoharjo RW 01)" class="bg-slate-900 text-white">Posyandu 1 (Dusun Gonoharjo RW 01)</option>
+                                    <option value="Posyandu 2 (Dusun Medini RW 02)" class="bg-slate-900 text-white">Posyandu 2 (Dusun Medini RW 02)</option>
+                                    <option value="Posyandu 3 (Dusun Nglimut RW 03)" class="bg-slate-900 text-white">Posyandu 3 (Dusun Nglimut RW 03)</option>
+                                    <option value="Posyandu 4 (Dusun Promasan RW 04)" class="bg-slate-900 text-white">Posyandu 4 (Dusun Promasan RW 04)</option>
+                                    <option value="Posyandu 5 (Dusun Gajah RW 05)" class="bg-slate-900 text-white">Posyandu 5 (Dusun Gajah RW 05)</option>
+                                    <option value="Posyandu 6 (Dusun Brintik RW 06)" class="bg-slate-900 text-white">Posyandu 6 (Dusun Brintik RW 06)</option>
+                                </select>
+                                <div class="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-slate-200 text-xs">
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="w-full py-3.5 px-6 mt-2 bg-gradient-to-r from-teal-500 via-emerald-500 to-teal-600 hover:from-teal-400 hover:to-emerald-400 text-white font-extrabold rounded-2xl shadow-[0_10px_25px_-5px_rgba(20,184,166,0.6)] border border-white/30 transition-all duration-300 transform active:scale-[0.98] text-xs sm:text-sm flex justify-center items-center gap-2.5 group cursor-pointer">
+                            <span>MASUK APLIKASI KADER</span>
+                            <i class="fas fa-arrow-right group-hover:translate-x-1.5 transition-transform"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <p class="mt-4 mb-4 text-slate-300 text-[11px] sm:text-xs font-semibold tracking-wider opacity-90 text-center z-20 drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
+            © 2026 GO-POSITIF by KreasiCahNdeso. All rights reserved.
+        </p>
+    </div>
+    
+    <!-- ================= MAIN APP KADER ================= -->
+    <div id="main-app" class="hidden min-h-screen flex flex-col justify-between">
+        
+        <!-- HEADER NAVIGATION (SATU BARIS, POSISI TENGAH, TAB DISESUAIKAN) -->
+        <header class="sticky top-0 z-40 bg-[#FAF7F0]/95 backdrop-blur-md px-3 sm:px-4 lg:px-8 py-2.5 border-b border-olive-green/15 bg-cover bg-center shadow-sm" style="background-image: linear-gradient(rgba(250, 247, 240, 0.95), rgba(250, 247, 240, 0.95)), url('https://lh3.googleusercontent.com/d/1BUX21ccxQ7HkC2VWsya914pOrcSWE851');">
+            <div class="max-w-7xl mx-auto flex items-center justify-between gap-2 lg:gap-4">
+                
+                <!-- SISI KIRI: Logo & Brand (Diberi ruang aman / shrink-0) -->
+                <div class="flex items-center space-x-2 cursor-pointer shrink-0" onclick="switchTab('beranda')">
+                    <div class="w-9 h-9 md:w-10 md:h-10 flex items-center justify-center flex-shrink-0">
+                        <img src="https://lh3.googleusercontent.com/d/1r5Z3o71WH4mpF5qn1Dfeav_V7qNnYldv" alt="Logo" class="w-full h-full object-contain">
+                    </div>
+                    <div>
+                        <h1 class="font-extrabold text-sm md:text-base text-deep-green leading-none tracking-tight">GO-Positif</h1>
+                        <p class="text-[9px] md:text-[10px] text-earth-brown font-bold tracking-wide mt-0.5">
+                            <span class="w-1.5 h-1.5 rounded-full bg-olive-green inline-block animate-pulse"></span> Kader Posyandu ILP
+                        </p>
+                    </div>
+                </div>
+
+                <!-- BAGIAN TENGAH: Navigasi Tab Menu (Panjang Disesuaikan & Bisa Scroll Halus) -->
+                <nav class="flex items-center bg-white/95 p-1 rounded-full border border-olive-green/20 shadow-inner overflow-x-auto max-w-[340px] sm:max-w-md md:max-w-lg lg:max-w-xl space-x-1 no-scrollbar shrink">
+                    <button onclick="switchTab('beranda')" id="tab-beranda" class="nav-tab active flex items-center whitespace-nowrap text-[11px] md:text-xs px-2.5 py-1.5">
+                        <i class="fa-solid fa-house mr-1"></i>Beranda
+                    </button>
+                    <button onclick="switchTab('absen')" id="tab-absen" class="nav-tab flex items-center whitespace-nowrap text-[11px] md:text-xs px-2.5 py-1.5">
+                        <i class="fa-solid fa-user-check mr-1"></i>Input Absen
+                    </button>
+                    <button onclick="switchTab('pemeriksaan')" id="tab-pemeriksaan" class="nav-tab flex items-center whitespace-nowrap text-[11px] md:text-xs px-2.5 py-1.5">
+                        <i class="fa-solid fa-notes-medical mr-1"></i>Input Pemeriksaan
+                    </button>
+                    <button onclick="switchTab('pemeriksaan-khusus')" id="tab-pemeriksaan-khusus" class="nav-tab flex items-center whitespace-nowrap text-[11px] md:text-xs px-2.5 py-1.5">
+                        <i class="fa-solid fa-star-of-life mr-1"></i>Pemeriksaan Khusus
+                    </button>
+                    <button onclick="switchTab('cek-sasaran')" id="tab-cek-sasaran" class="nav-tab flex items-center whitespace-nowrap text-[11px] md:text-xs px-2.5 py-1.5">
+                        <i class="fa-solid fa-users-gear mr-1"></i>Cek Sasaran
+                    </button>
+                    <button onclick="switchTab('konfirmasi')" id="tab-konfirmasi" class="nav-tab flex items-center whitespace-nowrap text-[11px] md:text-xs px-2.5 py-1.5">
+                        <i class="fa-solid fa-clipboard-check mr-1"></i>Konfirmasi Data
+                    </button>
+                    <button onclick="switchTab('kontak')" id="tab-kontak" class="nav-tab flex items-center whitespace-nowrap text-[11px] md:text-xs px-2.5 py-1.5">
+                        <i class="fa-solid fa-address-book mr-1"></i>Kontak
+                    </button>
+                </nav>
+
+                <!-- SISI KANAN: Tombol Aksi (Mode Lansia & Akses Posyandu) -->
+                <div class="flex items-center space-x-1.5 lg:space-x-2 shrink-0">
+                    <!-- Tombol Mobile / Tablet Kecil -->
+                    <div class="flex items-center space-x-1 lg:hidden">
+                        <button onclick="toggleModeLansia()" class="px-2 py-1.5 bg-white text-earth-brown rounded-lg border border-olive-green/30 text-[10px] font-bold flex items-center space-x-1 shadow-xs">
+                            <i class="fa-solid fa-eye text-olive-green"></i>
+                            <span id="label-mode-lansia-short">Lansia</span>
+                        </button>
+                        <button onclick="toggleSwitcherModal()" class="btn-olive px-2.5 py-1.5 text-[10px] font-bold flex items-center space-x-1 shadow-xs">
+                            <i class="fa-solid fa-cubes text-sun-yellow"></i>
+                            <span>AKSES PORTAL</span>
+                        </button>
+                    </div>
+
+                    <!-- Tombol Desktop / Laptop -->
+                    <div class="hidden lg:flex items-center space-x-2">
+                        <button onclick="toggleModeLansia()" id="btn-mode-lansia" class="px-2.5 py-1.5 bg-white text-earth-brown rounded-xl border border-olive-green/35 text-xs font-bold flex items-center space-x-1.5 hover:bg-soft-yellow transition cursor-pointer shadow-xs">
+                            <i class="fa-solid fa-eye text-olive-green"></i>
+                            <span id="label-mode-lansia">Mode Ramah Lansia</span>
+                        </button>
+                        <button onclick="toggleSwitcherModal()" class="btn-olive px-3 py-1.5 text-xs font-bold flex items-center space-x-1.5 shadow-sm cursor-pointer">
+                            <i class="fa-solid fa-cubes text-sun-yellow"></i>
+                            <span>AKSES PORTAL</span>
+                            <i class="fa-solid fa-chevron-down text-[10px] opacity-80"></i>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </header>
+        
+        <!-- MAIN CONTENT CONTAINER KADER -->
+        <main class="max-w-7xl mx-auto px-4 lg:px-8 py-6 md:py-8 flex-grow w-full space-y-6">
+        
+        <!-- ================= TAB 1: BERANDA / DASHBOARD KADER ================= -->
+            <section id="content-beranda" class="space-y-6 md:space-y-8">
+                <!-- HERO BANTER KADER (RESPONSIF OPTIMIZED: HP, TABLET, LAPTOP, KOMPUTER) -->
+                <div class="white-card p-4 sm:p-6 md:p-8 lg:p-10 relative overflow-hidden bg-cover bg-center border border-olive-green/20 shadow-sm" style="background-image: linear-gradient(to right, rgba(250, 247, 240, 0.85) 0%, rgba(250, 247, 240, 0.75) 55%, rgba(250, 247, 240, 0.30) 100%), url('https://lh3.googleusercontent.com/d/1w50EHwK87kEMjLm8aJ4beoA-L83NDV0G');">
+                    <div class="max-w-3xl space-y-4 md:space-y-5 relative z-10">
+                        
+                        <!-- Badge Instansi / Logo Group -->
+                        <div class="inline-flex flex-wrap items-center gap-2 p-2 pr-3 md:pr-4 rounded-2xl bg-white/90 backdrop-blur-md border border-olive-green/25 shadow-sm max-w-full">
+                            <div class="flex items-center gap-1.5 bg-soft-green/60 p-1.5 rounded-xl border border-olive-green/20">
+                                <div class="w-7 h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 rounded-lg bg-white p-1 shadow-xs border border-olive-green/15 flex items-center justify-center overflow-hidden flex-shrink-0" title="Kabupaten Kendal">
+                                    <img src="https://lh3.googleusercontent.com/d/16ubQpCYXIMnJy77LO07DZmNvTKoma88c" alt="Logo Kabupaten Kendal" class="w-full h-full object-contain">
+                                </div>
+                                <div class="w-7 h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 rounded-lg bg-white p-1 shadow-xs border border-olive-green/15 flex items-center justify-center overflow-hidden flex-shrink-0" title="Puskesmas">
+                                    <img src="https://lh3.googleusercontent.com/d/1m-X_H-ybnuNnw4mQiE5LPTzEv4Ih2Htb" alt="Logo Puskesmas" class="w-full h-full object-contain">
+                                </div>
+                                <div class="w-7 h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 rounded-lg bg-white p-1 shadow-xs border border-olive-green/15 flex items-center justify-center overflow-hidden flex-shrink-0" title="Posyandu Gonoharjo">
+                                    <img src="https://lh3.googleusercontent.com/d/1Pu9EO5ArNXsAwCYr7mRLfeVc0OV3L5_w" alt="Logo Posyandu Gonoharjo" class="w-full h-full object-contain">
+                                </div>
+                            </div>
+                            <div class="border-l border-olive-green/20 pl-2 sm:pl-3">
+                                <span class="text-[10px] sm:text-[11px] md:text-xs font-extrabold text-deep-green tracking-wide uppercase block">Portal Kader</span>
+                                <span class="text-[9px] sm:text-[10px] md:text-[11px] font-semibold text-earth-brown block leading-tight">POSYANDU DESA GONOHARJO</span>
+                            </div>
+                        </div>
+
+                        <!-- Judul Utama Responsif -->
+                        <h2 class="font-black text-slate-900 leading-tight [text-shadow:_0_0_12px_rgba(255,255,255,1),_0_2px_4px_rgba(255,255,255,0.9)]">
+                            <span class="block text-base sm:text-lg md:text-xl lg:text-2xl font-extrabold text-slate-700 tracking-wide mb-1">
+                                Salam Semangat,
+                            </span>
+                            <span class="block text-xl sm:text-2xl md:text-3xl lg:text-4xl font-black text-slate-900 break-words">
+                                Kader <span id="kader-nama-display" class="text-olive-green underline decoration-sun-yellow decoration-wavy decoration-2">Ani Setyowati</span>! 👋
+                            </span>
+                        </h2>
+                        
+                        <!-- Kutipan / Deskripsi Singkat -->
+                        <div class="pl-3 border-l-4 border-olive-green/90">
+                            <p class="text-xs sm:text-sm md:text-base font-extrabold text-slate-800 leading-relaxed [text-shadow:_0_0_10px_rgba(255,255,255,1),_0_1px_3px_rgba(255,255,255,0.9)]">
+                                "Platform Pelayanan Kesehatan Ibu, Anak, Remaja, Usia Produktif dan Lansia Terpadu Berbasis Digital."
+                            </p>
+                        </div>
+
+                        <!-- Tombol Aksi & Badge Posyandu (Fleksibel di HP & Desktop) -->
+                        <div class="pt-2 flex flex-wrap items-center gap-2.5 sm:gap-3">
+                            <!-- Badge Informasi Wilayah -->
+                            <div class="w-full sm:w-auto px-3.5 py-2.5 rounded-2xl bg-teal-800 text-teal-100 text-xs font-extrabold shadow-sm border border-teal-600/50 flex items-center justify-center sm:justify-start gap-2 cursor-default select-none">
+                                <i class="fa-solid fa-id-badge text-amber-300"></i>
+                                <span id="kader-posyandu-badge">Posyandu 1 (Dusun Gonoharjo RW 01)</span>
+                            </div>
+
+                            <!-- Tombol 3D: Mulai Input Absen -->
+                            <button onclick="switchTab('absen')" class="w-full sm:w-auto px-5 py-3 bg-gradient-to-b from-emerald-600 to-emerald-800 hover:from-emerald-500 hover:to-emerald-700 text-white text-xs md:text-sm font-extrabold rounded-2xl shadow-[0_6px_0_#0f2912] active:shadow-[0_2px_0_#0f2912] active:translate-y-1 transition-all duration-150 flex items-center justify-center space-x-2 border border-emerald-400/30 cursor-pointer">
+                                <i class="fa-solid fa-user-check text-sun-yellow"></i>
+                                <span>Mulai Input Absen Hari Ini</span>
+                            </button>
+
+                            <!-- Tombol 3D: Keluar Akun Kader -->
+                            <button onclick="confirmLogout()" class="w-full sm:w-auto px-4 py-3 bg-gradient-to-b from-red-600 to-red-800 hover:from-red-500 hover:to-red-700 text-white text-xs md:text-sm font-extrabold rounded-2xl shadow-[0_6px_0_#5c0606] active:shadow-[0_2px_0_#5c0606] active:translate-y-1 transition-all duration-150 flex items-center justify-center space-x-2 border border-red-400/30 cursor-pointer">
+                                <i class="fa-solid fa-right-from-bracket"></i>
+                                <span>Keluar Akun Kader</span>
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- BOX PENGUMUMAN KHUSUS KADER -->
+                <div class="white-card p-5 border-l-4 border-sun-yellow space-y-3 bg-gradient-to-r from-soft-yellow via-white to-soft-yellow">
+                    <div class="flex items-center justify-between border-b border-sun-yellow/30 pb-2">
+                        <div class="flex items-center space-x-2.5 text-earth-brown">
+                            <i class="fa-solid fa-bullhorn text-lg text-sun-yellow"></i>
+                            <h3 class="font-extrabold text-deep-green text-base">Pengumuman & Info Khusus Kader Posyandu</h3>
+                        </div>
+                        <span class="text-[10px] font-black px-2.5 py-0.5 bg-sun-yellow text-earth-brown rounded-full uppercase tracking-wider">Penting</span>
+                    </div>
+                    <ul class="text-xs text-earth-brown space-y-2 font-medium">
+                        <li class="flex items-start space-x-2">
+                            <i class="fa-solid fa-circle-check text-olive-green mt-0.5"></i>
+                            <span><strong>Rakor Bulanan Bidan Desa:</strong> Pelaksanaan evaluasi input data ILP diadakan tanggal 28 bulan ini di Balai Desa Gonoharjo pukul 13.00 WIB.</span>
+                        </li>
+                        <li class="flex items-start space-x-2">
+                            <i class="fa-solid fa-circle-check text-olive-green mt-0.5"></i>
+                            <span><strong>Stok PMT & Vitamin:</strong> Pengambilan PMT Tambahan dan Tablet Tambah Darah (TTD) dapat dilakukan di Poskesdes.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- DUA KARTU ALUR KADER -->
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="white-card p-6 space-y-4 border-t-4 border-olive-green">
+                        <div class="flex items-center space-x-3 border-b border-olive-green/10 pb-3">
+                            <div class="w-10 h-10 rounded-xl bg-soft-green text-deep-green flex items-center justify-center font-bold text-lg">
+                                <i class="fa-solid fa-barcode text-olive-green"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-extrabold text-deep-green text-base">Alur Input Absen Kehadiran</h3>
+                                <p class="text-[11px] text-earth-brown font-medium">3 Cara Absensi Sasaran di Lapangan</p>
+                            </div>
+                        </div>
+                        <ol class="text-xs space-y-2.5 text-earth-brown font-medium">
+                            <li class="p-2.5 rounded-xl bg-base-cream flex items-center space-x-2.5">
+                                <span class="w-6 h-6 rounded-full bg-olive-green text-white font-extrabold text-[11px] flex items-center justify-center">1</span>
+                                <span>Buka Tab Menu <strong>Input Absen</strong> di bagian atas.</span>
+                            </li>
+                            <li class="p-2.5 rounded-xl bg-base-cream flex items-center space-x-2.5">
+                                <span class="w-6 h-6 rounded-full bg-olive-green text-white font-extrabold text-[11px] flex items-center justify-center">2</span>
+                                <span>Pilih metode: <strong>Scan Barcode Kamera</strong>, <strong>Unggah Foto</strong>, atau <strong>Input Kode Manual</strong>.</span>
+                            </li>
+                            <li class="p-2.5 rounded-xl bg-base-cream flex items-center space-x-2.5">
+                                <span class="w-6 h-6 rounded-full bg-olive-green text-white font-extrabold text-[11px] flex items-center justify-center">3</span>
+                                <span>Sistem otomatis mencatat kehadiran keluarga & mengaktifkan form pemeriksaan.</span>
+                            </li>
+                        </ol>
+                    </div>
+
+                    <div class="white-card p-6 space-y-4 border-t-4 border-sun-yellow">
+                        <div class="flex items-center space-x-3 border-b border-olive-green/10 pb-3">
+                            <div class="w-10 h-10 rounded-xl bg-soft-yellow text-earth-brown flex items-center justify-center font-bold text-lg">
+                                <i class="fa-solid fa-stethoscope text-sun-yellow"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-extrabold text-deep-green text-base">Alur Input Data Pemeriksaan</h3>
+                                <p class="text-[11px] text-earth-brown font-medium">Prosedur Pengisian Hasil Posyandu</p>
+                            </div>
+                        </div>
+                        <ol class="text-xs space-y-2.5 text-earth-brown font-medium">
+                            <li class="p-2.5 rounded-xl bg-base-cream flex items-center space-x-2.5">
+                                <span class="w-6 h-6 rounded-full bg-sun-yellow text-earth-brown font-extrabold text-[11px] flex items-center justify-center">1</span>
+                                <span>Pastikan peserta <strong>telah absen terlebih dahulu</strong>.</span>
+                            </li>
+                            <li class="p-2.5 rounded-xl bg-base-cream flex items-center space-x-2.5">
+                                <span class="w-6 h-6 rounded-full bg-sun-yellow text-earth-brown font-extrabold text-[11px] flex items-center justify-center">2</span>
+                                <span>Pilih Kartu Anggota Sasaran & atur peran/kategori (Usia Produktif, Ibu Hamil, dll).</span>
+                            </li>
+                            <li class="p-2.5 rounded-xl bg-base-cream flex items-center space-x-2.5">
+                                <span class="w-6 h-6 rounded-full bg-sun-yellow text-earth-brown font-extrabold text-[11px] flex items-center justify-center">3</span>
+                                <span>Isi form parameter sesuai kategorinya & simpan catatan Posyandu.</span>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+
+                <!-- DIAGRAM GARIS KEHADIRAN 6 POSYANDU -->
+                <div class="white-card p-6 md:p-8 space-y-6">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-olive-green/10 pb-4">
+                        <div>
+                            <div class="flex items-center space-x-2">
+                                <h3 class="font-extrabold text-deep-green text-lg md:text-xl">Grafik Tren Kehadiran Sasaran (6 Posyandu Desa Gonoharjo)</h3>
+                                <span class="px-2.5 py-0.5 bg-soft-green text-deep-green text-xs font-bold rounded-full border border-olive-green/30">Dot Active</span>
+                            </div>
+                            <p class="text-xs text-earth-brown mt-1 font-medium">Perbandingan tingkat kehadiran peserta posyandu antar wilayah di Desa Gonoharjo.</p>
+                        </div>
+
+                        <div class="flex items-center space-x-2">
+                            <select id="filter-grafik-bulan" onchange="updateKehadiranChart()" class="p-2 bg-base-cream rounded-xl border border-olive-green/20 text-xs font-bold text-deep-green cursor-pointer focus:outline-none">
+                                <option value="semua">Semua Bulan (2026)</option>
+                                <option value="Jan">Januari</option>
+                                <option value="Feb">Februari</option>
+                                <option value="Mar">Maret</option>
+                                <option value="Apr">April</option>
+                                <option value="Mei">Mei</option>
+                                <option value="Jun">Juni</option>
+                                <option value="Jul">Juli</option>
+                                <option value="Agt">Agustus</option>
+                                <option value="Sep" selected>September</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="w-full h-80 relative">
+                        <canvas id="kehadiranKaderChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ================= TAB 2: INPUT ABSEN ================= -->
+            <section id="content-absen" class="hidden space-y-6">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-6 items-start">
+                    
+                    <!-- SISI KIRI: BOX FORM INPUT ABSEN -->
+                    <div class="lg:col-span-4 white-card p-4 sm:p-5 md:p-6 space-y-4 sm:space-y-5 border-2 border-olive-green/30 shadow-md">
+                        <div class="border-b border-olive-green/15 pb-3">
+                            <div class="flex items-center space-x-2.5 text-deep-green">
+                                <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-soft-green flex items-center justify-center font-bold text-base sm:text-lg shadow-xs shrink-0">
+                                    <i class="fa-solid fa-qrcode text-olive-green"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-extrabold text-deep-green text-base sm:text-lg leading-tight">Form Input Absen Kehadiran</h3>
+                                    <p class="text-[11px] text-earth-brown font-medium mt-0.5">Pilih Metode Input Sasaran</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- SUB-TAB METODE ABSEN -->
+                        <div class="grid grid-cols-3 gap-1 sm:gap-1.5 p-1 bg-base-cream rounded-xl border border-olive-green/20">
+                            <button onclick="switchAbsenMethod('scan')" id="btn-absen-scan" class="py-2 px-1 rounded-lg text-[10px] sm:text-[11px] font-extrabold bg-deep-green text-white shadow-xs flex items-center justify-center space-x-1 transition-all cursor-pointer">
+                                <i class="fa-solid fa-camera"></i>
+                                <span>1. Scan</span>
+                            </button>
+                            <button onclick="switchAbsenMethod('upload')" id="btn-absen-upload" class="py-2 px-1 rounded-lg text-[10px] sm:text-[11px] font-extrabold text-earth-brown hover:bg-soft-green flex items-center justify-center space-x-1 transition-all cursor-pointer">
+                                <i class="fa-solid fa-file-arrow-up"></i>
+                                <span>2. Unggah</span>
+                            </button>
+                            <button onclick="switchAbsenMethod('manual')" id="btn-absen-manual" class="py-2 px-1 rounded-lg text-[10px] sm:text-[11px] font-extrabold text-earth-brown hover:bg-soft-green flex items-center justify-center space-x-1 transition-all cursor-pointer">
+                                <i class="fa-solid fa-keyboard"></i>
+                                <span>3. Manual</span>
+                            </button>
+                        </div>
+
+                        <div id="method-absen-scan" class="space-y-3 text-center py-2 bg-base-cream/50 rounded-2xl border border-olive-green/10 p-3 sm:p-3.5">
+                            <div class="w-40 h-40 sm:w-44 sm:h-44 max-w-full aspect-square mx-auto rounded-2xl bg-black/85 text-white flex flex-col items-center justify-center relative overflow-hidden border-4 border-olive-green shadow-inner">
+                                <i class="fa-solid fa-qrcode text-3xl sm:text-4xl text-sun-yellow animate-pulse"></i>
+                                <span class="text-[10px] mt-2 text-white/80 font-extrabold">Kamera Barcode Aktif...</span>
+                                <div class="absolute inset-x-0 top-1/2 h-0.5 bg-red-500 shadow-md animate-ping"></div>
+                            </div>
+                            <p class="text-[11px] text-earth-brown font-medium leading-tight">Arahkan kamera pada barcode kartu posyandu keluarga.</p>
+                            <button onclick="prosesSimulasiAbsen('3324010101900001')" class="w-full btn-primary py-2.5 sm:py-3 text-xs font-bold flex items-center justify-center space-x-2 shadow-sm cursor-pointer">
+                                <i class="fa-solid fa-check-double text-sun-yellow"></i>
+                                <span>Simulasi Scan Barcode Berhasil</span>
+                            </button>
+                        </div>
+
+                        <div id="method-absen-upload" class="hidden space-y-3 py-2 bg-base-cream/50 rounded-2xl border border-olive-green/10 p-3 sm:p-3.5">
+                            <div onclick="document.getElementById('file-absen-upload').click()" class="p-4 sm:p-6 border-2 border-dashed border-olive-green/40 rounded-2xl bg-white text-center space-y-2 cursor-pointer hover:bg-soft-green/30 transition shadow-xs">
+                                <div class="w-9 h-9 sm:w-10 sm:h-10 mx-auto rounded-full bg-soft-green text-deep-green flex items-center justify-center text-base sm:text-lg">
+                                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs font-extrabold text-deep-green">Klik / Seret Foto Barcode</p>
+                                    <p class="text-[10px] text-earth-brown font-semibold mt-0.5">Format JPG, PNG, WEBP (Maks 5MB)</p>
+                                </div>
+                                <input type="file" class="hidden" id="file-absen-upload" accept="image/*" onchange="prosesSimulasiAbsen('3324010101900001')">
+                            </div>
+                            <button onclick="document.getElementById('file-absen-upload').click()" class="w-full btn-primary py-2.5 sm:py-3 text-xs font-bold flex items-center justify-center space-x-2 cursor-pointer">
+                                <i class="fa-solid fa-folder-open text-sun-yellow"></i>
+                                <span>Pilih File Foto Barcode</span>
+                            </button>
+                        </div>
+
+                        <div id="method-absen-manual" class="hidden space-y-3 py-2 bg-base-cream/50 rounded-2xl border border-olive-green/10 p-3 sm:p-3.5">
+                            <div class="space-y-1.5">
+                                <label class="block text-xs font-extrabold text-deep-green">Nomor Barcode / Nomor KK / NIK Sasaran:</label>
+                                <div class="relative">
+                                    <i class="fa-solid fa-barcode absolute left-3 top-3 text-olive-green text-xs"></i>
+                                    <input type="text" id="input-manual-barcode" placeholder="Contoh: 3324010101900001" class="w-full pl-9 pr-3 py-2.5 bg-white rounded-xl border border-olive-green/30 text-xs font-extrabold focus:outline-none focus:ring-2 focus:ring-olive-green/40 text-deep-green">
+                                </div>
+                                <p class="text-[10px] text-earth-brown font-medium">Demo cepat: <button type="button" onclick="document.getElementById('input-manual-barcode').value='3324010101900001'" class="underline text-olive-green font-bold cursor-pointer">3324010101900001</button></p>
+                            </div>
+                            <button onclick="prosesManualAbsenSubmit()" class="w-full btn-olive py-2.5 sm:py-3 text-xs font-bold flex items-center justify-center space-x-1.5 shadow-sm cursor-pointer">
+                                <i class="fa-solid fa-floppy-disk text-sun-yellow"></i>
+                                <span>Simpan Absen Kehadiran</span>
+                            </button>
+                        </div>
+
+                        <div class="p-3 sm:p-3.5 rounded-xl bg-soft-green/50 border border-olive-green/20 text-[11px] text-earth-brown space-y-1">
+                            <p class="font-bold text-deep-green flex items-center gap-1.5"><i class="fa-solid fa-circle-info text-olive-green"></i> Petunjuk Kader:</p>
+                            <p class="text-earth-brown leading-relaxed font-medium">Setelah keluarga diabsen, data langsung masuk ke tabel di sebelah kanan dan siap untuk diinput pemeriksaan kesehatannya.</p>
+                        </div>
+                    </div>
+
+                    <!-- SISI KANAN: DAFTAR PESERTA ABSEN HARI INI -->
+                    <div class="lg:col-span-8 white-card p-4 sm:p-5 md:p-6 space-y-4 border-2 border-olive-green/20 shadow-md">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-olive-green/15 pb-3">
+                            <div>
+                                <div class="flex items-center space-x-2">
+                                    <i class="fa-solid fa-clipboard-user text-olive-green text-base sm:text-lg"></i>
+                                    <h3 id="title-absen-today" class="font-extrabold text-deep-green text-base sm:text-lg leading-tight">Daftar Peserta Absen Hari Ini</h3>
+                                </div>
+                                <p class="text-[11px] sm:text-xs text-earth-brown font-medium mt-0.5">Tabel rekapitulasi kehadiran sasaran posyandu.</p>
+                            </div>
+                            <span id="count-absen-today" class="px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-[11px] sm:text-xs font-extrabold border border-emerald-300 shadow-xs shrink-0 self-start sm:self-auto">
+                                3 Keluarga Terdaftar
+                            </span>
+                        </div>
+
+                        <!-- FILTER BAR -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-12 gap-3 text-xs items-end">
+                            <div class="sm:col-span-1 lg:col-span-4 flex flex-col gap-1.5">
+                                <label for="filter-absen-date" class="text-[10px] font-extrabold text-earth-brown uppercase tracking-wider flex items-center gap-1.5">
+                                    <i class="fa-solid fa-calendar-day text-olive-green"></i> Tampilkan Tanggal:
+                                </label>
+                                <input type="date" id="filter-absen-date" onchange="filterTabelAbsenHariIni()" class="w-full p-2 bg-base-cream rounded-xl border border-olive-green/25 text-xs font-extrabold text-deep-green focus:outline-none cursor-pointer shadow-sm transition-all focus:ring-2 focus:ring-olive-green/40">
+                            </div>
+
+                            <div class="sm:col-span-1 md:col-span-2 lg:col-span-5 flex flex-col gap-1.5 relative">
+                                <label for="search-absen-today" class="text-[10px] font-extrabold text-earth-brown uppercase tracking-wider flex items-center gap-1.5">
+                                    <i class="fa-solid fa-magnifying-glass text-olive-green"></i> Cari Data Peserta:
+                                </label>
+                                <div class="relative w-full">
+                                    <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-olive-green text-xs"></i>
+                                    <input type="text" id="search-absen-today" onkeyup="filterTabelAbsenHariIni()" placeholder="Cari Nama KK, No. KK, atau Dusun..." class="w-full pl-9 pr-3 py-2 bg-base-cream rounded-xl border border-olive-green/25 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-olive-green/40 shadow-sm transition-all text-deep-green">
+                                </div>
+                            </div>
+
+                            <div class="sm:col-span-2 md:col-span-3 lg:col-span-3 flex flex-col gap-1.5">
+                                <label for="filter-absen-status" class="text-[10px] font-extrabold text-earth-brown uppercase tracking-wider flex items-center gap-1.5">
+                                    <i class="fa-solid fa-list-check text-olive-green"></i> Status Absen:
+                                </label>
+                                <select id="filter-absen-status" onchange="filterTabelAbsenHariIni()" class="w-full p-2 bg-base-cream rounded-xl border border-olive-green/25 text-xs font-extrabold text-deep-green focus:outline-none cursor-pointer shadow-sm transition-all focus:ring-2 focus:ring-olive-green/40">
+                                    <option value="semua">Semua Status</option>
+                                    <option value="Hadir">Hadir (Menunggu)</option>
+                                    <option value="Konfirmasi Edit">Konfirmasi Edit</option>
+                                    <option value="Pemeriksaan Selesai">Pemeriksaan Selesai</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- TABEL -->
+                        <div class="overflow-x-auto rounded-2xl border border-olive-green/25 max-h-[380px] sm:max-h-[440px] lg:max-h-[480px] overflow-y-auto no-scrollbar shadow-inner bg-white">
+                            <table class="w-full text-left text-xs text-deep-green relative">
+                                <thead class="bg-soft-green text-deep-green font-extrabold uppercase sticky top-0 z-10 border-b border-olive-green/20 shadow-xs">
+                                    <tr>
+                                        <th class="p-2.5 sm:p-3 text-center w-10 sm:w-12">No</th>
+                                        <th class="p-2.5 sm:p-3 whitespace-nowrap">Tanggal/Waktu</th>
+                                        <th class="p-2.5 sm:p-3 min-w-[140px]">Nama KK / Barcode</th>
+                                        <th class="p-2.5 sm:p-3 min-w-[130px]">Wilayah / RT RW</th>
+                                        <th class="p-2.5 sm:p-3 text-center min-w-[120px]">Status</th>
+                                        <th class="p-2.5 sm:p-3 text-center min-w-[100px]">Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody-absen-today" class="divide-y divide-olive-green/10 font-medium text-earth-brown">
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between text-[11px] text-earth-brown font-semibold pt-1 gap-1">
+                            <span><i class="fa-solid fa-circle-check text-emerald-600 mr-1"></i>Otomatis sinkron ke menu Input Pemeriksaan</span>
+                            <span class="text-olive-green font-extrabold"><i class="fa-solid fa-scroll mr-1"></i>Scroll tabel untuk melihat lebih banyak</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- ================= TAB 3: INPUT PEMERIKSAAN ================= -->
+            <section id="content-pemeriksaan" class="hidden space-y-6">
+                <div class="grid lg:grid-cols-12 gap-6 items-start">
+                    
+                    <div class="lg:col-span-4 white-card p-5 md:p-6 space-y-5 border-2 border-olive-green/30 shadow-md">
+                        <div class="border-b border-olive-green/15 pb-3">
+                            <div class="flex items-center space-x-2.5 text-deep-green">
+                                <div class="w-9 h-9 rounded-xl bg-soft-green flex items-center justify-center font-bold text-lg shadow-xs">
+                                    <i class="fa-solid fa-id-card-clip text-olive-green"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-extrabold text-deep-green text-base md:text-lg">Cari Data Sasaran</h3>
+                                    <p class="text-[11px] text-earth-brown font-medium">Peserta yang Telah Absen</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-3 gap-1.5 p-1 bg-base-cream rounded-xl border border-olive-green/20">
+                            <button onclick="switchPemeriksaanSearchMethod('scan')" id="btn-pem-search-scan" class="py-2 px-1 rounded-lg text-[11px] font-extrabold bg-deep-green text-white shadow-xs flex items-center justify-center space-x-1 transition-all cursor-pointer">
+                                <i class="fa-solid fa-camera"></i>
+                                <span>1. Scan</span>
+                            </button>
+                            <button onclick="switchPemeriksaanSearchMethod('upload')" id="btn-pem-search-upload" class="py-2 px-1 rounded-lg text-[11px] font-extrabold text-earth-brown hover:bg-soft-green flex items-center justify-center space-x-1 transition-all cursor-pointer">
+                                <i class="fa-solid fa-file-arrow-up"></i>
+                                <span>2. Unggah</span>
+                            </button>
+                            <button onclick="switchPemeriksaanSearchMethod('manual')" id="btn-pem-search-manual" class="py-2 px-1 rounded-lg text-[11px] font-extrabold text-earth-brown hover:bg-soft-green flex items-center justify-center space-x-1 transition-all cursor-pointer">
+                                <i class="fa-solid fa-keyboard"></i>
+                                <span>3. Manual</span>
+                            </button>
+                        </div>
+
+                        <div id="method-pem-search-scan" class="space-y-3 text-center py-2 bg-base-cream/50 rounded-2xl border border-olive-green/10 p-3">
+                            <div class="w-44 h-44 mx-auto rounded-2xl bg-black/85 text-white flex flex-col items-center justify-center relative overflow-hidden border-4 border-olive-green shadow-md">
+                                <i class="fa-solid fa-qrcode text-5xl text-sun-yellow animate-pulse"></i>
+                                <span class="text-[10px] mt-2 text-white/80 font-extrabold">Scanner Kamera Aktif...</span>
+                                <div class="absolute inset-x-0 top-1/2 h-0.5 bg-red-500 shadow-md animate-ping"></div>
+                            </div>
+                            <p class="text-[11px] text-earth-brown font-medium leading-tight">Arahkan kamera ke barcode sasaran yang telah absen untuk membuka data keluarga.</p>
+                            <button onclick="prosesSimulasiScanPemeriksaan()" class="w-full btn-primary py-2.5 text-xs font-bold flex items-center justify-center space-x-2 shadow-sm cursor-pointer">
+                                <i class="fa-solid fa-circle-check text-sun-yellow"></i>
+                                <span>Simulasi Scan Barcode Berhasil</span>
+                            </button>
+                        </div>
+
+                        <div id="method-pem-search-upload" class="hidden space-y-3 py-2 bg-base-cream/50 rounded-2xl border border-olive-green/10 p-3">
+                            <div onclick="document.getElementById('file-pem-search-upload').click()" class="p-6 border-2 border-dashed border-olive-green/40 rounded-2xl bg-white text-center space-y-2 cursor-pointer hover:bg-soft-green/30 transition shadow-xs">
+                                <div class="w-10 h-10 mx-auto rounded-full bg-soft-green text-deep-green flex items-center justify-center text-lg">
+                                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs font-extrabold text-deep-green">Klik / Seret Foto Barcode</p>
+                                    <p class="text-[10px] text-earth-brown font-semibold mt-0.5">Format JPG, PNG, WEBP, atau PDF</p>
+                                </div>
+                                <input type="file" class="hidden" id="file-pem-search-upload" accept="image/*,.pdf" onchange="prosesUploadBarcodePemeriksaan(this)">
+                            </div>
+                            <button onclick="document.getElementById('file-pem-search-upload').click()" class="w-full btn-primary py-2.5 text-xs font-bold flex items-center justify-center space-x-2 cursor-pointer">
+                                <i class="fa-solid fa-folder-open text-sun-yellow"></i>
+                                <span>Pilih Gambar / File Barcode</span>
+                            </button>
+                        </div>
+
+                        <div id="method-pem-search-manual" class="hidden space-y-3 py-2 bg-base-cream/50 rounded-2xl border border-olive-green/10 p-3">
+                            <div class="space-y-1.5">
+                                <label class="block text-xs font-extrabold text-deep-green">Ketik No. Barcode / No. KK / NIK Sasaran:</label>
+                                <div class="relative">
+                                    <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-olive-green text-xs"></i>
+                                    <input type="text" id="input-pemeriksaan-barcode" placeholder="Contoh: 3324010101900001" class="w-full pl-9 pr-3 py-2.5 bg-white rounded-xl border border-olive-green/30 text-xs font-extrabold focus:outline-none focus:ring-2 focus:ring-olive-green/50 shadow-xs text-deep-green">
+                                </div>
+                                <div class="pt-1">
+                                    <button onclick="quickFillPemeriksaanSearch('3324010101900001')" class="text-[10px] font-bold text-olive-green underline hover:text-deep-green cursor-pointer">
+                                        <i class="fa-solid fa-barcode mr-1"></i>Gunakan Barcode Demo: 3324010101900001
+                                    </button>
+                                </div>
+                            </div>
+                            <button onclick="cariPesertaPemeriksaan()" class="w-full btn-brown py-2.5 text-xs font-bold flex items-center justify-center space-x-2 shadow-xs cursor-pointer">
+                                <i class="fa-solid fa-magnifying-glass text-sun-yellow"></i>
+                                <span>Cari & Buka Data Keluarga</span>
+                            </button>
+                        </div>
+
+                        <div class="p-3 rounded-xl bg-soft-green/50 border border-olive-green/20 text-[11px] text-earth-brown space-y-1">
+                            <p class="font-bold text-deep-green flex items-center gap-1.5"><i class="fa-solid fa-circle-info text-olive-green"></i> Info Sistem:</p>
+                            <p class="text-earth-brown leading-relaxed font-medium">Setelah data sasaran terpanggil, pilih kartu anggota keluarga di sebelah kanan untuk mulai menginput data pemeriksaan.</p>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-8 space-y-5">
+                        <div class="white-card p-5 md:p-6 space-y-5 border-2 border-olive-green/20 shadow-md">
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-olive-green/15 pb-4">
+                                <div class="space-y-0.5">
+                                    <div class="flex items-center space-x-2 text-deep-green">
+                                        <i class="fa-solid fa-users text-lg text-olive-green"></i>
+                                        <h3 class="font-extrabold text-deep-green text-base md:text-lg">Pilih Anggota Keluarga yang Akan Diinput Pemeriksaannya</h3>
+                                    </div>
+                                    <p class="text-xs text-earth-brown font-medium">Klik tombol <span class="text-earth-brown font-bold underline">"Input Data Pemeriksaan"</span> atau ubah kategori sasaran langsung pada kartu di bawah.</p>
+                                </div>
+
+                                <div class="flex flex-wrap items-center gap-2">
+                                    <span id="pemeriksaan-kk-info" class="text-xs px-3 py-1.5 bg-soft-yellow rounded-xl font-bold text-earth-brown border border-sun-yellow/40 shadow-xs">
+                                        Keluarga Bp. Sujatno (RT 02 / RW 01)
+                                    </span>
+                                    
+                                    <button id="btn-konfirmasi-pemeriksaan" onclick="handleKonfirmasiPemeriksaanClick()" class="bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 text-xs font-extrabold rounded-xl flex items-center space-x-2 shadow-md hover:scale-105 transition-all duration-200 border border-amber-400/30 cursor-pointer">
+                                        <span>Konfirmasi Data ?</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div id="grid-cards-pemeriksaan" class="grid sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+            
+            <!-- ================= TAB 3.1: TAB MENU BARU - INPUT PEMERIKSAAN KHUSUS ================= -->
+            <section id="content-pemeriksaan-khusus" class="hidden space-y-6">
+                <div class="grid lg:grid-cols-12 gap-6 items-start">
+                    
+                    <!-- SISI KIRI: FORM DETAIL AGENDA / ACARA KHUSUS -->
+                    <div class="lg:col-span-5 white-card p-5 md:p-6 space-y-5 border-2 border-sun-yellow/40 shadow-md bg-soft-yellow/20">
+                        <div class="border-b border-sun-yellow/30 pb-3">
+                            <div class="flex items-center space-x-2.5 text-earth-brown">
+                                <div class="w-9 h-9 rounded-xl bg-soft-yellow flex items-center justify-center font-bold text-lg shadow-xs">
+                                    <i class="fa-solid fa-calendar-star text-sun-yellow"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-extrabold text-deep-green text-base md:text-lg">Detail Sesi / Acara Khusus</h3>
+                                    <p class="text-[11px] text-earth-brown font-medium">Pengaturan Agenda Laporan Web Admin</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="space-y-4 text-xs font-bold text-deep-green">
+                            <div class="space-y-1.5">
+                                <label class="block text-earth-brown font-extrabold">Nama Acara / Sesi Khusus:</label>
+                                <input type="text" id="agenda-nama" value="Pemeriksaan Khusus Ibu Hamil & Menyusui dari Puskesmas" placeholder="Contoh: Pemeriksaan Bumil oleh Puskesmas Limbangan" class="w-full p-2.5 bg-white rounded-xl border border-sun-yellow/40 focus:outline-none focus:ring-2 focus:ring-sun-yellow shadow-xs text-deep-green" required>
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-3">
+                                <div class="space-y-1.5">
+                                    <label class="block text-earth-brown font-extrabold">Tanggal Acara:</label>
+                                    <input type="date" id="agenda-tanggal" class="w-full p-2.5 bg-white rounded-xl border border-sun-yellow/40 focus:outline-none focus:ring-2 focus:ring-sun-yellow shadow-xs cursor-pointer text-deep-green" required>
+                                </div>
+                                <div class="space-y-1.5">
+                                    <label class="block text-earth-brown font-extrabold">Tanda / Label Khusus:</label>
+                                    <select id="agenda-tanda" class="w-full p-2.5 bg-white rounded-xl border border-sun-yellow/40 focus:outline-none focus:ring-2 focus:ring-sun-yellow shadow-xs cursor-pointer text-deep-green">
+                                        <option value="Puskesmas">Tim Puskesmas</option>
+                                        <option value="BidanDesa">Bidan Desa</option>
+                                        <option value="Penyuluhan">Penyuluhan Khusus</option>
+                                        <option value="ImunisasiMassal">Imunisasi Massal</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="space-y-1.5">
+                                <label class="block text-earth-brown font-extrabold">Pengisi Acara / Narsum / Tim Medis:</label>
+                                <input type="text" id="agenda-pengisi" value="Dr. Hj. Siti Aminah, M.Kes & Tim Puskesmas Limbangan" placeholder="Nama Dokter / Bidan / Narasumber..." class="w-full p-2.5 bg-white rounded-xl border border-sun-yellow/40 focus:outline-none shadow-xs text-deep-green" required>
+                            </div>
+
+                            <div class="space-y-1.5">
+                                <label class="block text-earth-brown font-extrabold">Keterangan Tambahan Acara:</label>
+                                <textarea id="agenda-keterangan" rows="3" class="w-full p-2.5 bg-white rounded-xl border border-sun-yellow/40 focus:outline-none shadow-xs text-deep-green">Pemeriksaan khusus USG portabel, skrining Hb bumil, dan pembagian vitamin penambah darah gratis.</textarea>
+                            </div>
+
+                            <div class="p-3 rounded-xl bg-white border border-sun-yellow/40 text-[11px] text-earth-brown space-y-1 shadow-xs">
+                                <p class="font-extrabold text-deep-green flex items-center gap-1.5"><i class="fa-solid fa-circle-info text-sun-yellow"></i> Logika Web Admin:</p>
+                                <p class="text-earth-brown font-medium">Tanggal acara & detail sesi khusus ini akan dikelompokkan terpisah dalam rekapitulasi laporan resmi di Web Admin.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SISI KANAN: PENCARIAN & KARTU SASARAN PEMERIKSAAN KHUSUS -->
+                    <div class="lg:col-span-7 space-y-5">
+                        <div class="white-card p-5 md:p-6 space-y-5 border-2 border-olive-green/20 shadow-md">
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-olive-green/15 pb-4">
+                                <div class="space-y-0.5">
+                                    <div class="flex items-center space-x-2 text-deep-green">
+                                        <i class="fa-solid fa-notes-medical text-lg text-olive-green"></i>
+                                        <h3 class="font-extrabold text-deep-green text-base md:text-lg">Input Pemeriksaan Sesuai Sesi Khusus</h3>
+                                    </div>
+                                    <p class="text-xs text-earth-brown font-medium">Pilih sasaran khusus (Bumil/Menyusui/Lansia) untuk dicatat pada agenda acara.</p>
+                                </div>
+
+                                <div class="flex items-center gap-2">
+                                    <input type="text" id="input-pemeriksaan-khusus-search" placeholder="Cari barcode / NIK sasaran..." class="p-2 bg-base-cream rounded-xl border border-olive-green/25 text-xs font-bold focus:outline-none text-deep-green">
+                                    <button onclick="cariPesertaPemeriksaanKhusus()" class="btn-olive px-3.5 py-2 text-xs font-bold shadow-xs cursor-pointer">Cari</button>
+                                </div>
+                            </div>
+
+                            <div id="grid-cards-pemeriksaan-khusus" class="grid sm:grid-cols-2 gap-4">
+                                <div class="white-card p-4 space-y-3 bg-gradient-to-br from-pink-50/90 via-rose-50/40 to-white border-2 border-pink-300">
+                                    <div class="flex items-center justify-between">
+                                        <span class="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-pink-100 text-pink-800 border">Ibu Hamil</span>
+                                        <span class="text-[10px] font-bold px-2 py-0.5 bg-emerald-100 text-emerald-800 rounded-full">✔️ Hadir Agenda</span>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-black text-deep-green text-sm">Siti Ratnah</h4>
+                                        <p class="text-[11px] text-pink-800 font-bold">Usia Hamil: 24 Minggu (Trimester 2)</p>
+                                        <p class="text-[10px] text-earth-brown font-mono">NIK: 332401******0002</p>
+                                    </div>
+                                    <button onclick="openModalPemeriksaanKhusus('A2')" class="w-full btn-olive py-2 text-xs font-bold flex items-center justify-center space-x-1 shadow-xs cursor-pointer">
+                                        <i class="fa-solid fa-pen-to-square text-sun-yellow"></i>
+                                        <span>Input Hasil Pemeriksaan Khusus</span>
+                                    </button>
+                                </div>
+
+                                <div class="white-card p-4 space-y-3 bg-gradient-to-br from-orange-50/90 via-amber-50/40 to-white border-2 border-orange-300">
+                                    <div class="flex items-center justify-between">
+                                        <span class="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-orange-100 text-orange-800 border">Ibu Menyusui</span>
+                                        <span class="text-[10px] font-bold px-2 py-0.5 bg-emerald-100 text-emerald-800 rounded-full">✔️ Hadir Agenda</span>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-black text-deep-green text-sm">Sri Wahyuni</h4>
+                                        <p class="text-[11px] text-orange-800 font-bold">Usia Bayi: 5 Bulan (ASI Eksklusif)</p>
+                                        <p class="text-[10px] text-earth-brown font-mono">NIK: 332401******0003</p>
+                                    </div>
+                                    <button onclick="openModalPemeriksaanKhusus('A3')" class="w-full btn-olive py-2 text-xs font-bold flex items-center justify-center space-x-1 shadow-xs cursor-pointer">
+                                        <i class="fa-solid fa-pen-to-square text-sun-yellow"></i>
+                                        <span>Input Hasil Pemeriksaan Khusus</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+            
+            <!-- ================= TAB 4: CEK DATA SASARAN ================= -->
+            <section id="content-cek-sasaran" class="hidden space-y-6">
+                <div class="white-card p-6 md:p-8 space-y-6 border-2 border-olive-green/20 shadow-md">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-olive-green/15 pb-4">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-11 h-11 rounded-2xl bg-soft-yellow text-earth-brown flex items-center justify-center font-bold text-xl shadow-xs">
+                                <i class="fa-solid fa-users-gear text-sun-yellow"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-extrabold text-deep-green text-lg md:text-xl">Kelola & Cek Data Sasaran Posyandu ILP</h3>
+                                <p class="text-xs text-earth-brown font-medium">Atur filter indikator kesehatan, cari barcode/nama, serta atur publikasi Web Sasaran.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center space-x-2 self-start md:self-auto">
+                            <span id="total-sasaran-badge" class="px-3.5 py-1.5 rounded-full bg-soft-green text-deep-green text-xs font-extrabold border border-olive-green/30 shadow-xs">
+                                Total: 12 Data Sasaran
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="p-4 rounded-2xl bg-base-cream/80 border border-olive-green/20 space-y-4 shadow-inner">
+                        <div class="flex items-center space-x-2 text-deep-green font-extrabold text-xs">
+                            <i class="fa-solid fa-filter text-olive-green"></i>
+                            <span>Filter & Pencarian Kasus Khusus Sasaran:</span>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-3 text-xs font-bold text-deep-green items-end">
+                            <div class="lg:col-span-3 space-y-1">
+                                <label class="block text-[11px] font-extrabold text-earth-brown">Kategori Kasus Khusus:</label>
+                                <select id="filter-kasus" onchange="applyFilterSasaran()" class="w-full p-2.5 bg-white rounded-xl border border-olive-green/25 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-olive-green/40 cursor-pointer shadow-xs text-deep-green">
+                                    <option value="semua">-- Semua Kasus --</option>
+                                    <option value="gula_tinggi">Gula Darah Tinggi (GDS > 200)</option>
+                                    <option value="tensi_tinggi">Tensi Tinggi (Hipertensi)</option>
+                                    <option value="kolesterol_tinggi">Kolesterol Tinggi</option>
+                                    <option value="asam_urat_tinggi">Asam Urat Tinggi</option>
+                                    <option value="hb_rendah">Anemia (Hb Rendah)</option>
+                                    <option value="stunting">Stunting / Sangat Pendek</option>
+                                    <option value="status_2t_o_b">Status N, T, 2T, O, B</option>
+                                </select>
+                            </div>
+
+                            <div class="lg:col-span-3 space-y-1">
+                                <label class="block text-[11px] font-extrabold text-earth-brown">Wilayah Posyandu:</label>
+                                <select id="filter-posyandu" onchange="applyFilterSasaran()" class="w-full p-2.5 bg-white rounded-xl border border-olive-green/25 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-olive-green/40 cursor-pointer shadow-xs text-deep-green">
+                                    <option value="semua">Semua Posyandu (1 - 6)</option>
+                                    <option value="Posyandu 1">Posyandu 1 (Gonoharjo)</option>
+                                    <option value="Posyandu 2">Posyandu 2 (Medini)</option>
+                                    <option value="Posyandu 3">Posyandu 3 (Nglimut)</option>
+                                    <option value="Posyandu 4">Posyandu 4 (Promasan)</option>
+                                    <option value="Posyandu 5">Posyandu 5 (Gajah)</option>
+                                    <option value="Posyandu 6">Posyandu 6 (Brintik)</option>
+                                </select>
+                            </div>
+
+                            <div class="lg:col-span-2 space-y-1">
+                                <label class="block text-[11px] font-extrabold text-earth-brown">Bulan & Tahun:</label>
+                                <input type="month" id="filter-bulan-tahun" value="2026-09" onchange="applyFilterSasaran()" class="w-full p-2 bg-white rounded-xl border border-olive-green/25 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-olive-green/40 cursor-pointer shadow-xs text-deep-green">
+                            </div>
+
+                            <div class="lg:col-span-4 space-y-1">
+                                <label class="block text-[11px] font-extrabold text-earth-brown">Kata Kunci Nama / NIK / Barcode:</label>
+                                <div class="flex items-center gap-1.5">
+                                    <div class="relative flex-grow">
+                                        <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-olive-green text-xs"></i>
+                                        <input type="text" id="filter-keyword" onkeyup="applyFilterSasaran()" placeholder="Cari nama, NIK, barcode..." class="w-full pl-9 pr-2.5 py-2 bg-white rounded-xl border border-olive-green/25 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-olive-green/40 shadow-xs text-deep-green">
+                                    </div>
+                                    <button type="button" onclick="openModalBarcodeSasaran()" class="btn-primary px-3 py-2 text-xs font-extrabold flex items-center space-x-1.5 rounded-xl shadow-xs shrink-0 hover:scale-105 transition-all cursor-pointer" title="Scan / Unggah / Input Nomor Barcode">
+                                        <i class="fa-solid fa-barcode text-sm text-sun-yellow"></i>
+                                        <span class="hidden sm:inline">Scan Barcode</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-between pt-1 border-t border-olive-green/10">
+                            <p class="text-[11px] text-earth-brown font-semibold italic">
+                                *Tip: Klik tombol <strong class="text-deep-green font-extrabold">Scan Barcode</strong> untuk mencari data sasaran menggunakan kamera, gambar, atau nomor kode.
+                            </p>
+                            <div class="flex items-center space-x-2">
+                                <button onclick="resetFilterSasaran()" class="px-3.5 py-1.5 bg-stone-200 hover:bg-stone-300 text-deep-green rounded-xl text-xs font-bold transition cursor-pointer">Reset Filter</button>
+                                <button onclick="applyFilterSasaran()" class="btn-primary px-5 py-1.5 font-extrabold text-xs shadow-xs cursor-pointer">Terapkan Filter</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between text-xs font-bold text-deep-green">
+                            <span id="filtered-count-info"><i class="fa-solid fa-list text-olive-green mr-1.5"></i> Menampilkan hasil data sasaran:</span>
+                            <span class="text-[11px] text-earth-brown font-extrabold">*Atur Sakelar (ON/OFF) untuk publikasi di Web Sasaran</span>
+                        </div>
+
+                        <div class="overflow-x-auto rounded-2xl border border-olive-green/20 max-h-[460px] overflow-y-auto no-scrollbar shadow-inner bg-white">
+                            <table class="w-full text-left text-xs text-deep-green relative">
+                                <thead class="bg-soft-green text-deep-green font-extrabold uppercase sticky top-0 z-10 border-b border-olive-green/20 shadow-xs">
+                                    <tr>
+                                        <th class="p-3 text-center w-12">No</th>
+                                        <th class="p-3">Tgl & Wilayah</th>
+                                        <th class="p-3">Nama Sasaran & NIK/Barcode</th>
+                                        <th class="p-3">Kategori</th>
+                                        <th class="p-3">Hasil Catatan / Kasus Khusus</th>
+                                        <th class="p-3 text-center">Status Web Sasaran</th>
+                                        <th class="p-3 text-center">Aksi Edit</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody-cek-sasaran" class="divide-y divide-olive-green/10 font-medium text-earth-brown">
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="flex flex-col sm:flex-row items-center justify-between text-[11px] text-earth-brown font-semibold pt-1 gap-2">
+                            <span><i class="fa-solid fa-circle-info text-olive-green mr-1"></i> Data diperbarui secara presisi dari posyandu ILP</span>
+                            <span class="text-deep-green font-bold"><i class="fa-solid fa-scroll mr-1"></i> Scroll tabel untuk melihat lebih banyak data</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- ================= TAB 5: KONFIRMASI DATA SASARAN ================= -->
+            <section id="content-konfirmasi" class="hidden space-y-8">
+                <div class="white-card p-6 md:p-8 space-y-6 border-2 border-sun-yellow/40">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-olive-green/10 pb-4">
+                        <div class="space-y-1">
+                            <span class="px-3 py-1 rounded-full text-[10px] font-black bg-soft-yellow text-earth-brown border border-sun-yellow/40">
+                                Verifikasi Berjenjang (Dual Confirmation)
+                            </span>
+                            <h3 class="font-extrabold text-deep-green text-lg md:text-xl">Konfirmasi Usulan Perubahan Data Keluarga Sasaran</h3>
+                            <p class="text-xs text-earth-brown font-medium">Daftar permohonan penambahan / pengurangan / perbaikan data dari Web Sasaran yang membutuhkan persetujuan Kader & Admin Web.</p>
+                        </div>
+                    </div>
+
+                    <div class="overflow-x-auto rounded-xl border border-sun-yellow/30 max-h-[420px] overflow-y-auto no-scrollbar shadow-inner bg-white">
+                        <table class="w-full text-left text-xs text-deep-green relative">
+                            <thead class="bg-soft-yellow/60 text-earth-brown uppercase font-extrabold sticky top-0 z-10 border-b border-sun-yellow/30 shadow-xs">
+                                <tr>
+                                    <th class="p-3">Tgl Usulan</th>
+                                    <th class="p-3">Nama Usulan</th>
+                                    <th class="p-3">Kategori</th>
+                                    <th class="p-3">Jenis Usulan & Alasan</th>
+                                    <th class="p-3 text-center">Konfirmasi Kader</th>
+                                    <th class="p-3 text-center">Konfirmasi Admin</th>
+                                    <th class="p-3 text-center">Aksi Konfirmasi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody-konfirmasi-usulan" class="divide-y divide-olive-green/10 font-medium text-earth-brown">
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="p-4 rounded-xl bg-base-cream border border-olive-green/20 text-xs text-earth-brown space-y-1">
+                        <p class="font-extrabold text-deep-green"><i class="fa-solid fa-shield-halved mr-1 text-olive-green"></i> Catatan Aturan Konfirmasi 2 Langkah (Dual Confirmation):</p>
+                        <p>Data usulan anggota baru/hapus hanya akan efektif masuk ke database utama setelah mendapatkan <strong>Centang Konfirmasi Kader</strong> (di Web Kader) DAN <strong>Centang Konfirmasi Admin</strong> (di Web Admin Laporan).</p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- ================= TAB 6: KONTAK & TANYA ASTI (AI DENGAN FITUR ANTI-SPAM) ================= -->
+            <section id="content-kontak" class="hidden space-y-8">
+                <div class="grid lg:grid-cols-12 gap-8">
+                    
+                    <div class="lg:col-span-6 space-y-6">
+                        <div class="white-card p-6 space-y-4 border-2 border-olive-green/20 shadow-md">
+                            <div class="flex items-center justify-between border-b border-olive-green/10 pb-3.5">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-10 h-10 rounded-xl flex items-center justify-center bg-soft-green text-deep-green font-bold shadow-xs">
+                                        <i class="fa-solid fa-location-dot text-lg text-olive-green"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-extrabold text-deep-green text-lg">Lokasi Posyandu Desa</h3>
+                                        <p class="text-xs text-earth-brown font-medium">Balai Desa & Pos Kesehatan Desa Gonoharjo</p>
+                                    </div>
+                                </div>
+                                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-extrabold bg-soft-green text-deep-green border border-olive-green/30">
+                                    <span class="w-2 h-2 rounded-full bg-olive-green animate-pulse"></span> Titik Aktif
+                                </span>
+                            </div>
+
+                            <div class="relative w-full h-72 md:h-80 rounded-2xl overflow-hidden border-2 border-olive-green/20 shadow-inner group">
+                                <iframe 
+                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15837.754751433621!2d110.3156689!3d-7.1214041!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7080d8298b488b%3A0x5027a76e356e7e0!2sGonoharjo%2C%20Kec.%20Limbangan%2C%20Kabupaten%20Kendal%2C%20Jawa%20Tengah!5e0!3m2!1sid!2sid!4v1710000000000!5m2!1sid!2sid" 
+                                    width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Peta Posyandu Desa Gonoharjo">
+                                </iframe>
+                                
+                                <a href="https://maps.app.goo.gl/NmTfdSzSU8gGeZUMA" target="_blank" rel="noopener noreferrer" class="absolute bottom-3 right-3 btn-primary px-3.5 py-2 text-xs font-extrabold flex items-center space-x-1.5 shadow-lg border border-white/30 cursor-pointer">
+                                    <i class="fa-solid fa-diamond-turn-right text-sun-yellow text-sm"></i>
+                                    <span>Petunjuk Arah</span>
+                                </a>
+                            </div>
+
+                            <div class="space-y-2.5 text-xs md:text-sm text-earth-brown font-medium bg-base-cream p-4 rounded-xl border border-olive-green/15">
+                                <p><strong class="text-deep-green">Alamat:</strong> Balai Desa Gonoharjo, Kec. Limbangan, Kab. Kendal, Jawa Tengah 51381</p>
+                                <p><strong class="text-deep-green">Hotline Kader:</strong> +62 812-3456-7890</p>
+                                <p><strong class="text-deep-green">Email:</strong> posyandugonoharjo@gmail.com</p>
+                            </div>
+
+                            <div class="pt-2 border-t border-olive-green/10">
+                                <p class="text-xs font-bold text-deep-green mb-2">Sosial Media Posyandu:</p>
+                                <div class="flex flex-wrap gap-2">
+                                    <a href="https://wa.me/6281234567890" target="_blank" class="px-3 py-2 rounded-xl bg-green-50 text-emerald-800 font-bold text-xs flex items-center space-x-2 border border-emerald-200">
+                                        <i class="fa-brands fa-whatsapp text-lg text-emerald-600"></i>
+                                        <span>WhatsApp</span>
+                                    </a>
+                                    <a href="https://instagram.com" target="_blank" class="px-3 py-2 rounded-xl bg-pink-50 text-pink-800 font-bold text-xs flex items-center space-x-2 border border-pink-200">
+                                        <i class="fa-brands fa-instagram text-lg text-pink-600"></i>
+                                        <span>Instagram</span>
+                                    </a>
+                                    <a href="https://youtu.be/FSqc9qFuqVM" target="_blank" class="px-3 py-2 rounded-xl bg-red-50 text-red-800 font-bold text-xs flex items-center space-x-2 border border-red-200">
+                                        <i class="fa-brands fa-youtube text-lg text-red-600"></i>
+                                        <span>YouTube</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-6">
+                        <div class="white-card p-6 space-y-4 flex flex-col h-[580px] justify-between border-2 border-olive-green/30">
+                            
+                            <div class="flex items-center justify-between border-b border-olive-green/10 pb-3">
+                                <div class="flex items-center space-x-3">
+                                    <div class="relative">
+                                        <div class="w-12 h-12 rounded-full bg-white p-0.5 border border-olive-green/30 shadow-sm overflow-hidden flex items-center justify-center">
+                                            <img src="https://lh3.googleusercontent.com/d/1AW-1Z0iV8ygSM47sk8KSDu_nD2lKFHDi" alt="Logo Tanya ASTI" class="w-full h-full object-cover rounded-full">
+                                        </div>
+                                        <span class="w-3.5 h-3.5 bg-emerald-500 border-2 border-white rounded-full absolute bottom-0 right-0"></span>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-extrabold text-deep-green text-base">Tanya ASTI</h3>
+                                        <p class="text-[11px] text-earth-brown font-bold">Asisten Digital Kader Posyandu Gonoharjo</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <span id="asti-status-badge" class="text-[10px] bg-soft-green text-deep-green px-2.5 py-1 rounded-full font-bold border border-olive-green/30">Online</span>
+                                    <p id="asti-limit-counter" class="text-[9px] text-earth-brown font-semibold mt-1">Kuota Sesi: <span id="asti-remaining-count">5</span>/5 Tanya</p>
+                                </div>
+                            </div>
+
+                            <div id="chat-messages" class="p-4 rounded-2xl flex-grow overflow-y-auto space-y-3 text-xs bg-base-cream border border-olive-green/10">
+                                <div class="flex items-start space-x-2">
+                                    <div class="w-8 h-8 rounded-full bg-white p-0.5 border border-olive-green/20 overflow-hidden flex-shrink-0 shadow-xs">
+                                        <img src="https://lh3.googleusercontent.com/d/1AW-1Z0iV8ygSM47sk8KSDu_nD2lKFHDi" alt="ASTI" class="w-full h-full object-cover rounded-full">
+                                    </div>
+                                    <div class="bg-white p-3 rounded-2xl rounded-tl-none shadow-xs text-deep-green max-w-[85%] leading-relaxed border border-olive-green/10 font-medium">
+                                        Halo Kader! Saya <strong>ASTI</strong> 👩‍⚕️. Silakan tanyakan seputar standar pengukuran balita, kriteria stunting, atau petunjuk input data kader! <em>(Dilengkapi Sistem Anti-Spam)</em>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="asti-quick-buttons" class="flex flex-wrap gap-1.5 pt-1">
+                                <button onclick="sendQuickChat('Standar Z-Score Stunting')" class="px-2.5 py-1 text-[11px] bg-soft-green text-deep-green font-bold rounded-lg border border-olive-green/30 hover:bg-white transition cursor-pointer">
+                                    📏 Kriteria Stunting
+                                </button>
+                                <button onclick="sendQuickChat('Batas Hipertensi Dewasa')" class="px-2.5 py-1 text-[11px] bg-soft-yellow text-earth-brown font-bold rounded-lg border border-sun-yellow/40 hover:bg-white transition cursor-pointer">
+                                    🩺 Batas Hipertensi
+                                </button>
+                                <button onclick="sendQuickChat('Cara Konfirmasi Data Usulan')" class="px-2.5 py-1 text-[11px] bg-white text-deep-green font-bold rounded-lg border border-olive-green/20 hover:bg-base-cream transition cursor-pointer">
+                                    ✔️ Konfirmasi Usulan
+                                </button>
+                            </div>
+
+                            <form id="asti-chat-form" onsubmit="handleChatSubmit(event)" class="flex items-center gap-2 pt-2 border-t border-olive-green/10">
+                                <div class="website-field-hp">
+                                    <input type="text" id="hp-asti-check" autocomplete="off">
+                                </div>
+                                <input type="text" id="chat-input" placeholder="Tanyakan seputar tugas kader..." class="w-full px-4 py-2.5 text-xs text-deep-green font-medium focus:outline-none bg-base-cream rounded-xl border border-olive-green/20" required>
+                                <button type="submit" id="btn-chat-send" class="btn-primary px-4 py-2.5 text-xs font-bold flex items-center space-x-1 flex-shrink-0 cursor-pointer">
+                                    <span>Kirim</span>
+                                    <i class="fa-solid fa-paper-plane text-xs text-sun-yellow"></i>
+                                </button>
+                            </form>
+
+                            <div id="asti-fallback-wa" class="hidden pt-2 border-t border-olive-green/10">
+                                <a href="https://wa.me/6281234567890?text=Halo%20Bidan%20Desa%20Gonoharjo,%20saya%20Kader%20ingin%20bertanya%20seputar%20pemeriksaan..." target="_blank" class="w-full btn-primary py-2.5 px-4 text-xs font-bold flex items-center justify-center space-x-2 bg-emerald-700 hover:bg-emerald-800 border border-emerald-500 shadow-md">
+                                    <i class="fa-brands fa-whatsapp text-sm text-emerald-300"></i>
+                                    <span>Hubungi Bidan Desa Langsung via WhatsApp</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+        </main>
+
+        <!-- FLOATING LOGOUT BAR -->
+        <aside class="fixed bottom-4 right-4 z-40 max-w-sm w-[calc(100%-2rem)] md:w-auto">
+            <div class="p-3 rounded-2xl bg-white/95 backdrop-blur-md border-2 border-olive-green/30 shadow-2xl flex items-center justify-between gap-3 text-xs text-deep-green">
+                <div class="flex items-center space-x-2.5">
+                    <div class="w-8 h-8 rounded-xl bg-soft-green text-deep-green flex items-center justify-center font-bold flex-shrink-0">
+                        <i class="fa-solid fa-user-check text-olive-green"></i>
+                    </div>
+                    <div class="space-y-0.5">
+                        <p class="text-[11px] font-black leading-tight" id="floating-kader-name">Kader Ani Setyowati</p>
+                        <p class="text-[10px] text-emerald-700 font-bold leading-none">Status: Sesi Kader Aktif</p>
+                    </div>
+                </div>
+
+                <button onclick="confirmLogout()" class="px-3 py-1.5 bg-red-600 text-white text-[11px] font-bold rounded-xl hover:bg-red-700 transition flex items-center gap-1 shadow-xs cursor-pointer">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span>Keluar</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- FOOTER RESMI -->
+        <footer class="bg-white/90 backdrop-blur-md border-t border-olive-green/20 pt-8 sm:pt-10 pb-6 px-4 lg:px-8 mt-12 bg-cover bg-center" style="background-image: linear-gradient(rgba(255, 255, 255, 0.90), rgba(255, 255, 255, 0.90)), url('https://lh3.googleusercontent.com/d/1BUX21ccxQ7HkC2VWsya914pOrcSWE851');">
+            <div class="max-w-7xl mx-auto grid sm:grid-cols-2 lg:grid-cols-4 gap-8 pb-8 border-b border-olive-green/10 text-xs">
+                
+                <div class="space-y-3">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-xl bg-white p-1 shadow-sm border border-olive-green/20 flex items-center justify-center overflow-hidden flex-shrink-0">
+                            <img src="https://lh3.googleusercontent.com/d/1r5Z3o71WH4mpF5qn1Dfeav_V7qNnYldv" alt="Logo GO-Positif Gonoharjo" class="w-full h-full object-contain">
+                        </div>
+                        <div>
+                            <h4 class="font-extrabold text-sm text-deep-green">GO-Positif</h4>
+                            <p class="text-[10px] text-earth-brown font-bold">Web Kader Desa Gonoharjo</p>
+                        </div>
+                    </div>
+                    <p class="text-earth-brown text-xs font-medium leading-relaxed">
+                        Portal resmi Web Kader Integrasi Layanan Primer (ILP) Posyandu Desa Gonoharjo. Pencatatan rekam data posyandu presisi, aman, & terstruktur sepanjang siklus hidup.
+                    </p>
+                </div>
+
+                <div class="space-y-3">
+                    <h4 class="font-extrabold text-sm text-deep-green border-b border-olive-green/10 pb-1">Navigasi Kader</h4>
+                    <ul class="space-y-2 text-earth-brown font-medium">
+                        <li><a href="javascript:void(0)" onclick="switchTab('beranda')" class="hover:text-olive-green transition">Beranda Utama</a></li>
+                        <li><a href="javascript:void(0)" onclick="switchTab('absen')" class="hover:text-olive-green transition">Input Absen Kehadiran</a></li>
+                        <li><a href="javascript:void(0)" onclick="switchTab('pemeriksaan')" class="hover:text-olive-green transition">Input Data Pemeriksaan</a></li>
+                        <li><a href="javascript:void(0)" onclick="switchTab('pemeriksaan-khusus')" class="hover:text-olive-green transition">Input Pemeriksaan Khusus</a></li>
+                        <li><a href="javascript:void(0)" onclick="switchTab('cek-sasaran')" class="hover:text-olive-green transition">Cek & Edit Data Sasaran</a></li>
+                        <li><a href="javascript:void(0)" onclick="switchTab('konfirmasi')" class="hover:text-olive-green transition">Konfirmasi Usulan Sasaran</a></li>
+                    </ul>
+                </div>
+
+                <div class="space-y-3">
+                    <h4 class="font-extrabold text-sm text-deep-green border-b border-olive-green/10 pb-1">Siklus Hidup ILP</h4>
+                    <ul class="space-y-2 text-earth-brown font-medium">
+                        <li>Balita & Anak Prasekolah</li>
+                        <li>Remaja & Usia Sekolah</li>
+                        <li>Ibu Hamil & Ibu Menyusui</li>
+                        <li>Usia Produktif & Lansia</li>
+                    </ul>
+                </div>
+
+                <div class="space-y-3">
+                    <h4 class="font-extrabold text-sm text-deep-green border-b border-olive-green/10 pb-1">Sekretariat & Peta</h4>
+                    <p class="text-earth-brown font-medium leading-relaxed">
+                        <i class="fa-solid fa-location-dot text-olive-green mr-1.5"></i>
+                        Balai Desa Gonoharjo, Kec. Limbangan, Kab. Kendal, Jawa Tengah 51381
+                    </p>
+                    <p class="text-earth-brown font-medium">
+                        <i class="fa-solid fa-phone text-olive-green mr-1.5"></i>
+                        +62 812-3456-7890
+                    </p>
+                    <a href="https://maps.app.goo.gl/NmTfdSzSU8gGeZUMA" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-olive-green hover:underline font-bold text-[11px] gap-1 mt-1">
+                        <i class="fa-solid fa-map-location-dot"></i>
+                        <span>Buka Google Maps Resmi ↗</span>
+                    </a>
+                </div>
+
+            </div>
+
+            <div class="max-w-7xl mx-auto pt-6 flex flex-col sm:flex-row items-center justify-between text-[11px] text-earth-brown font-medium gap-2 text-center sm:text-left">
+                <p>© 2026 GO-POSITIF by KreasiCahNdeso. All rights reserved.</p>
+                <p class="text-olive-green font-bold">Kecamatan Limbangan, Kabupaten Kendal</p>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- MODAL POP-UP BARCODE UNTUK TAB CEK DATA SASARAN -->
+    <div id="modal-barcode-sasaran" class="fixed inset-0 z-50 bg-stone-900/40 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="white-card p-6 max-w-md w-full bg-[#FAF7F0] space-y-5 border-2 border-olive-green/30 shadow-2xl">
+            <div class="flex items-center justify-between border-b border-olive-green/15 pb-3">
+                <div class="flex items-center space-x-2 text-deep-green">
+                    <i class="fa-solid fa-barcode text-xl text-olive-green"></i>
+                    <h3 class="font-extrabold text-deep-green text-base">Pencarian via Barcode Sasaran</h3>
+                </div>
+                <button onclick="closeModalBarcodeSasaran()" class="text-earth-brown hover:text-deep-green text-lg cursor-pointer">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="grid grid-cols-3 gap-1.5 p-1 bg-white rounded-xl border border-olive-green/20">
+                <button onclick="switchPopupBarcodeTab('scan')" id="btn-popup-scan" class="py-2 px-1 rounded-lg text-[11px] font-extrabold bg-deep-green text-white shadow-xs flex items-center justify-center space-x-1 transition-all cursor-pointer">
+                    <i class="fa-solid fa-camera"></i>
+                    <span>1. Scan</span>
+                </button>
+                <button onclick="switchPopupBarcodeTab('upload')" id="btn-popup-upload" class="py-2 px-1 rounded-lg text-[11px] font-extrabold text-earth-brown hover:bg-soft-green flex items-center justify-center space-x-1 transition-all cursor-pointer">
+                    <i class="fa-solid fa-file-arrow-up"></i>
+                    <span>2. Unggah</span>
+                </button>
+                <button onclick="switchPopupBarcodeTab('manual')" id="btn-popup-manual" class="py-2 px-1 rounded-lg text-[11px] font-extrabold text-earth-brown hover:bg-soft-green flex items-center justify-center space-x-1 transition-all cursor-pointer">
+                    <i class="fa-solid fa-keyboard"></i>
+                    <span>3. Manual</span>
+                </button>
+            </div>
+
+            <div id="popup-barcode-scan" class="space-y-3 text-center py-2">
+                <div class="w-48 h-48 mx-auto rounded-2xl bg-black/85 text-white flex flex-col items-center justify-center relative overflow-hidden border-4 border-olive-green shadow-inner">
+                    <i class="fa-solid fa-qrcode text-5xl text-sun-yellow animate-pulse"></i>
+                    <span class="text-[11px] mt-2 text-white/80 font-extrabold">Scanner Kamera Aktif...</span>
+                    <div class="absolute inset-x-0 top-1/2 h-0.5 bg-red-500 shadow-md animate-ping"></div>
+                </div>
+                <p class="text-[11px] text-earth-brown font-medium">Arahkan kamera ke barcode sasaran untuk memfilter data otomatis.</p>
+                <button onclick="applyBarcodeFromPopup('3324010101900001')" class="w-full btn-primary py-2.5 text-xs font-bold flex items-center justify-center space-x-2 shadow-sm cursor-pointer">
+                    <i class="fa-solid fa-check-double text-sun-yellow"></i>
+                    <span>Gunakan Barcode: 3324010101900001</span>
+                </button>
+            </div>
+
+            <div id="popup-barcode-upload" class="hidden space-y-3 py-2">
+                <div onclick="document.getElementById('file-popup-barcode').click()" class="p-6 border-2 border-dashed border-olive-green/30 rounded-2xl bg-white text-center space-y-2 cursor-pointer hover:bg-soft-green/30 transition">
+                    <i class="fa-solid fa-cloud-arrow-up text-3xl text-olive-green"></i>
+                    <p class="text-xs font-bold text-deep-green">Klik untuk Memilih Foto Barcode</p>
+                    <p class="text-[10px] text-earth-brown font-semibold">Format Gambar (JPG, PNG) atau PDF</p>
+                    <input type="file" class="hidden" id="file-popup-barcode" accept="image/*,.pdf" onchange="applyBarcodeFromPopup('3324010101900002')">
+                </div>
+                <button onclick="document.getElementById('file-popup-barcode').click()" class="w-full btn-primary py-2.5 text-xs font-bold flex items-center justify-center space-x-1.5 cursor-pointer">
+                    <i class="fa-solid fa-folder-open text-sun-yellow"></i>
+                    <span>Pilih Foto Barcode</span>
+                </button>
+            </div>
+
+            <div id="popup-barcode-manual" class="hidden space-y-3 py-2">
+                <div class="space-y-1.5">
+                    <label class="block text-xs font-bold text-deep-green">Ketik Nomor Barcode / NIK Sasaran:</label>
+                    <div class="relative">
+                        <i class="fa-solid fa-barcode absolute left-3 top-3 text-olive-green text-xs"></i>
+                        <input type="text" id="input-popup-barcode-val" placeholder="Ketik nomor barcode atau NIK..." class="w-full pl-9 pr-3 py-2.5 bg-white rounded-xl border border-olive-green/30 text-xs font-extrabold focus:outline-none focus:ring-2 focus:ring-olive-green/40 text-deep-green">
+                    </div>
+                </div>
+                <button onclick="submitManualPopupBarcode()" class="w-full btn-brown py-2.5 text-xs font-bold flex items-center justify-center space-x-1.5 shadow-sm cursor-pointer">
+                    <i class="fa-solid fa-filter text-sun-yellow"></i>
+                    <span>Terapkan Filter Barcode</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 1: INPUT PEMERIKSAAN DINAMIS PER ANGGOTA KELUARGA -->
+    <div id="modal-input-pemeriksaan" class="fixed inset-0 z-50 bg-stone-900/40 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="white-card p-6 max-w-xl w-full bg-[#FAF7F0] space-y-4 border-2 border-olive-green/30 max-h-[90vh] overflow-y-auto">
+            <div class="flex items-center justify-between border-b border-olive-green/10 pb-3">
+                <div class="flex items-center space-x-2">
+                    <span id="form-pemeriksaan-kategori-badge" class="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-soft-green text-deep-green border border-olive-green/30">
+                        Balita
+                    </span>
+                    <h3 id="form-pemeriksaan-title" class="font-extrabold text-deep-green text-base">Input Pemeriksaan: Budi Sujatno</h3>
+                </div>
+                <button onclick="closeModalPemeriksaan()" class="text-earth-brown hover:text-deep-green text-lg cursor-pointer">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <form onsubmit="savePemeriksaanData(event)" class="space-y-4 text-xs font-bold text-deep-green">
+                <div id="form-fields-dynamic-container" class="space-y-3">
+                </div>
+
+                <div>
+                    <label class="block mb-1 text-earth-brown font-extrabold"><i class="fa-solid fa-user-doctor mr-1 text-olive-green"></i>Catatan Khusus Bidan / Kader:</label>
+                    <textarea id="input-catatan-bidan" rows="3" placeholder="Masukkan catatan hasil konseling / rekomendasi Bidan..." class="w-full p-2.5 bg-white rounded-xl border border-olive-green/20 focus:outline-none text-deep-green" required></textarea>
+                </div>
+
+                <div class="pt-2 flex justify-end space-x-2 border-t border-olive-green/10">
+                    <button type="button" onclick="closeModalPemeriksaan()" class="px-4 py-2 bg-stone-200 text-deep-green rounded-xl cursor-pointer">Batal</button>
+                    <button type="submit" class="btn-primary px-6 py-2 font-bold cursor-pointer">Simpan Data Pemeriksaan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL 1.1: INPUT PEMERIKSAAN KHUSUS SESI ACARA -->
+    <div id="modal-input-pemeriksaan-khusus" class="fixed inset-0 z-50 bg-stone-900/40 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="white-card p-6 max-w-xl w-full bg-[#FAF7F0] space-y-4 border-2 border-sun-yellow/40 max-h-[90vh] overflow-y-auto">
+            <div class="flex items-center justify-between border-b border-sun-yellow/30 pb-3">
+                <div class="flex items-center space-x-2">
+                    <span class="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-soft-yellow text-earth-brown border border-sun-yellow/40">
+                        Pemeriksaan Khusus Puskesmas
+                    </span>
+                    <h3 id="form-pem-khusus-title" class="font-extrabold text-deep-green text-base">Input Sesi Khusus: Siti Ratnah</h3>
+                </div>
+                <button onclick="closeModalPemeriksaanKhusus()" class="text-earth-brown hover:text-deep-green text-lg cursor-pointer">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <form onsubmit="savePemeriksaanKhususData(event)" class="space-y-4 text-xs font-bold text-deep-green">
+                <div class="p-3 rounded-xl bg-soft-yellow/50 border border-sun-yellow/30 space-y-1 text-[11px]">
+                    <p class="font-extrabold text-earth-brown">Agenda Terpilih:</p>
+                    <p id="modal-agenda-summary" class="font-bold text-deep-green">Pemeriksaan Khusus Ibu Hamil & Menyusui dari Puskesmas</p>
+                </div>
+
+                <div class="grid grid-cols-2 gap-2 text-xs">
+                    <div>
+                        <label class="block mb-1 font-bold">Usia Hamil / Menyusui:</label>
+                        <input type="text" id="khusus-usia-periode" value="24 Minggu" class="w-full p-2 bg-white rounded-xl border border-sun-yellow/40 text-deep-green" required>
+                    </div>
+                    <div>
+                        <label class="block mb-1 font-bold">Tekanan Darah (mmHg):</label>
+                        <input type="text" id="khusus-tensi" value="115/75" class="w-full p-2 bg-white rounded-xl border border-sun-yellow/40 text-deep-green" required>
+                    </div>
+                    <div>
+                        <label class="block mb-1 font-bold">Kadar Hemoglobin (Hb g/dL):</label>
+                        <input type="number" step="0.1" id="khusus-hb" value="11.5" class="w-full p-2 bg-white rounded-xl border border-sun-yellow/40 text-deep-green">
+                    </div>
+                    <div>
+                        <label class="block mb-1 font-bold">Distribusi Vitamin / TTD:</label>
+                        <input type="text" id="khusus-vitamin" value="Tablet Tambah Darah (30 Tablet)" class="w-full p-2 bg-white rounded-xl border border-sun-yellow/40 text-deep-green">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block mb-1 text-earth-brown font-extrabold"><i class="fa-solid fa-user-doctor mr-1 text-sun-yellow"></i>Catatan Tim Puskesmas / Bidan Desa:</label>
+                    <textarea id="khusus-catatan" rows="3" class="w-full p-2.5 bg-white rounded-xl border border-sun-yellow/40 focus:outline-none text-deep-green" required>Pemeriksaan USG portabel dan konseling gizi kehamilan oleh Tim Puskesmas Limbangan berjalan lancar.</textarea>
+                </div>
+
+                <div class="pt-2 flex justify-end space-x-2 border-t border-sun-yellow/30">
+                    <button type="button" onclick="closeModalPemeriksaanKhusus()" class="px-4 py-2 bg-stone-200 text-deep-green rounded-xl cursor-pointer">Batal</button>
+                    <button type="submit" class="btn-brown px-6 py-2 font-bold cursor-pointer">Simpan Laporan Sesi Khusus</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL 2: EDIT DATA SASARAN & STATUS ON/OFF -->
+    <div id="modal-edit-sasaran" class="fixed inset-0 z-50 bg-stone-900/40 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="white-card p-6 max-w-md w-full bg-[#FAF7F0] space-y-4 border-2 border-olive-green/30">
+            <div class="flex items-center justify-between border-b border-olive-green/10 pb-3">
+                <h3 class="font-extrabold text-deep-green text-base">Edit Data Sasaran & Web Status</h3>
+                <button onclick="closeModalEditSasaran()" class="text-earth-brown hover:text-deep-green text-lg cursor-pointer">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <form onsubmit="saveEditSasaran(event)" class="space-y-3 text-xs font-bold text-deep-green">
+                <div>
+                    <label class="block mb-1">Nama Sasaran:</label>
+                    <input type="text" id="edit-nama-sasaran" class="w-full p-2.5 bg-white rounded-xl border border-olive-green/20 focus:outline-none text-deep-green" required>
+                </div>
+
+                <div>
+                    <label class="block mb-1">Kategori Usia & Peran:</label>
+                    <select id="edit-kategori-sasaran" class="w-full p-2.5 bg-white rounded-xl border border-olive-green/20 focus:outline-none text-deep-green">
+                        <option value="Balita">Balita (0-5 Thn)</option>
+                        <option value="Remaja">Remaja (10-18 Thn)</option>
+                        <option value="Usia Produktif">Usia Produktif (Dewasa)</option>
+                        <option value="Ibu Hamil">Ibu Hamil</option>
+                        <option value="Ibu Menyusui">Ibu Menyusui</option>
+                        <option value="Lansia">Lansia (>60 Thn)</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block mb-1">Status Tampilan pada Web Sasaran:</label>
+                    <select id="edit-status-web-sasaran" class="w-full p-2.5 bg-white rounded-xl border border-olive-green/20 focus:outline-none text-deep-green">
+                        <option value="ON">ON (Tampilkan Hasil di Web Sasaran)</option>
+                        <option value="OFF">OFF (Sembunyikan dari Web Sasaran)</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block mb-1">Rincian Hasil Catatan:</label>
+                    <textarea id="edit-catatan-sasaran" rows="3" class="w-full p-2.5 bg-white rounded-xl border border-olive-green/20 focus:outline-none text-deep-green"></textarea>
+                </div>
+
+                <div class="pt-2 flex justify-end space-x-2">
+                    <button type="button" onclick="closeModalEditSasaran()" class="px-4 py-2 bg-stone-200 text-deep-green rounded-xl cursor-pointer">Batal</button>
+                    <button type="submit" class="btn-brown px-4 py-2 font-bold cursor-pointer">Simpan Perubahan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL 3: WEB SWITCHER GO-POSITIF -->
+    <div id="modal-switcher" class="fixed inset-0 z-50 bg-stone-900/40 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="white-card p-6 max-w-md w-full space-y-5 bg-[#FAF7F0] border-2 border-olive-green/30 shadow-2xl">
+            <div class="flex items-center justify-between border-b border-olive-green/10 pb-3">
+                <div class="flex items-center space-x-2">
+                    <i class="fa-solid fa-cubes text-olive-green text-lg"></i>
+                    <h3 class="font-extrabold text-deep-green text-base">WEB SWITCHER GO-POSITIF</h3>
+                </div>
+                <button onclick="toggleSwitcherModal()" class="text-earth-brown hover:text-deep-green text-lg cursor-pointer">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <p class="text-xs text-earth-brown font-medium">Pilih portal ekosistem Jaringan GO-Positif Gonoharjo yang ingin dibuka:</p>
+
+            <div class="space-y-2.5 text-xs">
+                <button onclick="simulasiPortalNav('WEB UTAMA POSYANDU')" class="w-full p-3 bg-white text-earth-brown font-bold rounded-xl flex items-center justify-between hover:bg-base-cream border border-olive-green/20 shadow-xs cursor-pointer">
+                    <span class="flex items-center space-x-2">
+                        <i class="fa-solid fa-house text-olive-green"></i>
+                        <span>1. PORTAL UTAMA POSYANDU</span>
+                    </span>
+                    <i class="fa-solid fa-arrow-right text-earth-brown/40"></i>
+                </button>
+
+                <a href="https://gopositif.github.io/sasaran/" target="_blank" class="w-full p-3 bg-white text-earth-brown font-bold rounded-xl flex items-center justify-between hover:bg-base-cream border border-olive-green/20 shadow-xs cursor-pointer">
+                    <span class="flex items-center space-x-2">
+                        <i class="fa-solid fa-qrcode text-sun-yellow"></i>
+                        <span>2. PORTAL SASARAN POSYANDU</span>
+                    </span>
+                    <i class="fa-solid fa-arrow-right text-earth-brown/40"></i>
+                </a>
+
+                <button onclick="simulasiPortalNav('WEB KADER POSYANDU')" class="w-full p-3 btn-primary font-bold flex items-center justify-between shadow-xs cursor-pointer">
+                    <span class="flex items-center space-x-2">
+                        <i class="fa-solid fa-user-pen text-sun-yellow"></i>
+                        <span>3. PORTAL KADER POSYANDU (Aktif)</span>
+                    </span>
+                    <i class="fa-solid fa-circle-check text-sun-yellow"></i>
+                </button>
+
+                <button onclick="simulasiPortalNav('WEB ADMIN POSYANDU')" class="w-full p-3 bg-white text-earth-brown font-bold rounded-xl flex items-center justify-between hover:bg-base-cream border border-olive-green/20 shadow-xs cursor-pointer">
+                    <span class="flex items-center space-x-2">
+                        <i class="fa-solid fa-chart-line text-deep-green"></i>
+                        <span>4. PORTAL ADMIN POSYANDU</span>
+                    </span>
+                    <i class="fa-solid fa-arrow-right text-earth-brown/40"></i>
+                </button>
+
+                <button onclick="simulasiPortalNav('WEB TEAM IT POSYANDU')" class="w-full p-3 btn-brown font-extrabold flex items-center justify-between shadow-xs cursor-pointer">
+                    <span class="flex items-center space-x-2">
+                        <i class="fa-solid fa-lock text-sun-yellow"></i>
+                        <span>5. PORTAL IT POSYANDU (🔒)</span>
+                    </span>
+                    <i class="fa-solid fa-key text-sun-yellow"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 4: LOGOUT CONFIRMATION -->
+    <div id="modal-logout-confirm" class="fixed inset-0 z-50 bg-stone-900/50 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="white-card p-6 max-w-sm w-full bg-white space-y-4 border-2 border-red-500/30 text-center shadow-2xl">
+            <div class="w-14 h-14 mx-auto rounded-full bg-red-100 text-red-600 flex items-center justify-center text-2xl font-bold">
+                <i class="fa-solid fa-right-from-bracket"></i>
+            </div>
+            <div class="space-y-1.5">
+                <h3 class="font-extrabold text-deep-green text-base">Konfirmasi Keluar Sesi Kader</h3>
+                <p class="text-xs text-earth-brown font-medium">Apakah Anda yakin ingin keluar dari Portal Kader Posyandu ILP?</p>
+            </div>
+            <div class="pt-2 flex items-center justify-center gap-2">
+                <button onclick="closeLogoutModal()" class="w-1/2 px-4 py-2.5 rounded-xl bg-slate-200 text-deep-green text-xs font-bold hover:bg-slate-300 transition cursor-pointer">
+                    Batal
+                </button>
+                <button onclick="executeLogout()" class="w-1/2 px-4 py-2.5 rounded-xl bg-red-600 text-white text-xs font-bold hover:bg-red-700 transition shadow-xs cursor-pointer">
+                    Ya, Keluar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC & STATE SYSTEM WEB KADER UTUH -->
+    <script>
+        let isKaderLoggedIn = false;
+        let currentKaderNama = "Ani Setyowati";
+        let currentPosyanduBertugas = "Posyandu 1 (Dusun Gonoharjo RW 01)";
+        let meledakChartInstance = null;
+        let selectedMemberForExam = null;
+        let selectedIndexEdit = null;
+        let currentPemeriksaanBarcode = "3324010101900001"; 
+        
+        let konfirmasiState = 'UNCONFIRMED';
+        
+        // SISTEM ANTI-SPAM & LIMIT KUOTA CHAT TANYA ASTI KADER
+        let astiChatCount = 0;
+        const maxAstiQuota = 5;
+        let lastChatTimestamp = 0;
+        const minChatIntervalMs = 2500;
+
+        const todayStr = new Date().toISOString().split('T')[0];
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const dateInput = document.getElementById('filter-absen-date');
+            if (dateInput) {
+                dateInput.value = todayStr;
+            }
+            const agendaDateInput = document.getElementById('agenda-tanggal');
+            if (agendaDateInput) {
+                agendaDateInput.value = todayStr;
+            }
+        });
+
+        // FUNGSI MODE RAMAH LANSIA
+        function toggleModeLansia() {
+            document.body.classList.toggle('mode-lansia');
+            const isLansia = document.body.classList.contains('mode-lansia');
+            const label = document.getElementById('label-mode-lansia');
+            const labelShort = document.getElementById('label-mode-lansia-short');
+            
+            if(isLansia) {
+                if(label) label.innerText = "Mode Normal";
+                if(labelShort) labelShort.innerText = "Normal";
+            } else {
+                if(label) label.innerText = "Mode Ramah Lansia";
+                if(labelShort) labelShort.innerText = "Lansia";
+            }
+        }
+
+        // TOGGLE LIHAT KATA SANDI LOGIN
+        function toggleLoginPassword() {
+            const pwdInput = document.getElementById('login-password');
+            const icon = document.getElementById('togglePasswordIcon');
+            if (pwdInput && icon) {
+                if (pwdInput.type === 'password') {
+                    pwdInput.type = 'text';
+                    icon.classList.remove('fa-eye');
+                    icon.classList.add('fa-eye-slash');
+                } else {
+                    pwdInput.type = 'password';
+                    icon.classList.remove('fa-eye-slash');
+                    icon.classList.add('fa-eye');
+                }
+            }
+        }
+
+        // DATABASE ABSEN HARI INI
+        let todayAttendanceList = [
+            { no: 1, tanggal: todayStr, waktu: "08:15 WIB", kkName: "Bp. Sujatno", barcode: "3324010101900001", wilayah: "Gonoharjo RT 02 / RW 01", status: "Hadir", statusBadge: "bg-amber-100 text-amber-800 border-amber-300", isEdited: false },
+            { no: 2, tanggal: todayStr, waktu: "08:30 WIB", kkName: "Bp. Bambang Sutrisno", barcode: "3324010101900002", wilayah: "Gonoharjo RT 01 / RW 01", status: "Hadir", statusBadge: "bg-amber-100 text-amber-800 border-amber-300", isEdited: false },
+            { no: 3, tanggal: todayStr, waktu: "08:45 WIB", kkName: "Bp. Slamet Riyadi", barcode: "3324010101900003", wilayah: "Gonoharjo RT 03 / RW 01", status: "Pemeriksaan Selesai", statusBadge: "bg-emerald-100 text-emerald-800 border-emerald-300", isEdited: false }
+        ];
+
+        // DATABASE MOCKUP KELUARGA & HASIL SASARAN
+        const familyDataMock = {
+            "3324010101900001": {
+                kk: "3324010101900001",
+                kepalaKeluarga: "Sujatno",
+                posyandu: "Posyandu 1",
+                dusun: "Gonoharjo RT 02 / RW 01",
+                sudahAbsen: true,
+                anggota: [
+                    { 
+                        id: "A1", 
+                        nama: "Sujatno", 
+                        nik: "3324010101900001", 
+                        kategori: "Usia Produktif", 
+                        usia: "48 Tahun", 
+                        statusWeb: "ON", 
+                        terakhirCatat: "15 Sep 2026",
+                        detailTerakhir: "Tensi: 135/85 mmHg, GDS: 140 mg/dL, Kolesterol: 190 mg/dL",
+                        catatan: "Hipertensi Derajat 1. Disarankan mengurangi konsumsi garam berlebih.", 
+                        sudahPemeriksaan: true 
+                    },
+                    { 
+                        id: "A2", 
+                        nama: "Siti Ratnah", 
+                        nik: "3324010101900002", 
+                        kategori: "Ibu Hamil", 
+                        usia: "28 Tahun", 
+                        statusWeb: "ON", 
+                        terakhirCatat: "18 Sep 2026",
+                        detailTerakhir: "Usia Hamil: 24 Mgg (Trimester 2), Tensi: 115/75, Hb: 11.5 g/dL, LILA: 25.5 cm",
+                        catatan: "Kondisi kehamilan stabil. Konsumsi rutin Tablet Tambah Darah (TTD).", 
+                        sudahPemeriksaan: true 
+                    },
+                    { 
+                        id: "A3", 
+                        nama: "Sri Wahyuni", 
+                        nik: "3324010101900003", 
+                        kategori: "Ibu Menyusui", 
+                        usia: "31 Tahun", 
+                        statusWeb: "ON", 
+                        terakhirCatat: "19 Sep 2026",
+                        detailTerakhir: "Usia Bayi: 5 Bulan, Status ASI: Eksklusif, Tensi: 120/80 mmHg, Vit A: Lengkap",
+                        catatan: "Lanjutkan konseling ASI Eksklusif hingga usia bayi 6 bulan.", 
+                        sudahPemeriksaan: true 
+                    },
+                    { 
+                        id: "A4", 
+                        nama: "Budi Sujatno", 
+                        nik: "3324010101900004", 
+                        kategori: "Balita", 
+                        usia: "22 Bulan", 
+                        statusWeb: "ON", 
+                        terakhirCatat: "15 Sep 2026",
+                        detailTerakhir: "BB: 11.8 kg, TB: 84.5 cm, LK: 47.2 cm, Status: N (Naik)",
+                        catatan: "Pertumbuhan balita baik & sesuai pita hijau KMS. Bebas indikasi stunting.", 
+                        sudahPemeriksaan: false 
+                    },
+                    { 
+                        id: "A5", 
+                        nama: "Maya Sujatno", 
+                        nik: "3324010101900005", 
+                        kategori: "Remaja", 
+                        usia: "15 Tahun", 
+                        statusWeb: "ON", 
+                        terakhirCatat: "10 Agt 2026",
+                        detailTerakhir: "BB: 45.0 kg, TB: 155.0 cm, Hb: 12.5 g/dL, Tensi: 110/70 mmHg",
+                        catatan: "Skrining anemia remaja putri normal. Rutin minum TTD sekolah.", 
+                        sudahPemeriksaan: false 
+                    },
+                    { 
+                        id: "A6", 
+                        nama: "Mbah Sastro", 
+                        nik: "3324010101900006", 
+                        kategori: "Lansia", 
+                        usia: "72 Tahun", 
+                        statusWeb: "ON", 
+                        terakhirCatat: "15 Sep 2026",
+                        detailTerakhir: "Tensi: 140/90 mmHg, GDS: 155 mg/dL, Asam Urat: 7.2 mg/dL, Kolesterol: 210 mg/dL",
+                        catatan: "Asam Urat & Kolesterol cenderung tinggi. Hindari jeroan & emping.", 
+                        sudahPemeriksaan: true 
+                    }
+                ]
+            }
+        };
+
+        let usulanDataMock = [
+            { id: 1, tgl: "22 Sep 2026", nama: "Dede Bayi Sujatno", nik: "3324010101900006", kategori: "Balita", jenis: "Tambah Anggota (Kelahiran Baru)", alasan: "Lahir tanggal 10 Sep 2026", konfirmasiKader: false, konfirmasiAdmin: false },
+            { id: 2, tgl: "20 Sep 2026", nama: "Siti Aminah", nik: "3324010101900099", kategori: "Lansia", jenis: "Hapus Anggota (Pindah Wilayah)", alasan: "Pindah tempat tinggal ke Kota Semarang", konfirmasiKader: true, konfirmasiAdmin: false }
+        ];
+
+        let rekamKasusKhususMock = [
+            { id: 101, bulanTahun: "2026-09", tgl: "15 Sep 2026", posyandu: "Posyandu 1", nama: "Mbah Sastro", nik: "3324010101900006", kategori: "Lansia", kasusKey: "asam_urat_tinggi,kolesterol_tinggi", kasus: "Asam Urat Tinggi (7.2) & Kolesterol (210 mg/dL)", statusWeb: "ON" },
+            { id: 102, bulanTahun: "2026-09", tgl: "12 Sep 2026", posyandu: "Posyandu 2", nama: "Adik Farhan", nik: "3324010101900010", kategori: "Balita", kasusKey: "status_2t_o_b", kasus: "Status 2T (Tidak Naik 2 Bulan) & BB/U Kurang", statusWeb: "ON" },
+            { id: 103, bulanTahun: "2026-09", tgl: "18 Sep 2026", posyandu: "Posyandu 1", nama: "Siti Ratnah", nik: "3324010101900002", kategori: "Ibu Hamil", kasusKey: "hb_rendah", kasus: "Anemia Ringan (Hb 10.5 g/dL), Perlu TTD Tambahan", statusWeb: "ON" },
+            { id: 104, bulanTahun: "2026-09", tgl: "19 Sep 2026", posyandu: "Posyandu 1", nama: "Sri Wahyuni", nik: "3324010101900003", kategori: "Ibu Menyusui", kasusKey: "status_2t_o_b", kasus: "Konseling ASI Eksklusif & Pemantauan LILA", statusWeb: "ON" },
+            { id: 105, bulanTahun: "2026-09", tgl: "15 Sep 2026", posyandu: "Posyandu 1", nama: "Bp. Sujatno", nik: "3324010101900001", kategori: "Usia Produktif", kasusKey: "tensi_tinggi", kasus: "Hipertensi Derajat 1 (135/85 mmHg)", statusWeb: "ON" },
+            { id: 106, bulanTahun: "2026-09", tgl: "14 Sep 2026", posyandu: "Posyandu 2", nama: "Bp. Bambang Sutrisno", nik: "3324010101900002", kategori: "Usia Produktif", kasusKey: "gula_tinggi", kasus: "Gula Darah Puasa Tinggi (GDS 215 mg/dL)", statusWeb: "ON" },
+            { id: 107, bulanTahun: "2026-09", tgl: "10 Sep 2026", posyandu: "Posyandu 3", nama: "Dik Kenzo", nik: "3324010101900015", kategori: "Balita", kasusKey: "stunting", kasus: "Terindikasi Stunting (TB/U < -2 SD)", statusWeb: "ON" },
+            { id: 108, bulanTahun: "2026-09", tgl: "11 Sep 2026", posyandu: "Posyandu 4", nama: "Ibu Mariyam", nik: "3324010101900020", kategori: "Lansia", kasusKey: "tensi_tinggi", kasus: "Hipertensi Sedang (150/95 mmHg)", statusWeb: "ON" },
+            { id: 109, bulanTahun: "2026-09", tgl: "16 Sep 2026", posyandu: "Posyandu 5", nama: "Mbah Sukirman", nik: "3324010101900022", kategori: "Lansia", kasusKey: "kolesterol_tinggi", kasus: "Kolesterol Tinggi (240 mg/dL)", statusWeb: "ON" },
+            { id: 110, bulanTahun: "2026-09", tgl: "17 Sep 2026", posyandu: "Posyandu 6", nama: "Mbah Kartini", nik: "3324010101900030", kategori: "Lansia", kasusKey: "tensi_tinggi", kasus: "Tensi Tinggi 160/100 mmHg", statusWeb: "ON" }
+        ];
+
+        function maskNik(nik) {
+            if (!nik || nik.length < 8) return "332401******0001";
+            return nik.substring(0, 6) + "******" + nik.substring(nik.length - 4);
+        }
+
+        function getCategoryStyleConfig(category) {
+            switch (category) {
+                case 'Balita':
+                    return {
+                        bgGradient: 'bg-gradient-to-br from-cyan-50/90 via-sky-50/40 to-white',
+                        borderColor: 'border-cyan-300/80 hover:border-cyan-400',
+                        accentBg: 'bg-cyan-200',
+                        badgeBg: 'bg-cyan-100',
+                        badgeText: 'text-cyan-800',
+                        headingText: 'text-cyan-900',
+                        icon: '<i class="fa-solid fa-baby text-cyan-600"></i>',
+                        noteBg: 'bg-cyan-50/80',
+                        noteBorder: 'border-cyan-200',
+                        noteTitle: 'text-cyan-800',
+                        noteText: 'text-cyan-950'
+                    };
+                case 'Remaja':
+                    return {
+                        bgGradient: 'bg-gradient-to-br from-purple-50/90 via-indigo-50/40 to-white',
+                        borderColor: 'border-purple-300/80 hover:border-purple-400',
+                        accentBg: 'bg-purple-200',
+                        badgeBg: 'bg-purple-100',
+                        badgeText: 'text-purple-800',
+                        headingText: 'text-purple-900',
+                        icon: '<i class="fa-solid fa-user-graduate text-purple-600"></i>',
+                        noteBg: 'bg-purple-50/80',
+                        noteBorder: 'border-purple-200',
+                        noteTitle: 'text-purple-800',
+                        noteText: 'text-purple-950'
+                    };
+                case 'Ibu Hamil':
+                    return {
+                        bgGradient: 'bg-gradient-to-br from-pink-50/90 via-rose-50/40 to-white',
+                        borderColor: 'border-pink-300/80 hover:border-pink-400',
+                        accentBg: 'bg-pink-200',
+                        badgeBg: 'bg-pink-100',
+                        badgeText: 'text-pink-800',
+                        headingText: 'text-pink-900',
+                        icon: '<i class="fa-solid fa-person-pregnant text-pink-600"></i>',
+                        noteBg: 'bg-pink-50/80',
+                        noteBorder: 'border-pink-200',
+                        noteTitle: 'text-pink-800',
+                        noteText: 'text-pink-950'
+                    };
+                case 'Ibu Menyusui':
+                    return {
+                        bgGradient: 'bg-gradient-to-br from-orange-50/90 via-amber-50/40 to-white',
+                        borderColor: 'border-orange-300/80 hover:border-orange-400',
+                        accentBg: 'bg-orange-200',
+                        badgeBg: 'bg-orange-100',
+                        badgeText: 'text-orange-800',
+                        headingText: 'text-orange-900',
+                        icon: '<i class="fa-solid fa-person-breastfeeding text-orange-600"></i>',
+                        noteBg: 'bg-orange-50/80',
+                        noteBorder: 'border-orange-200',
+                        noteTitle: 'text-orange-800',
+                        noteText: 'text-orange-950'
+                    };
+                case 'Lansia':
+                    return {
+                        bgGradient: 'bg-gradient-to-br from-amber-50/90 via-yellow-50/40 to-white',
+                        borderColor: 'border-amber-300/80 hover:border-amber-400',
+                        accentBg: 'bg-amber-200',
+                        badgeBg: 'bg-amber-100',
+                        badgeText: 'text-amber-800',
+                        headingText: 'text-amber-900',
+                        icon: '<i class="fa-solid fa-person-cane text-amber-600"></i>',
+                        noteBg: 'bg-amber-50/80',
+                        noteBorder: 'border-amber-200',
+                        noteTitle: 'text-amber-800',
+                        noteText: 'text-amber-950'
+                    };
+                default:
+                    return {
+                        bgGradient: 'bg-gradient-to-br from-emerald-50/90 via-teal-50/40 to-white',
+                        borderColor: 'border-emerald-300/80 hover:border-emerald-400',
+                        accentBg: 'bg-emerald-200',
+                        badgeBg: 'bg-emerald-100',
+                        badgeText: 'text-emerald-800',
+                        headingText: 'text-emerald-900',
+                        icon: '<i class="fa-solid fa-user-check text-emerald-600"></i>',
+                        noteBg: 'bg-emerald-50/80',
+                        noteBorder: 'border-emerald-200',
+                        noteTitle: 'text-emerald-800',
+                        noteText: 'text-emerald-950'
+                    };
+            }
+        }
+
+        function updateKonfirmasiButtonUI() {
+            const btn = document.getElementById('btn-konfirmasi-pemeriksaan');
+            if (!btn) return;
+
+            if (konfirmasiState === 'UNCONFIRMED') {
+                btn.className = "bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 text-xs font-extrabold rounded-xl flex items-center space-x-2 shadow-md hover:scale-105 transition-all duration-200 border border-amber-400/30 cursor-pointer";
+                btn.innerHTML = `<span>Konfirmasi Data ?</span>`;
+            } else if (konfirmasiState === 'CONFIRMED') {
+                btn.className = "bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 text-xs font-extrabold rounded-xl flex items-center space-x-2 shadow-md transition-all duration-200 border border-emerald-400/30 cursor-pointer";
+                btn.innerHTML = `<i class="fa-solid fa-check text-sm text-emerald-100"></i><span>Konfirmasi Berhasil</span>`;
+            } else if (konfirmasiState === 'EDITED') {
+                btn.className = "bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 text-xs font-extrabold rounded-xl flex items-center space-x-2 shadow-md hover:scale-105 transition-all duration-200 border border-orange-400/30 cursor-pointer";
+                btn.innerHTML = `<span>Konfirmasi Edit ?</span>`;
+            }
+        }
+
+        function handleKonfirmasiPemeriksaanClick() {
+            if (konfirmasiState === 'UNCONFIRMED' || konfirmasiState === 'EDITED') {
+                konfirmasiState = 'CONFIRMED';
+                updateAttendanceStatusForCurrentFamily("Pemeriksaan Selesai");
+                updateKonfirmasiButtonUI();
+                renderTabelAbsenHariIni();
+                showToast("Konfirmasi data berhasil disimpan!", "success");
+            } else {
+                showToast("Data pemeriksaan keluarga ini sudah dikonfirmasi.", "info");
+            }
+        }
+
+        function updateAttendanceStatusForCurrentFamily(newStatus) {
+            const family = familyDataMock[currentPemeriksaanBarcode];
+            if (!family) return;
+            const item = todayAttendanceList.find(a => a.barcode === family.kk);
+            if (item) {
+                item.status = newStatus;
+                if (newStatus === "Pemeriksaan Selesai") {
+                    item.statusBadge = "bg-emerald-100 text-emerald-800 border-emerald-300";
+                } else if (newStatus === "Konfirmasi Edit") {
+                    item.statusBadge = "bg-orange-100 text-orange-800 border-orange-300";
+                }
+            }
+        }
+
+        function changeMemberCategory(memberId, newCat) {
+            const fam = familyDataMock[currentPemeriksaanBarcode];
+            if (!fam) return;
+            const member = fam.anggota.find(m => m.id === memberId);
+            if (member) {
+                member.kategori = newCat;
+                if (konfirmasiState === 'CONFIRMED') {
+                    konfirmasiState = 'EDITED';
+                    updateAttendanceStatusForCurrentFamily("Konfirmasi Edit");
+                }
+                updateKonfirmasiButtonUI();
+                renderPemeriksaanCards();
+                renderTabelAbsenHariIni();
+                showToast(`Kategori ${member.nama} diubah menjadi ${newCat}`, "info");
+            }
+        }
+
+        // LOGIN HANDLER
+        function handleKaderLogin(e) {
+            e.preventDefault();
+            const username = document.getElementById('login-username').value;
+            const posyandu = document.getElementById('login-posyandu').value;
+
+            isKaderLoggedIn = true;
+            currentKaderNama = username.split('.')[0] || "Ani Setyowati";
+            currentPosyanduBertugas = posyandu;
+
+            document.getElementById('kader-nama-display').innerText = currentKaderNama;
+            document.getElementById('floating-kader-name').innerText = "Kader " + currentKaderNama;
+            document.getElementById('kader-posyandu-badge').innerText = currentPosyanduBertugas;
+
+            document.getElementById('login-screen').classList.add('hidden');
+            document.getElementById('main-app').classList.remove('hidden');
+
+            initKehadiranChart();
+            renderTabelAbsenHariIni();
+            renderPemeriksaanCards();
+            renderTabelCekSasaran();
+            renderTabelKonfirmasi();
+            updateKonfirmasiButtonUI();
+
+            showToast("Selamat Datang, Kader " + currentKaderNama + "!", "success");
+        }
+
+        function confirmLogout() {
+            document.getElementById('modal-logout-confirm').classList.remove('hidden');
+        }
+
+        function closeLogoutModal() {
+            document.getElementById('modal-logout-confirm').classList.add('hidden');
+        }
+
+        function executeLogout() {
+            closeLogoutModal();
+            isKaderLoggedIn = false;
+            document.getElementById('main-app').classList.add('hidden');
+            document.getElementById('login-screen').classList.remove('hidden');
+            showToast("Sesi Kader Berhasil Keluar", "info");
+        }
+
+        function switchTab(tabId) {
+            const tabs = ['beranda', 'absen', 'pemeriksaan', 'pemeriksaan-khusus', 'cek-sasaran', 'konfirmasi', 'kontak'];
+            tabs.forEach(t => {
+                const content = document.getElementById(`content-${t}`);
+                const tabBtn = document.getElementById(`tab-${t}`);
+
+                if (content) content.classList.add('hidden');
+                if (tabBtn) tabBtn.classList.remove('active');
+            });
+
+            const targetContent = document.getElementById(`content-${tabId}`);
+            const targetTab = document.getElementById(`tab-${tabId}`);
+
+            if (targetContent) targetContent.classList.remove('hidden');
+            if (targetTab) targetTab.classList.add('active');
+
+            if (tabId === 'pemeriksaan') {
+                renderPemeriksaanCards();
+            } else if (tabId === 'cek-sasaran') {
+                renderTabelCekSasaran();
+            } else if (tabId === 'konfirmasi') {
+                renderTabelKonfirmasi();
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function switchAbsenMethod(method) {
+            ['scan', 'upload', 'manual'].forEach(m => {
+                document.getElementById(`method-absen-${m}`).classList.add('hidden');
+                const btn = document.getElementById(`btn-absen-${m}`);
+                btn.className = "py-2 px-1 rounded-lg text-[10px] sm:text-[11px] font-extrabold text-earth-brown hover:bg-soft-green flex items-center justify-center space-x-1 transition-all cursor-pointer";
+            });
+
+            document.getElementById(`method-absen-${method}`).classList.remove('hidden');
+            const activeBtn = document.getElementById(`btn-absen-${method}`);
+            activeBtn.className = "py-2 px-1 rounded-lg text-[10px] sm:text-[11px] font-extrabold bg-deep-green text-white shadow-xs flex items-center justify-center space-x-1 transition-all cursor-pointer";
+        }
+
+        function switchPemeriksaanSearchMethod(method) {
+            ['scan', 'upload', 'manual'].forEach(m => {
+                document.getElementById(`method-pem-search-${m}`).classList.add('hidden');
+                const btn = document.getElementById(`btn-pem-search-${m}`);
+                btn.className = "py-2 px-1 rounded-lg text-[11px] font-extrabold text-earth-brown hover:bg-soft-green flex items-center justify-center space-x-1 transition-all cursor-pointer";
+            });
+
+            document.getElementById(`method-pem-search-${method}`).classList.remove('hidden');
+            const activeBtn = document.getElementById(`btn-pem-search-${method}`);
+            activeBtn.className = "py-2 px-1 rounded-lg text-[11px] font-extrabold bg-deep-green text-white shadow-xs flex items-center justify-center space-x-1 transition-all cursor-pointer";
+        }
+
+        function renderTabelAbsenHariIni() {
+            const tbody = document.getElementById('tbody-absen-today');
+            if (!tbody) return;
+
+            const dateVal = document.getElementById('filter-absen-date')?.value || todayStr;
+            const searchVal = (document.getElementById('search-absen-today')?.value || '').toLowerCase();
+            const statusVal = document.getElementById('filter-absen-status')?.value || 'semua';
+
+            let filtered = todayAttendanceList.filter(item => {
+                const matchDate = (item.tanggal === dateVal);
+                const matchSearch = item.kkName.toLowerCase().includes(searchVal) || 
+                                    item.barcode.includes(searchVal) || 
+                                    item.wilayah.toLowerCase().includes(searchVal);
+                const matchStatus = (statusVal === 'semua') || (item.status === statusVal);
+                return matchDate && matchSearch && matchStatus;
+            });
+
+            document.getElementById('count-absen-today').innerText = `${filtered.length} Keluarga Terdaftar`;
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="6" class="p-6 text-center text-earth-brown italic">
+                            Tidak ada data kehadiran yang sesuai dengan filter pilihan.
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = filtered.map((item, idx) => `
+                <tr class="hover:bg-soft-green/30 transition">
+                    <td class="p-2.5 text-center font-bold text-deep-green">${idx + 1}</td>
+                    <td class="p-2.5 font-bold text-deep-green">${item.tanggal}<br><span class="text-[10px] text-earth-brown font-medium">${item.waktu}</span></td>
+                    <td class="p-2.5">
+                        <div class="font-extrabold text-deep-green">${item.kkName}</div>
+                        <div class="text-[10px] text-olive-green font-mono">${maskNik(item.barcode)}</div>
+                    </td>
+                    <td class="p-2.5 text-[11px] font-medium text-earth-brown">${item.wilayah}</td>
+                    <td class="p-2.5 text-center">
+                        <span class="px-2.5 py-1 rounded-full text-[10px] font-extrabold border ${item.statusBadge}">
+                            ${item.status}
+                        </span>
+                    </td>
+                    <td class="p-2.5 text-center">
+                        <button onclick="bukaPemeriksaanByBarcode('${item.barcode}')" class="px-3 py-1 bg-deep-green hover:bg-[#143216] text-white rounded-lg text-[10px] font-extrabold shadow-xs transition flex items-center justify-center space-x-1 mx-auto cursor-pointer">
+                            <i class="fa-solid fa-stethoscope text-sun-yellow"></i>
+                            <span>Input Pemeriksaan</span>
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function filterTabelAbsenHariIni() {
+            renderTabelAbsenHariIni();
+        }
+
+        function prosesSimulasiAbsen(barcode) {
+            const timeNow = new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }) + " WIB";
+            const existing = todayAttendanceList.find(a => a.barcode === barcode);
+            
+            if (!existing) {
+                todayAttendanceList.unshift({
+                    no: todayAttendanceList.length + 1,
+                    tanggal: todayStr,
+                    waktu: timeNow,
+                    kkName: "Bp. Sujatno",
+                    barcode: barcode,
+                    wilayah: "Gonoharjo RT 02 / RW 01",
+                    status: "Hadir",
+                    statusBadge: "bg-amber-100 text-amber-800 border-amber-300",
+                    isEdited: false
+                });
+            }
+            
+            renderTabelAbsenHariIni();
+            showToast("Absen Kehadiran Bp. Sujatno Berhasil Dicatat!", "success");
+        }
+
+        function prosesManualAbsenSubmit() {
+            const code = document.getElementById('input-manual-barcode').value.trim();
+            if (!code) {
+                showToast("Ketikkan nomor barcode / KK terlebih dahulu!", "warning");
+                return;
+            }
+            prosesSimulasiAbsen(code);
+            document.getElementById('input-manual-barcode').value = "";
+        }
+
+        function bukaPemeriksaanByBarcode(barcode) {
+            currentPemeriksaanBarcode = barcode;
+            cariPesertaPemeriksaan(barcode);
+            switchTab('pemeriksaan');
+        }
+
+        function quickFillPemeriksaanSearch(code) {
+            document.getElementById('input-pemeriksaan-barcode').value = code;
+            cariPesertaPemeriksaan(code);
+        }
+
+        function prosesSimulasiScanPemeriksaan() {
+            cariPesertaPemeriksaan("3324010101900001");
+        }
+
+        function prosesUploadBarcodePemeriksaan(input) {
+            if (input.files && input.files[0]) {
+                cariPesertaPemeriksaan("3324010101900001");
+            }
+        }
+
+        function cariPesertaPemeriksaan(barcodeVal) {
+            const val = barcodeVal || document.getElementById('input-pemeriksaan-barcode').value.trim();
+            if (!val) {
+                showToast("Masukkan No. Barcode / No. KK / NIK sasaran!", "warning");
+                return;
+            }
+            if (familyDataMock[val]) {
+                currentPemeriksaanBarcode = val;
+                
+                const item = todayAttendanceList.find(a => a.barcode === val);
+                if (item) {
+                    if (item.status === "Pemeriksaan Selesai") {
+                        konfirmasiState = 'CONFIRMED';
+                    } else if (item.status === "Konfirmasi Edit") {
+                        konfirmasiState = 'EDITED';
+                    } else {
+                        konfirmasiState = 'UNCONFIRMED';
+                    }
+                } else {
+                    konfirmasiState = 'UNCONFIRMED';
+                }
+
+                const fam = familyDataMock[val];
+                document.getElementById('pemeriksaan-kk-info').innerText = `Keluarga Bp. ${fam.kepalaKeluarga} (${fam.dusun})`;
+                renderPemeriksaanCards();
+                updateKonfirmasiButtonUI();
+                showToast(`Data keluarga Bp. ${fam.kepalaKeluarga} berhasil dimuat!`, "success");
+            } else {
+                showToast("Data sasaran tidak ditemukan / belum terdaftar.", "error");
+            }
+        }
+
+        function renderPemeriksaanCards() {
+            const grid = document.getElementById('grid-cards-pemeriksaan');
+            if (!grid) return;
+
+            const family = familyDataMock[currentPemeriksaanBarcode];
+            if (!family) {
+                grid.innerHTML = `<p class="col-span-full text-center text-xs text-earth-brown py-8">Silakan cari sasaran terlebih dahulu.</p>`;
+                return;
+            }
+
+            grid.innerHTML = family.anggota.map(m => {
+                const cfg = getCategoryStyleConfig(m.kategori);
+                return `
+                    <div class="white-card p-4 space-y-3 ${cfg.bgGradient} border-2 ${cfg.borderColor} flex flex-col justify-between shadow-sm">
+                        <div class="space-y-2">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-1.5">
+                                    <span class="w-7 h-7 rounded-lg ${cfg.accentBg} flex items-center justify-center text-xs">
+                                        ${cfg.icon}
+                                    </span>
+                                    <span class="text-xs font-black ${cfg.headingText}">${m.nama}</span>
+                                </div>
+                                <span class="text-[10px] font-bold px-2 py-0.5 rounded-full ${m.sudahPemeriksaan ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'} border">
+                                    ${m.sudahPemeriksaan ? '✔️ Selesai' : '❌ Belum'}
+                                </span>
+                            </div>
+
+                            <div class="space-y-1">
+                                <label class="block text-[10px] font-extrabold text-earth-brown">Kategori / Peran Sasaran:</label>
+                                <select onchange="changeMemberCategory('${m.id}', this.value)" class="w-full p-1.5 bg-white/90 rounded-lg border border-olive-green/20 text-[11px] font-bold text-deep-green focus:outline-none cursor-pointer">
+                                    <option value="Balita" ${m.kategori === 'Balita' ? 'selected' : ''}>Balita (0-5 Thn)</option>
+                                    <option value="Remaja" ${m.kategori === 'Remaja' ? 'selected' : ''}>Remaja (10-18 Thn)</option>
+                                    <option value="Usia Produktif" ${m.kategori === 'Usia Produktif' ? 'selected' : ''}>Usia Produktif (Dewasa)</option>
+                                    <option value="Ibu Hamil" ${m.kategori === 'Ibu Hamil' ? 'selected' : ''}>Ibu Hamil</option>
+                                    <option value="Ibu Menyusui" ${m.kategori === 'Ibu Menyusui' ? 'selected' : ''}>Ibu Menyusui</option>
+                                    <option value="Lansia" ${m.kategori === 'Lansia' ? 'selected' : ''}>Lansia (>60 Thn)</option>
+                                </select>
+                            </div>
+
+                            <div class="text-[11px] text-earth-brown space-y-0.5 font-medium border-t border-olive-green/10 pt-2">
+                                <p><strong>NIK:</strong> <span class="font-mono text-deep-green">${maskNik(m.nik)}</span></p>
+                                <p><strong>Usia:</strong> ${m.usia}</p>
+                            </div>
+
+                            <div class="p-2.5 rounded-xl ${cfg.noteBg} border ${cfg.noteBorder} space-y-1 text-[10px]">
+                                <p class="font-bold ${cfg.noteTitle} flex items-center justify-between">
+                                    <span>Hasil Pemeriksaan:</span>
+                                    <span class="text-[9px] font-normal opacity-80">${m.terakhirCatat}</span>
+                                </p>
+                                <p class="font-semibold ${cfg.noteText}">${m.detailTerakhir}</p>
+                                <p class="italic text-earth-brown border-t border-earth-brown/10 pt-1 mt-1">${m.catatan}</p>
+                            </div>
+                        </div>
+
+                        <button onclick="openModalPemeriksaan('${m.id}')" class="w-full btn-olive py-2 text-xs font-bold flex items-center justify-center space-x-1 shadow-xs mt-2 cursor-pointer">
+                            <i class="fa-solid fa-pen-to-square text-sun-yellow"></i>
+                            <span>Input Data Pemeriksaan</span>
+                        </button>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function openModalPemeriksaan(memberId) {
+            const family = familyDataMock[currentPemeriksaanBarcode];
+            if (!family) return;
+            selectedMemberForExam = family.anggota.find(m => m.id === memberId);
+            if (!selectedMemberForExam) return;
+
+            document.getElementById('form-pemeriksaan-title').innerText = `Input Pemeriksaan: ${selectedMemberForExam.nama}`;
+            document.getElementById('form-pemeriksaan-kategori-badge').innerText = selectedMemberForExam.kategori;
+            document.getElementById('input-catatan-bidan').value = selectedMemberForExam.catatan || "";
+
+            const container = document.getElementById('form-fields-dynamic-container');
+            
+            if (selectedMemberForExam.kategori === 'Balita') {
+                container.innerHTML = `
+                    <div class="grid grid-cols-2 gap-2 text-xs">
+                        <div>
+                            <label class="block mb-1 font-bold text-deep-green">Berat Badan (kg):</label>
+                            <input type="number" step="0.1" value="11.8" class="w-full p-2 bg-white rounded-xl border border-olive-green/20 text-deep-green" required>
+                        </div>
+                        <div>
+                            <label class="block mb-1 font-bold text-deep-green">Tinggi/Panjang (cm):</label>
+                            <input type="number" step="0.1" value="84.5" class="w-full p-2 bg-white rounded-xl border border-olive-green/20 text-deep-green" required>
+                        </div>
+                        <div>
+                            <label class="block mb-1 font-bold text-deep-green">Lingkar Kepala (cm):</label>
+                            <input type="number" step="0.1" value="47.2" class="w-full p-2 bg-white rounded-xl border border-olive-green/20 text-deep-green">
+                        </div>
+                        <div>
+                            <label class="block mb-1 font-bold text-deep-green">Status BB/U:</label>
+                            <select class="w-full p-2 bg-white rounded-xl border border-olive-green/20 text-deep-green cursor-pointer">
+                                <option value="N">N (Naik)</option>
+                                <option value="T">T (Tidak Naik)</option>
+                                <option value="2T">2T (2x Tidak Naik)</option>
+                                <option value="O">O (Tidak Ditimbang)</option>
+                                <option value="B">B (Baru Pertama Ditimbang)</option>
+                            </select>
+                        </div>
+                    </div>
+                `;
+            } else if (selectedMemberForExam.kategori === 'Ibu Hamil') {
+                container.innerHTML = `
+                    <div class="grid grid-cols-2 gap-2 text-xs">
+                        <div>
+                            <label class="block mb-1 font-bold text-deep-green">Usia Hamil (Minggu):</label>
+                            <input type="number" value="24" class="w-full p-2 bg-white rounded-xl border border-olive-green/20 text-deep-green" required>
+                        </div>
+                        <div>
+                            <label class="block mb-1 font-bold text-deep-green">Tekanan Darah (mmHg):</label>
+                            <input type="text" value="115/75" class="w-full p-2 bg-white rounded-xl border border-olive-green/20 text-deep-green" required>
+                        </div>
+                        <div>
+                            <label class="block mb-1 font-bold text-deep-green">Kadar Hb (g/dL):</label>
+                            <input type="number" step="0.1" value="11.5" class="w-full p-2 bg-white rounded-xl border border-olive-green/20 text-deep-green">
+                        </div>
+                        <div>
+                            <label class="block mb-1 font-bold text-deep-green">LILA (cm):</label>
+                            <input type="number" step="0.1" value="25.5" class="w-full p-2 bg-white rounded-xl border border-olive-green/20 text-deep-green">
+                        </div>
+                    </div>
+                `;
+            } else {
+                container.innerHTML = `
+                    <div class="grid grid-cols-2 gap-2 text-xs">
+                        <div>
+                            <label class="block mb-1 font-bold text-deep-green">Tekanan Darah (mmHg):</label>
+                            <input type="text" value="135/85" class="w-full p-2 bg-white rounded-xl border border-olive-green/20 text-deep-green" required>
+                        </div>
+                        <div>
+                            <label class="block mb-1 font-bold text-deep-green">Gula Darah (GDS mg/dL):</label>
+                            <input type="number" value="140" class="w-full p-2 bg-white rounded-xl border border-olive-green/20 text-deep-green">
+                        </div>
+                        <div>
+                            <label class="block mb-1 font-bold text-deep-green">Kolesterol (mg/dL):</label>
+                            <input type="number" value="190" class="w-full p-2 bg-white rounded-xl border border-olive-green/20 text-deep-green">
+                        </div>
+                        <div>
+                            <label class="block mb-1 font-bold text-deep-green">Asam Urat (mg/dL):</label>
+                            <input type="number" step="0.1" value="6.5" class="w-full p-2 bg-white rounded-xl border border-olive-green/20 text-deep-green">
+                        </div>
+                    </div>
+                `;
+            }
+
+            document.getElementById('modal-input-pemeriksaan').classList.remove('hidden');
+        }
+
+        function closeModalPemeriksaan() {
+            document.getElementById('modal-input-pemeriksaan').classList.add('hidden');
+        }
+
+        function savePemeriksaanData(e) {
+            e.preventDefault();
+            if (!selectedMemberForExam) return;
+
+            const catatan = document.getElementById('input-catatan-bidan').value;
+            selectedMemberForExam.sudahPemeriksaan = true;
+            selectedMemberForExam.catatan = catatan;
+            selectedMemberForExam.terakhirCatat = "Hari Ini (Posyandu)";
+
+            if (konfirmasiState === 'CONFIRMED') {
+                konfirmasiState = 'EDITED';
+                updateAttendanceStatusForCurrentFamily("Konfirmasi Edit");
+            }
+
+            updateKonfirmasiButtonUI();
+            closeModalPemeriksaan();
+            renderPemeriksaanCards();
+            renderTabelAbsenHariIni();
+            showToast(`Data pemeriksaan ${selectedMemberForExam.nama} berhasil disimpan!`, "success");
+        }
+
+        // HANDLER PEMERIKSAAN KHUSUS (TAB BARU)
+        function cariPesertaPemeriksaanKhusus() {
+            showToast("Pencarian sasaran sesi khusus berhasil dimuat.", "info");
+        }
+
+        function openModalPemeriksaanKhusus(memberId) {
+            const agendaNama = document.getElementById('agenda-nama').value;
+            document.getElementById('modal-agenda-summary').innerText = agendaNama;
+            document.getElementById('modal-input-pemeriksaan-khusus').classList.remove('hidden');
+        }
+
+        function closeModalPemeriksaanKhusus() {
+            document.getElementById('modal-input-pemeriksaan-khusus').classList.add('hidden');
+        }
+
+        function savePemeriksaanKhususData(e) {
+            e.preventDefault();
+            const agendaNama = document.getElementById('agenda-nama').value;
+            const agendaTanggal = document.getElementById('agenda-tanggal').value;
+            const agendaTanda = document.getElementById('agenda-tanda').value;
+            
+            closeModalPemeriksaanKhusus();
+            showToast(`Laporan sesi khusus "${agendaNama}" (${agendaTanggal}) [${agendaTanda}] berhasil disimpan!`, "success");
+        }
+
+        function renderTabelCekSasaran() {
+            const tbody = document.getElementById('tbody-cek-sasaran');
+            if (!tbody) return;
+
+            const kasusVal = document.getElementById('filter-kasus')?.value || 'semua';
+            const posyanduVal = document.getElementById('filter-posyandu')?.value || 'semua';
+            const monthVal = document.getElementById('filter-bulan-tahun')?.value || '';
+            const keywordVal = (document.getElementById('filter-keyword')?.value || '').toLowerCase();
+
+            let filtered = rekamKasusKhususMock.filter(item => {
+                const matchKasus = (kasusVal === 'semua') || item.kasusKey.includes(kasusVal);
+                const matchPosyandu = (posyanduVal === 'semua') || item.posyandu.includes(posyanduVal);
+                const matchMonth = (!monthVal) || (item.bulanTahun === monthVal);
+                const matchKeyword = item.nama.toLowerCase().includes(keywordVal) || 
+                                     item.nik.includes(keywordVal) || 
+                                     item.kasus.toLowerCase().includes(keywordVal);
+                return matchKasus && matchPosyandu && matchMonth && matchKeyword;
+            });
+
+            document.getElementById('filtered-count-info').innerHTML = `<i class="fa-solid fa-list text-olive-green mr-1.5"></i> Menampilkan ${filtered.length} data sasaran:`;
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="7" class="p-6 text-center text-earth-brown italic">
+                            Tidak ada rekam data sasaran yang cocok dengan kriteria filter.
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = filtered.map((item, idx) => `
+                <tr class="hover:bg-soft-green/30 transition">
+                    <td class="p-3 text-center font-bold text-deep-green">${idx + 1}</td>
+                    <td class="p-3">
+                        <div class="font-extrabold text-deep-green">${item.tgl}</div>
+                        <div class="text-[10px] text-olive-green font-bold">${item.posyandu}</div>
+                    </td>
+                    <td class="p-3">
+                        <div class="font-extrabold text-deep-green">${item.nama}</div>
+                        <div class="text-[10px] text-earth-brown font-mono">${maskNik(item.nik)}</div>
+                    </td>
+                    <td class="p-3">
+                        <span class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-soft-green text-deep-green border border-olive-green/30">
+                            ${item.kategori}
+                        </span>
+                    </td>
+                    <td class="p-3 text-xs font-semibold text-earth-brown">${item.kasus}</td>
+                    <td class="p-3 text-center">
+                        <button onclick="toggleStatusWebSasaran(${item.id})" class="px-3 py-1 rounded-full text-[10px] font-black ${item.statusWeb === 'ON' ? 'bg-emerald-100 text-emerald-800 border-emerald-300' : 'bg-red-100 text-red-800 border-red-300'} border transition cursor-pointer">
+                            ${item.statusWeb === 'ON' ? '🟢 ON (Tampil)' : '🔴 OFF (Sembunyi)'}
+                        </button>
+                    </td>
+                    <td class="p-3 text-center">
+                        <button onclick="openModalEditSasaran(${item.id})" class="p-1.5 rounded-lg bg-soft-yellow text-earth-brown hover:bg-sun-yellow hover:text-white transition cursor-pointer" title="Edit Sasaran">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function applyFilterSasaran() {
+            renderTabelCekSasaran();
+        }
+
+        function resetFilterSasaran() {
+            document.getElementById('filter-kasus').value = 'semua';
+            document.getElementById('filter-posyandu').value = 'semua';
+            document.getElementById('filter-bulan-tahun').value = '2026-09';
+            document.getElementById('filter-keyword').value = '';
+            renderTabelCekSasaran();
+            showToast("Filter data sasaran telah di-reset", "info");
+        }
+
+        function toggleStatusWebSasaran(id) {
+            const item = rekamKasusKhususMock.find(x => x.id === id);
+            if (item) {
+                item.statusWeb = (item.statusWeb === 'ON') ? 'OFF' : 'ON';
+                renderTabelCekSasaran();
+                showToast(`Status tampilan ${item.nama} diubah ke ${item.statusWeb}`, "info");
+            }
+        }
+
+        function openModalBarcodeSasaran() {
+            document.getElementById('modal-barcode-sasaran').classList.remove('hidden');
+        }
+
+        function closeModalBarcodeSasaran() {
+            document.getElementById('modal-barcode-sasaran').classList.add('hidden');
+        }
+
+        function switchPopupBarcodeTab(method) {
+            ['scan', 'upload', 'manual'].forEach(m => {
+                document.getElementById(`popup-barcode-${m}`).classList.add('hidden');
+                document.getElementById(`btn-popup-${m}`).className = "py-2 px-1 rounded-lg text-[11px] font-extrabold text-earth-brown hover:bg-soft-green flex items-center justify-center space-x-1 transition-all cursor-pointer";
+            });
+            document.getElementById(`popup-barcode-${method}`).classList.remove('hidden');
+            document.getElementById(`btn-popup-${method}`).className = "py-2 px-1 rounded-lg text-[11px] font-extrabold bg-deep-green text-white shadow-xs flex items-center justify-center space-x-1 transition-all cursor-pointer";
+        }
+
+        function applyBarcodeFromPopup(code) {
+            document.getElementById('filter-keyword').value = code;
+            closeModalBarcodeSasaran();
+            renderTabelCekSasaran();
+            showToast(`Filter barcode ${code} berhasil diterapkan!`, "success");
+        }
+
+        function submitManualPopupBarcode() {
+            const val = document.getElementById('input-popup-barcode-val').value.trim();
+            if (val) {
+                applyBarcodeFromPopup(val);
+            }
+        }
+
+        function openModalEditSasaran(id) {
+            const item = rekamKasusKhususMock.find(x => x.id === id);
+            if (!item) return;
+            selectedIndexEdit = id;
+
+            document.getElementById('edit-nama-sasaran').value = item.nama;
+            document.getElementById('edit-kategori-sasaran').value = item.kategori;
+            document.getElementById('edit-status-web-sasaran').value = item.statusWeb;
+            document.getElementById('edit-catatan-sasaran').value = item.kasus;
+
+            document.getElementById('modal-edit-sasaran').classList.remove('hidden');
+        }
+
+        function closeModalEditSasaran() {
+            document.getElementById('modal-edit-sasaran').classList.add('hidden');
+        }
+
+        function saveEditSasaran(e) {
+            e.preventDefault();
+            const item = rekamKasusKhususMock.find(x => x.id === selectedIndexEdit);
+            if (item) {
+                item.nama = document.getElementById('edit-nama-sasaran').value;
+                item.kategori = document.getElementById('edit-kategori-sasaran').value;
+                item.statusWeb = document.getElementById('edit-status-web-sasaran').value;
+                item.kasus = document.getElementById('edit-catatan-sasaran').value;
+
+                closeModalEditSasaran();
+                renderTabelCekSasaran();
+                showToast("Perubahan data sasaran berhasil disimpan!", "success");
+            }
+        }
+
+        function renderTabelKonfirmasi() {
+            const tbody = document.getElementById('tbody-konfirmasi-usulan');
+            if (!tbody) return;
+
+            tbody.innerHTML = usulanDataMock.map((u, idx) => `
+                <tr class="hover:bg-soft-yellow/20 transition">
+                    <td class="p-3 text-[11px] font-extrabold text-deep-green">${u.tgl}</td>
+                    <td class="p-3">
+                        <div class="font-extrabold text-deep-green">${u.nama}</div>
+                        <div class="text-[10px] text-earth-brown font-mono">${maskNik(u.nik)}</div>
+                    </td>
+                    <td class="p-3">
+                        <span class="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-soft-green text-deep-green border border-olive-green/30">
+                            ${u.kategori}
+                        </span>
+                    </td>
+                    <td class="p-3 text-xs">
+                        <div class="font-bold text-earth-brown">${u.jenis}</div>
+                        <div class="text-[11px] text-earth-brown/80 italic">${u.alasan}</div>
+                    </td>
+                    <td class="p-3 text-center">
+                        <span class="px-2.5 py-1 rounded-full text-[10px] font-black ${u.konfirmasiKader ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'} border">
+                            ${u.konfirmasiKader ? '✔️ Disetujui Kader' : '⏳ Menunggu'}
+                        </span>
+                    </td>
+                    <td class="p-3 text-center">
+                        <span class="px-2.5 py-1 rounded-full text-[10px] font-black ${u.konfirmasiAdmin ? 'bg-emerald-100 text-emerald-800' : 'bg-stone-200 text-stone-700'} border">
+                            ${u.konfirmasiAdmin ? '✔️ Disetujui Admin' : '⏳ Belum Admin'}
+                        </span>
+                    </td>
+                    <td class="p-3 text-center">
+                        <button onclick="toggleKonfirmasiKader(${u.id})" class="px-3 py-1 rounded-xl text-[10px] font-black ${u.konfirmasiKader ? 'bg-stone-200 text-deep-green' : 'btn-coral'} shadow-xs transition cursor-pointer">
+                            ${u.konfirmasiKader ? 'Batal Centang' : 'Setujui (Centang)'}
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function toggleKonfirmasiKader(id) {
+            const item = usulanDataMock.find(x => x.id === id);
+            if (item) {
+                item.konfirmasiKader = !item.konfirmasiKader;
+                renderTabelKonfirmasi();
+                showToast(item.konfirmasiKader ? "Konfirmasi Kader berhasil disetujui!" : "Konfirmasi Kader dibatalkan", "info");
+            }
+        }
+
+        // CHATBOT TANYA ASTI DENGAN PROTEKSI ANTI-SPAM & LIMIT KUOTA
+        function handleChatSubmit(e) {
+            e.preventDefault();
+
+            const hpVal = document.getElementById('hp-asti-check').value;
+            if (hpVal !== '') return false;
+
+            const input = document.getElementById('chat-input');
+            const msg = input.value.trim();
+            if (!msg) return;
+
+            if (astiChatCount >= maxAstiQuota) {
+                triggerAstiQuotaLimit();
+                return;
+            }
+
+            const now = Date.now();
+            if (now - lastChatTimestamp < minChatIntervalMs) {
+                showToast("Anti-Spam: Ketik dengan tenang (tunggu 3 detik antar pertanyaan).", "warning");
+                return;
+            }
+
+            lastChatTimestamp = now;
+            astiChatCount++;
+            updateAstiCounter();
+
+            appendChatMessage('user', msg);
+            input.value = '';
+
+            setTimeout(() => {
+                let botReply = "Terima kasih atas pertanyaannya! Tim Bidan Desa & Sistem GO-Positif akan terus membantu tugas Kader sehari-hari.";
+                const query = msg.toLowerCase();
+                if (query.includes('stunting')) {
+                    botReply = "Kriteria Stunting pada Balita ditentukan jika Panjang/Tinggi Badan menurut Usia (PB/U atau TB/U) berada di bawah -2 Standard Deviation (Z-Score < -2 SD).";
+                } else if (query.includes('hipertensi')) {
+                    botReply = "Hipertensi Dewasa/Usia Produktif dikategorikan jika Tekanan Darah Sistolik >= 140 mmHg atau Diastolik >= 90 mmHg.";
+                } else if (query.includes('konfirmasi')) {
+                    botReply = "Verifikasi usulan menggunakan sistem Dual Confirmation: Membutuhkan persetujuan Centang Kader di Web Kader DAN Centang Admin di Web Admin.";
+                }
+                appendChatMessage('bot', botReply);
+
+                if (astiChatCount >= maxAstiQuota) {
+                    setTimeout(() => triggerAstiQuotaLimit(), 1000);
+                }
+            }, 600);
+        }
+
+        function sendQuickChat(text) {
+            if (astiChatCount >= maxAstiQuota) {
+                triggerAstiQuotaLimit();
+                return;
+            }
+            document.getElementById('chat-input').value = text;
+            handleChatSubmit(new Event('submit'));
+        }
+
+        function updateAstiCounter() {
+            const sisa = maxAstiQuota - astiChatCount;
+            const counterEl = document.getElementById('asti-remaining-count');
+            if (counterEl) counterEl.innerText = sisa;
+
+            if (sisa <= 2) {
+                const badge = document.getElementById('asti-status-badge');
+                if (badge) {
+                    badge.classList.remove('bg-soft-green', 'text-deep-green');
+                    badge.classList.add('bg-amber-100', 'text-amber-800');
+                }
+            }
+        }
+
+        function triggerAstiQuotaLimit() {
+            appendChatMessage('bot', '🔒 <strong>Batas Pertanyaan Sesi Digital Tercapai</strong><br>Untuk menjaga stabilitas sistem dan efisiensi kuota layanan AI, sesi tanya jawab otomatis dibatasi (5/5). Silakan hubungi Bidan Desa Gonoharjo secara langsung.');
+            
+            const form = document.getElementById('asti-chat-form');
+            const quickBtns = document.getElementById('asti-quick-buttons');
+            const fallbackWA = document.getElementById('asti-fallback-wa');
+
+            if(form) form.classList.add('hidden');
+            if(quickBtns) quickBtns.classList.add('hidden');
+            if(fallbackWA) fallbackWA.classList.remove('hidden');
+
+            const badge = document.getElementById('asti-status-badge');
+            if(badge) {
+                badge.innerText = "Kuota Sesi Selesai";
+                badge.className = "text-[10px] bg-red-100 text-red-800 px-2.5 py-1 rounded-full font-bold border border-red-300";
+            }
+        }
+
+        function appendChatMessage(sender, text) {
+            const box = document.getElementById('chat-messages');
+            if (!box) return;
+
+            const div = document.createElement('div');
+            if (sender === 'user') {
+                div.className = "flex items-start space-x-2 justify-end";
+                div.innerHTML = `
+                    <div class="bg-deep-green text-white p-3 rounded-2xl rounded-tr-none shadow-xs max-w-[85%] leading-relaxed font-bold">
+                        ${text}
+                    </div>
+                `;
+            } else {
+                div.className = "flex items-start space-x-2";
+                div.innerHTML = `
+                    <div class="w-8 h-8 rounded-full bg-white p-0.5 border border-olive-green/20 overflow-hidden flex-shrink-0 shadow-xs">
+                        <img src="https://lh3.googleusercontent.com/d/1AW-1Z0iV8ygSM47sk8KSDu_nD2lKFHDi" alt="ASTI" class="w-full h-full object-cover rounded-full">
+                    </div>
+                    <div class="bg-white p-3 rounded-2xl rounded-tl-none shadow-xs text-deep-green max-w-[85%] leading-relaxed border border-olive-green/10 font-medium">
+                        ${text}
+                    </div>
+                `;
+            }
+            box.appendChild(div);
+            box.scrollTop = box.scrollHeight;
+        }
+
+        function toggleSwitcherModal() {
+            const modal = document.getElementById('modal-switcher');
+            if(modal) modal.classList.toggle('hidden');
+        }
+
+        function simulasiPortalNav(portalName) {
+            toggleSwitcherModal();
+            showToast(`Mengalihkan ke ${portalName}...`, "info");
+        }
+
+        function initKehadiranChart() {
+            const ctx = document.getElementById('kehadiranKaderChart')?.getContext('2d');
+            if (!ctx) return;
+
+            if (meledakChartInstance) meledakChartInstance.destroy();
+
+            meledakChartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Posyandu 1', 'Posyandu 2', 'Posyandu 3', 'Posyandu 4', 'Posyandu 5', 'Posyandu 6'],
+                    datasets: [
+                        {
+                            label: 'Kehadiran Sasaran (%)',
+                            data: [92, 88, 95, 84, 90, 87],
+                            borderColor: '#1E4620',
+                            backgroundColor: 'rgba(124, 146, 70, 0.20)',
+                            fill: true,
+                            tension: 0.35,
+                            pointBackgroundColor: '#7C9246',
+                            pointBorderColor: '#ffffff',
+                            pointBorderWidth: 2,
+                            pointRadius: 6,
+                            pointHoverRadius: 8
+                        },
+                        {
+                            label: 'Target Capaian Desa (%)',
+                            data: [85, 85, 85, 85, 85, 85],
+                            borderColor: '#F3A94B',
+                            borderDash: [5, 5],
+                            fill: false,
+                            pointRadius: 0
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'top' }
+                    },
+                    scales: {
+                        y: { min: 60, max: 100 }
+                    }
+                }
+            });
+        }
+
+        function updateKehadiranChart() {
+            initKehadiranChart();
+            showToast("Grafik tren kehadiran diperbarui!", "info");
+        }
+
+        function showToast(text, type = "info") {
+            const toast = document.getElementById('toast-notification');
+            const icon = document.getElementById('toast-icon');
+            const toastText = document.getElementById('toast-text');
+
+            if (!toast || !toastText) return;
+
+            toastText.innerText = text;
+
+            if (type === "success") {
+                icon.className = "w-8 h-8 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold flex-shrink-0";
+                icon.innerHTML = '<i class="fa-solid fa-check"></i>';
+            } else if (type === "warning") {
+                icon.className = "w-8 h-8 rounded-full bg-amber-100 text-amber-800 flex items-center justify-center font-bold flex-shrink-0";
+                icon.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i>';
+            } else if (type === "error") {
+                icon.className = "w-8 h-8 rounded-full bg-red-100 text-red-800 flex items-center justify-center font-bold flex-shrink-0";
+                icon.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+            } else {
+                icon.className = "w-8 h-8 rounded-full bg-soft-green text-deep-green flex items-center justify-center font-bold flex-shrink-0";
+                icon.innerHTML = '<i class="fa-solid fa-info"></i>';
+            }
+
+            toast.classList.remove('translate-x-full');
+
+            setTimeout(() => {
+                toast.classList.add('translate-x-full');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
