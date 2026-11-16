@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Kader Posyandu - GO-Positif Gonoharjo</title>
 
     <!-- Favicon Logo Tab Browser -->
@@ -224,8 +224,69 @@
             width: 0;
             z-index: -1;
         }
+
+        /* ===== LAPISAN POLES V7: tampilan, efek & responsif HP/tablet/laptop/desktop ===== */
+        html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+        body {
+            background-image: radial-gradient(900px 420px at 8% -5%, rgba(124,146,70,.14), transparent 60%),
+                              radial-gradient(700px 380px at 100% 0%, rgba(243,169,75,.13), transparent 55%);
+            background-attachment: fixed;
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+        header.sticky { padding-top: max(10px, env(safe-area-inset-top)); box-shadow: 0 1px 0 rgba(124,146,70,.18), 0 14px 28px -20px rgba(30,70,32,.45); }
+        .white-card { border-radius: 20px; }
+        @media (hover: hover) { .white-card:hover { transform: translateY(-2px); } }
+        .btn-primary, .btn-olive, .btn-brown, .btn-coral { box-shadow: 0 1px 0 rgba(255,255,255,.18) inset, 0 6px 14px -8px rgba(30,70,32,.55); }
+        .btn-primary { background-image: linear-gradient(180deg, #276029, #1E4620); }
+        .btn-olive { background-image: linear-gradient(180deg, #8AA352, #7C9246); }
+        button:active:not(:disabled) { transform: scale(.97); }
+        button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 3px solid rgba(243,169,75,.6); outline-offset: 2px; }
+        input, select, textarea { transition: border-color .15s, box-shadow .15s; }
+        input:focus, select:focus, textarea:focus { border-color: var(--olive-green) !important; box-shadow: 0 0 0 4px rgba(124,146,70,.16); }
+        .nav-tab:hover:not(.active) { background: #EBF2DF; }
+        .nav-tab.active { background-image: linear-gradient(135deg, #2C6B2F, #1E4620); }
+        main > section:not(.hidden) { animation: secIn .35s cubic-bezier(.2,.7,.2,1); }
+        @keyframes secIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+        div[id^="modal-"].fixed:not(.hidden) > div { animation: modalIn .28s cubic-bezier(.2,.8,.2,1); }
+        @keyframes modalIn { from { opacity: 0; transform: translateY(14px) scale(.98); } to { opacity: 1; transform: none; } }
+        .overflow-x-auto { -webkit-overflow-scrolling: touch; }
+        table { width: 100%; }
+        tbody tr:nth-child(even) { background: rgba(235,242,223,.32); }
+        tbody tr { transition: background .15s; }
+        #grid-cards-pemeriksaan .white-card { border-radius: 22px; }
+
+        /* HP & tablet: header dua baris agar menu tidak terpotong */
+        @media (max-width: 1023px) {
+            header.sticky > div { flex-wrap: wrap; row-gap: 8px; }
+            header.sticky nav { order: 3; flex: 1 1 100%; max-width: 100% !important; }
+        }
+        @media (max-width: 640px) {
+            input, select, textarea { font-size: 16px !important; }
+            main { padding-left: 14px; padding-right: 14px; }
+            div[id^="modal-"].fixed { align-items: flex-end !important; padding: 0 !important; }
+            div[id^="modal-"].fixed > .white-card { border-radius: 26px 26px 0 0; max-height: 92dvh; max-width: 100%; padding-bottom: calc(1.5rem + env(safe-area-inset-bottom)); }
+        }
+        @media (pointer: coarse) { button, select, input:not([type="checkbox"]):not([type="radio"]) { min-height: 44px; } }
+        @media (min-width: 1536px) { .max-w-7xl { max-width: 1440px; } }
+        @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
+        /* ===== V8: tab 3D, formulir item, perapian responsif ===== */
+        header nav { perspective: 700px; padding: 8px 8px 11px !important; background: linear-gradient(180deg, #E4EBD6, #F6F9EF) !important; box-shadow: inset 0 3px 6px rgba(30,70,32,.18), 0 1px 0 #fff !important; scroll-snap-type: x proximity; }
+        header nav .nav-tab { scroll-snap-align: center; padding: 8px 14px; border: 1px solid rgba(124,146,70,.28); background: linear-gradient(180deg, #fff, #EDF2E1); color: var(--earth-brown); transform-style: preserve-3d; transform: translateY(0) rotateX(10deg); box-shadow: 0 4px 0 #C4D1A8, 0 8px 12px -6px rgba(30,70,32,.4), inset 0 1px 0 #fff; transition: transform .18s, box-shadow .18s, background .18s; }
+        header nav .nav-tab:hover:not(.active) { transform: translateY(-3px) rotateX(16deg); box-shadow: 0 6px 0 #C4D1A8, 0 12px 16px -8px rgba(30,70,32,.45), inset 0 1px 0 #fff; }
+        header nav .nav-tab:active { transform: translateY(3px) rotateX(0); box-shadow: 0 1px 0 #C4D1A8, inset 0 2px 4px rgba(30,70,32,.2); }
+        header nav .nav-tab.active { color: #fff; background: linear-gradient(180deg, #3B8140, #1E4620); border-color: #153417; transform: translateY(-2px) rotateX(0); box-shadow: 0 5px 0 #0F2A11, 0 12px 16px -6px rgba(30,70,32,.6), inset 0 1px 0 rgba(255,255,255,.3); }
+        .pf-skip { font-size: 10px; font-weight: 700; padding: 2px 4px; border-radius: 8px; border: 1px solid rgba(124,146,70,.3); background: #F3F7EA; color: var(--earth-brown); max-width: 112px; cursor: pointer; }
+        .cfg-btn { width: 34px; height: 34px; border-radius: 10px; background: #F3F7EA; color: var(--deep-green); font-size: 11px; flex-shrink: 0; cursor: pointer; }
+        .cfg-btn:hover { background: #E2EBCF; }
+        .grid > * { min-width: 0; }
+        .white-card h3 { text-wrap: balance; }
+        table th, table td { vertical-align: top; }
+        @media (max-width: 640px) { .pf-skip { max-width: 96px; } header nav .nav-tab { padding: 8px 11px; } }
+        @media (min-width: 1024px) and (max-width: 1279px) { header nav { max-width: 520px !important; } }
+        @media (prefers-reduced-motion: reduce) { header nav .nav-tab { transform: none !important; } }
     </style>
 </head>
+
 <body class="min-h-screen flex flex-col justify-between antialiased bg-[#FAF7F0]">
 
     <!-- TOAST NOTIFICATION -->
@@ -690,7 +751,7 @@
                                 <div class="absolute inset-x-0 top-1/2 h-0.5 bg-red-500 shadow-md animate-ping"></div>
                             </div>
                             <p class="text-[11px] text-earth-brown font-medium leading-tight">Arahkan kamera pada barcode kartu posyandu keluarga.</p>
-                            <button onclick="prosesSimulasiAbsen('3324010101900001')" class="w-full btn-primary py-2.5 sm:py-3 text-xs font-bold flex items-center justify-center space-x-2 shadow-sm cursor-pointer">
+                            <button onclick="prosesSimulasiAbsen('KRT-001')" class="w-full btn-primary py-2.5 sm:py-3 text-xs font-bold flex items-center justify-center space-x-2 shadow-sm cursor-pointer">
                                 <i class="fa-solid fa-check-double text-sun-yellow"></i>
                                 <span>Simulasi Scan Barcode Berhasil</span>
                             </button>
@@ -705,7 +766,7 @@
                                     <p class="text-xs font-extrabold text-deep-green">Klik / Seret Foto Barcode</p>
                                     <p class="text-[10px] text-earth-brown font-semibold mt-0.5">Format JPG, PNG, WEBP (Maks 5MB)</p>
                                 </div>
-                                <input type="file" class="hidden" id="file-absen-upload" accept="image/*" onchange="prosesSimulasiAbsen('3324010101900001')">
+                                <input type="file" class="hidden" id="file-absen-upload" accept="image/*" onchange="prosesSimulasiAbsen('KRT-001')">
                             </div>
                             <button onclick="document.getElementById('file-absen-upload').click()" class="w-full btn-primary py-2.5 sm:py-3 text-xs font-bold flex items-center justify-center space-x-2 cursor-pointer">
                                 <i class="fa-solid fa-folder-open text-sun-yellow"></i>
@@ -715,12 +776,12 @@
 
                         <div id="method-absen-manual" class="hidden space-y-3 py-2 bg-base-cream/50 rounded-2xl border border-olive-green/10 p-3 sm:p-3.5">
                             <div class="space-y-1.5">
-                                <label class="block text-xs font-extrabold text-deep-green">Nomor Barcode / Nomor KK / NIK Sasaran:</label>
+                                <label class="block text-xs font-extrabold text-deep-green">Kode Kartu Keluarga:</label>
                                 <div class="relative">
                                     <i class="fa-solid fa-barcode absolute left-3 top-3 text-olive-green text-xs"></i>
-                                    <input type="text" id="input-manual-barcode" placeholder="Contoh: 3324010101900001" class="w-full pl-9 pr-3 py-2.5 bg-white rounded-xl border border-olive-green/30 text-xs font-extrabold focus:outline-none focus:ring-2 focus:ring-olive-green/40 text-deep-green">
+                                    <input type="text" id="input-manual-barcode" placeholder="Contoh: KRT-001" class="w-full pl-9 pr-3 py-2.5 bg-white rounded-xl border border-olive-green/30 text-xs font-extrabold focus:outline-none focus:ring-2 focus:ring-olive-green/40 text-deep-green">
                                 </div>
-                                <p class="text-[10px] text-earth-brown font-medium">Demo cepat: <button type="button" onclick="document.getElementById('input-manual-barcode').value='3324010101900001'" class="underline text-olive-green font-bold cursor-pointer">3324010101900001</button></p>
+                                <p class="text-[10px] text-earth-brown font-medium">Demo cepat: <button type="button" onclick="document.getElementById('input-manual-barcode').value='KRT-001'" class="underline text-olive-green font-bold cursor-pointer">KRT-001</button></p>
                             </div>
                             <button onclick="prosesManualAbsenSubmit()" class="w-full btn-olive py-2.5 sm:py-3 text-xs font-bold flex items-center justify-center space-x-1.5 shadow-sm cursor-pointer">
                                 <i class="fa-solid fa-floppy-disk text-sun-yellow"></i>
@@ -764,7 +825,7 @@
                                 </label>
                                 <div class="relative w-full">
                                     <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-olive-green text-xs"></i>
-                                    <input type="text" id="search-absen-today" onkeyup="filterTabelAbsenHariIni()" placeholder="Cari Nama KK, No. KK, atau Dusun..." class="w-full pl-9 pr-3 py-2 bg-base-cream rounded-xl border border-olive-green/25 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-olive-green/40 shadow-sm transition-all text-deep-green">
+                                    <input type="text" id="search-absen-today" onkeyup="filterTabelAbsenHariIni()" placeholder="Cari kepala keluarga, kode kartu, atau dusun..." class="w-full pl-9 pr-3 py-2 bg-base-cream rounded-xl border border-olive-green/25 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-olive-green/40 shadow-sm transition-all text-deep-green">
                                 </div>
                             </div>
 
@@ -788,7 +849,7 @@
                                     <tr>
                                         <th class="p-2.5 sm:p-3 text-center w-10 sm:w-12">No</th>
                                         <th class="p-2.5 sm:p-3 whitespace-nowrap">Tanggal/Waktu</th>
-                                        <th class="p-2.5 sm:p-3 min-w-[140px]">Nama KK / Barcode</th>
+                                        <th class="p-2.5 sm:p-3 min-w-[140px]">Kepala Keluarga / Kode Kartu</th>
                                         <th class="p-2.5 sm:p-3 min-w-[130px]">Wilayah / RT RW</th>
                                         <th class="p-2.5 sm:p-3 text-center min-w-[120px]">Status</th>
                                         <th class="p-2.5 sm:p-3 text-center min-w-[100px]">Aksi</th>
@@ -871,14 +932,14 @@
 
                         <div id="method-pem-search-manual" class="hidden space-y-3 py-2 bg-base-cream/50 rounded-2xl border border-olive-green/10 p-3">
                             <div class="space-y-1.5">
-                                <label class="block text-xs font-extrabold text-deep-green">Ketik No. Barcode / No. KK / NIK Sasaran:</label>
+                                <label class="block text-xs font-extrabold text-deep-green">Ketik Kode Kartu Keluarga:</label>
                                 <div class="relative">
                                     <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-olive-green text-xs"></i>
-                                    <input type="text" id="input-pemeriksaan-barcode" placeholder="Contoh: 3324010101900001" class="w-full pl-9 pr-3 py-2.5 bg-white rounded-xl border border-olive-green/30 text-xs font-extrabold focus:outline-none focus:ring-2 focus:ring-olive-green/50 shadow-xs text-deep-green">
+                                    <input type="text" id="input-pemeriksaan-barcode" placeholder="Contoh: KRT-001" class="w-full pl-9 pr-3 py-2.5 bg-white rounded-xl border border-olive-green/30 text-xs font-extrabold focus:outline-none focus:ring-2 focus:ring-olive-green/50 shadow-xs text-deep-green">
                                 </div>
                                 <div class="pt-1">
-                                    <button onclick="quickFillPemeriksaanSearch('3324010101900001')" class="text-[10px] font-bold text-olive-green underline hover:text-deep-green cursor-pointer">
-                                        <i class="fa-solid fa-barcode mr-1"></i>Gunakan Barcode Demo: 3324010101900001
+                                    <button onclick="quickFillPemeriksaanSearch('KRT-001')" class="text-[10px] font-bold text-olive-green underline hover:text-deep-green cursor-pointer">
+                                        <i class="fa-solid fa-barcode mr-1"></i>Gunakan Kode Demo: KRT-001
                                     </button>
                                 </div>
                             </div>
@@ -906,7 +967,7 @@
                                 </div>
 
                                 <div class="flex flex-wrap items-center gap-2">
-                                    <span id="pemeriksaan-kk-info" class="text-xs px-3 py-1.5 bg-soft-yellow rounded-xl font-bold text-earth-brown border border-sun-yellow/40 shadow-xs">
+                                    <button type="button" onclick="openAturItem()" class="btn-brown px-3.5 py-2 text-xs font-bold flex items-center gap-1.5 cursor-pointer"><i class="fa-solid fa-sliders text-sun-yellow"></i><span>Atur Item Pemeriksaan</span></button><span id="pemeriksaan-kk-info" class="text-xs px-3 py-1.5 bg-soft-yellow rounded-xl font-bold text-earth-brown border border-sun-yellow/40 shadow-xs">
                                         Keluarga Bp. Sujatno (RT 02 / RW 01)
                                     </span>
                                     
@@ -965,6 +1026,15 @@
                             </div>
 
                             <div class="space-y-1.5">
+                                <label class="block text-earth-brown font-extrabold">Tandai catatan sebagai (terbaca di laporan admin):</label>
+                                <div id="khusus-tags" class="flex flex-wrap gap-2">
+                                    <label class="flex items-center gap-2 px-3 py-2 bg-white rounded-xl border border-sun-yellow/40 cursor-pointer"><input type="checkbox" value="Pemeriksaan Khusus" checked class="accent-[#F3A94B] w-4 h-4"><span>Pemeriksaan Khusus</span></label>
+                                    <label class="flex items-center gap-2 px-3 py-2 bg-white rounded-xl border border-sun-yellow/40 cursor-pointer"><input type="checkbox" value="Acara Khusus" class="accent-[#F3A94B] w-4 h-4"><span>Acara Khusus</span></label>
+                                    <label class="flex items-center gap-2 px-3 py-2 bg-white rounded-xl border border-sun-yellow/40 cursor-pointer"><input type="checkbox" value="Sesi Khusus" class="accent-[#F3A94B] w-4 h-4"><span>Sesi Khusus</span></label>
+                                </div>
+                            </div>
+
+                            <div class="space-y-1.5">
                                 <label class="block text-earth-brown font-extrabold">Pengisi Acara / Narsum / Tim Medis:</label>
                                 <input type="text" id="agenda-pengisi" value="Dr. Hj. Siti Aminah, M.Kes & Tim Puskesmas Limbangan" placeholder="Nama Dokter / Bidan / Narasumber..." class="w-full p-2.5 bg-white rounded-xl border border-sun-yellow/40 focus:outline-none shadow-xs text-deep-green" required>
                             </div>
@@ -984,61 +1054,33 @@
                     <!-- SISI KANAN: PENCARIAN & KARTU SASARAN PEMERIKSAAN KHUSUS -->
                     <div class="lg:col-span-7 space-y-5">
                         <div class="white-card p-5 md:p-6 space-y-5 border-2 border-olive-green/20 shadow-md">
-                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-olive-green/15 pb-4">
-                                <div class="space-y-0.5">
-                                    <div class="flex items-center space-x-2 text-deep-green">
-                                        <i class="fa-solid fa-notes-medical text-lg text-olive-green"></i>
-                                        <h3 class="font-extrabold text-deep-green text-base md:text-lg">Input Pemeriksaan Sesuai Sesi Khusus</h3>
-                                    </div>
-                                    <p class="text-xs text-earth-brown font-medium">Pilih sasaran khusus (Bumil/Menyusui/Lansia) untuk dicatat pada agenda acara.</p>
+                            <div class="space-y-3 border-b border-olive-green/15 pb-4">
+                                <div class="flex flex-wrap items-center justify-between gap-2">
+                                    <div class="flex items-center gap-2 text-deep-green"><i class="fa-solid fa-notes-medical text-lg text-olive-green"></i><h3 class="font-extrabold text-base md:text-lg">Input Pemeriksaan Sesuai Sesi Khusus</h3></div>
+                                    <button type="button" onclick="openAturItem()" class="btn-brown px-3.5 py-2 text-xs font-bold flex items-center gap-1.5 cursor-pointer"><i class="fa-solid fa-sliders text-sun-yellow"></i><span>Atur Item Pemeriksaan</span></button>
                                 </div>
-
-                                <div class="flex items-center gap-2">
-                                    <input type="text" id="input-pemeriksaan-khusus-search" placeholder="Cari barcode / NIK sasaran..." class="p-2 bg-base-cream rounded-xl border border-olive-green/25 text-xs font-bold focus:outline-none text-deep-green">
-                                    <button onclick="cariPesertaPemeriksaanKhusus()" class="btn-olive px-3.5 py-2 text-xs font-bold shadow-xs cursor-pointer">Cari</button>
+                                <p class="text-xs text-earth-brown font-medium">Cari keluarga yang hadir, lalu input pemeriksaan tiap anggota. Catatan otomatis diberi tanda sesi khusus di kiri.</p>
+                                <div class="flex flex-col sm:flex-row gap-2">
+                                    <div class="relative flex-1"><i class="fa-solid fa-magnifying-glass absolute left-3 top-3.5 text-olive-green text-xs"></i><input type="text" id="input-khusus-search" onkeydown="if(event.key==='Enter')cariPesertaPemeriksaanKhusus()" placeholder="Ketik kode kartu keluarga..." class="w-full pl-9 pr-3 py-2.5 bg-base-cream rounded-xl border border-olive-green/25 text-xs font-bold"></div>
+                                    <button onclick="cariPesertaPemeriksaanKhusus()" class="btn-olive px-4 py-2.5 text-xs font-bold cursor-pointer">Cari</button>
+                                    <button onclick="cariPesertaPemeriksaanKhusus('KRT-001')" class="px-3 py-2.5 text-xs font-bold bg-white border border-olive-green/30 rounded-xl text-olive-green cursor-pointer"><i class="fa-solid fa-barcode mr-1"></i>Kode Demo</button>
                                 </div>
                             </div>
-
-                            <div id="grid-cards-pemeriksaan-khusus" class="grid sm:grid-cols-2 gap-4">
-                                <div class="white-card p-4 space-y-3 bg-gradient-to-br from-pink-50/90 via-rose-50/40 to-white border-2 border-pink-300">
-                                    <div class="flex items-center justify-between">
-                                        <span class="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-pink-100 text-pink-800 border">Ibu Hamil</span>
-                                        <span class="text-[10px] font-bold px-2 py-0.5 bg-emerald-100 text-emerald-800 rounded-full">✔️ Hadir Agenda</span>
-                                    </div>
-                                    <div>
-                                        <h4 class="font-black text-deep-green text-sm">Siti Ratnah</h4>
-                                        <p class="text-[11px] text-pink-800 font-bold">Usia Hamil: 24 Minggu (Trimester 2)</p>
-                                        <p class="text-[10px] text-earth-brown font-mono">NIK: 332401******0002</p>
-                                    </div>
-                                    <button onclick="openModalPemeriksaanKhusus('A2')" class="w-full btn-olive py-2 text-xs font-bold flex items-center justify-center space-x-1 shadow-xs cursor-pointer">
-                                        <i class="fa-solid fa-pen-to-square text-sun-yellow"></i>
-                                        <span>Input Hasil Pemeriksaan Khusus</span>
-                                    </button>
-                                </div>
-
-                                <div class="white-card p-4 space-y-3 bg-gradient-to-br from-orange-50/90 via-amber-50/40 to-white border-2 border-orange-300">
-                                    <div class="flex items-center justify-between">
-                                        <span class="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-orange-100 text-orange-800 border">Ibu Menyusui</span>
-                                        <span class="text-[10px] font-bold px-2 py-0.5 bg-emerald-100 text-emerald-800 rounded-full">✔️ Hadir Agenda</span>
-                                    </div>
-                                    <div>
-                                        <h4 class="font-black text-deep-green text-sm">Sri Wahyuni</h4>
-                                        <p class="text-[11px] text-orange-800 font-bold">Usia Bayi: 5 Bulan (ASI Eksklusif)</p>
-                                        <p class="text-[10px] text-earth-brown font-mono">NIK: 332401******0003</p>
-                                    </div>
-                                    <button onclick="openModalPemeriksaanKhusus('A3')" class="w-full btn-olive py-2 text-xs font-bold flex items-center justify-center space-x-1 shadow-xs cursor-pointer">
-                                        <i class="fa-solid fa-pen-to-square text-sun-yellow"></i>
-                                        <span>Input Hasil Pemeriksaan Khusus</span>
-                                    </button>
-                                </div>
+                            <div id="grid-cards-khusus" class="grid sm:grid-cols-2 xl:grid-cols-3 gap-4"></div>
+                        </div>
+                        <div class="white-card p-5 md:p-6 space-y-3 border-2 border-sun-yellow/30">
+                            <div class="flex flex-wrap items-center justify-between gap-2">
+                                <div><h3 class="font-extrabold text-deep-green text-sm md:text-base"><i class="fa-solid fa-clipboard-list text-sun-yellow mr-2"></i>Rekap Catatan Khusus (Laporan Admin)</h3><p class="text-[11px] text-earth-brown font-medium">Tiap catatan membawa tanda sesi khusus agar mudah disaring admin.</p></div>
+                                <button onclick="unduhCsvKhusus()" class="btn-primary px-3.5 py-2 text-xs font-bold cursor-pointer"><i class="fa-solid fa-file-csv mr-1"></i>Unduh CSV</button>
                             </div>
+                            <div class="overflow-x-auto rounded-xl border border-olive-green/15"><table class="w-full text-left text-xs"><thead class="bg-soft-green text-deep-green font-extrabold"><tr><th class="p-2.5">Tanggal</th><th class="p-2.5">Sasaran</th><th class="p-2.5">Tanda / Acara</th><th class="p-2.5">Hasil</th></tr></thead><tbody id="tbody-rekap-khusus"></tbody></table></div>
                         </div>
                     </div>
-
                 </div>
             </section>
+
             
-            <!-- ================= TAB 4: CEK DATA SASARAN ================= -->
+<!-- ================= TAB 4: CEK DATA SASARAN ================= -->
             <section id="content-cek-sasaran" class="hidden space-y-6">
                 <div class="white-card p-6 md:p-8 space-y-6 border-2 border-olive-green/20 shadow-md">
                     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-olive-green/15 pb-4">
@@ -1099,11 +1141,11 @@
                             </div>
 
                             <div class="lg:col-span-4 space-y-1">
-                                <label class="block text-[11px] font-extrabold text-earth-brown">Kata Kunci Nama / NIK / Barcode:</label>
+                                <label class="block text-[11px] font-extrabold text-earth-brown">Kata Kunci Nama / Kasus:</label>
                                 <div class="flex items-center gap-1.5">
                                     <div class="relative flex-grow">
                                         <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-olive-green text-xs"></i>
-                                        <input type="text" id="filter-keyword" onkeyup="applyFilterSasaran()" placeholder="Cari nama, NIK, barcode..." class="w-full pl-9 pr-2.5 py-2 bg-white rounded-xl border border-olive-green/25 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-olive-green/40 shadow-xs text-deep-green">
+                                        <input type="text" id="filter-keyword" onkeyup="applyFilterSasaran()" placeholder="Cari nama atau kasus..." class="w-full pl-9 pr-2.5 py-2 bg-white rounded-xl border border-olive-green/25 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-olive-green/40 shadow-xs text-deep-green">
                                     </div>
                                     <button type="button" onclick="openModalBarcodeSasaran()" class="btn-primary px-3 py-2 text-xs font-extrabold flex items-center space-x-1.5 rounded-xl shadow-xs shrink-0 hover:scale-105 transition-all cursor-pointer" title="Scan / Unggah / Input Nomor Barcode">
                                         <i class="fa-solid fa-barcode text-sm text-sun-yellow"></i>
@@ -1136,7 +1178,7 @@
                                     <tr>
                                         <th class="p-3 text-center w-12">No</th>
                                         <th class="p-3">Tgl & Wilayah</th>
-                                        <th class="p-3">Nama Sasaran & NIK/Barcode</th>
+                                        <th class="p-3">Nama Sasaran</th>
                                         <th class="p-3">Kategori</th>
                                         <th class="p-3">Hasil Catatan / Kasus Khusus</th>
                                         <th class="p-3 text-center">Status Web Sasaran</th>
@@ -1467,9 +1509,9 @@
                     <div class="absolute inset-x-0 top-1/2 h-0.5 bg-red-500 shadow-md animate-ping"></div>
                 </div>
                 <p class="text-[11px] text-earth-brown font-medium">Arahkan kamera ke barcode sasaran untuk memfilter data otomatis.</p>
-                <button onclick="applyBarcodeFromPopup('3324010101900001')" class="w-full btn-primary py-2.5 text-xs font-bold flex items-center justify-center space-x-2 shadow-sm cursor-pointer">
+                <button onclick="applyBarcodeFromPopup('KRT-001')" class="w-full btn-primary py-2.5 text-xs font-bold flex items-center justify-center space-x-2 shadow-sm cursor-pointer">
                     <i class="fa-solid fa-check-double text-sun-yellow"></i>
-                    <span>Gunakan Barcode: 3324010101900001</span>
+                    <span>Gunakan Kode: KRT-001</span>
                 </button>
             </div>
 
@@ -1478,7 +1520,7 @@
                     <i class="fa-solid fa-cloud-arrow-up text-3xl text-olive-green"></i>
                     <p class="text-xs font-bold text-deep-green">Klik untuk Memilih Foto Barcode</p>
                     <p class="text-[10px] text-earth-brown font-semibold">Format Gambar (JPG, PNG) atau PDF</p>
-                    <input type="file" class="hidden" id="file-popup-barcode" accept="image/*,.pdf" onchange="applyBarcodeFromPopup('3324010101900002')">
+                    <input type="file" class="hidden" id="file-popup-barcode" accept="image/*,.pdf" onchange="applyBarcodeFromPopup('KRT-002')">
                 </div>
                 <button onclick="document.getElementById('file-popup-barcode').click()" class="w-full btn-primary py-2.5 text-xs font-bold flex items-center justify-center space-x-1.5 cursor-pointer">
                     <i class="fa-solid fa-folder-open text-sun-yellow"></i>
@@ -1488,10 +1530,10 @@
 
             <div id="popup-barcode-manual" class="hidden space-y-3 py-2">
                 <div class="space-y-1.5">
-                    <label class="block text-xs font-bold text-deep-green">Ketik Nomor Barcode / NIK Sasaran:</label>
+                    <label class="block text-xs font-bold text-deep-green">Ketik Kode Kartu Keluarga:</label>
                     <div class="relative">
                         <i class="fa-solid fa-barcode absolute left-3 top-3 text-olive-green text-xs"></i>
-                        <input type="text" id="input-popup-barcode-val" placeholder="Ketik nomor barcode atau NIK..." class="w-full pl-9 pr-3 py-2.5 bg-white rounded-xl border border-olive-green/30 text-xs font-extrabold focus:outline-none focus:ring-2 focus:ring-olive-green/40 text-deep-green">
+                        <input type="text" id="input-popup-barcode-val" placeholder="Ketik kode kartu keluarga..." class="w-full pl-9 pr-3 py-2.5 bg-white rounded-xl border border-olive-green/30 text-xs font-extrabold focus:outline-none focus:ring-2 focus:ring-olive-green/40 text-deep-green">
                     </div>
                 </div>
                 <button onclick="submitManualPopupBarcode()" class="w-full btn-brown py-2.5 text-xs font-bold flex items-center justify-center space-x-1.5 shadow-sm cursor-pointer">
@@ -1606,12 +1648,12 @@
                 <div>
                     <label class="block mb-1">Kategori Usia & Peran:</label>
                     <select id="edit-kategori-sasaran" class="w-full p-2.5 bg-white rounded-xl border border-olive-green/20 focus:outline-none text-deep-green">
-                        <option value="Balita">Balita (0-5 Thn)</option>
+                        <option value="Balita">Balita & Baduta (0-59 Bln)</option>
                         <option value="Remaja">Remaja (10-18 Thn)</option>
-                        <option value="Usia Produktif">Usia Produktif (Dewasa)</option>
+                        <option value="Usia Produktif">Usia Produktif (15-59 Thn)</option>
                         <option value="Ibu Hamil">Ibu Hamil</option>
                         <option value="Ibu Menyusui">Ibu Menyusui</option>
-                        <option value="Lansia">Lansia (>60 Thn)</option>
+                        <option value="Lansia">Lansia & PTM (60+ Thn)</option>
                     </select>
                 </div>
 
@@ -1720,7 +1762,7 @@
         let meledakChartInstance = null;
         let selectedMemberForExam = null;
         let selectedIndexEdit = null;
-        let currentPemeriksaanBarcode = "3324010101900001"; 
+        let currentPemeriksaanBarcode = "KRT-001"; 
         
         let konfirmasiState = 'UNCONFIRMED';
         
@@ -1778,15 +1820,15 @@
 
         // DATABASE ABSEN HARI INI
         let todayAttendanceList = [
-            { no: 1, tanggal: todayStr, waktu: "08:15 WIB", kkName: "Bp. Sujatno", barcode: "3324010101900001", wilayah: "Gonoharjo RT 02 / RW 01", status: "Hadir", statusBadge: "bg-amber-100 text-amber-800 border-amber-300", isEdited: false },
-            { no: 2, tanggal: todayStr, waktu: "08:30 WIB", kkName: "Bp. Bambang Sutrisno", barcode: "3324010101900002", wilayah: "Gonoharjo RT 01 / RW 01", status: "Hadir", statusBadge: "bg-amber-100 text-amber-800 border-amber-300", isEdited: false },
-            { no: 3, tanggal: todayStr, waktu: "08:45 WIB", kkName: "Bp. Slamet Riyadi", barcode: "3324010101900003", wilayah: "Gonoharjo RT 03 / RW 01", status: "Pemeriksaan Selesai", statusBadge: "bg-emerald-100 text-emerald-800 border-emerald-300", isEdited: false }
+            { no: 1, tanggal: todayStr, waktu: "08:15 WIB", kkName: "Bp. Sujatno", barcode: "KRT-001", wilayah: "Gonoharjo RT 02 / RW 01", status: "Hadir", statusBadge: "bg-amber-100 text-amber-800 border-amber-300", isEdited: false },
+            { no: 2, tanggal: todayStr, waktu: "08:30 WIB", kkName: "Bp. Bambang Sutrisno", barcode: "KRT-002", wilayah: "Gonoharjo RT 01 / RW 01", status: "Hadir", statusBadge: "bg-amber-100 text-amber-800 border-amber-300", isEdited: false },
+            { no: 3, tanggal: todayStr, waktu: "08:45 WIB", kkName: "Bp. Slamet Riyadi", barcode: "KRT-003", wilayah: "Gonoharjo RT 03 / RW 01", status: "Pemeriksaan Selesai", statusBadge: "bg-emerald-100 text-emerald-800 border-emerald-300", isEdited: false }
         ];
 
         // DATABASE MOCKUP KELUARGA & HASIL SASARAN
         const familyDataMock = {
-            "3324010101900001": {
-                kk: "3324010101900001",
+            "KRT-001": {
+                kk: "KRT-001",
                 kepalaKeluarga: "Sujatno",
                 posyandu: "Posyandu 1",
                 dusun: "Gonoharjo RT 02 / RW 01",
@@ -1795,7 +1837,7 @@
                     { 
                         id: "A1", 
                         nama: "Sujatno", 
-                        nik: "3324010101900001", 
+
                         kategori: "Usia Produktif", 
                         usia: "48 Tahun", 
                         statusWeb: "ON", 
@@ -1807,7 +1849,7 @@
                     { 
                         id: "A2", 
                         nama: "Siti Ratnah", 
-                        nik: "3324010101900002", 
+
                         kategori: "Ibu Hamil", 
                         usia: "28 Tahun", 
                         statusWeb: "ON", 
@@ -1819,7 +1861,7 @@
                     { 
                         id: "A3", 
                         nama: "Sri Wahyuni", 
-                        nik: "3324010101900003", 
+
                         kategori: "Ibu Menyusui", 
                         usia: "31 Tahun", 
                         statusWeb: "ON", 
@@ -1831,7 +1873,7 @@
                     { 
                         id: "A4", 
                         nama: "Budi Sujatno", 
-                        nik: "3324010101900004", 
+
                         kategori: "Balita", 
                         usia: "22 Bulan", 
                         statusWeb: "ON", 
@@ -1843,7 +1885,7 @@
                     { 
                         id: "A5", 
                         nama: "Maya Sujatno", 
-                        nik: "3324010101900005", 
+
                         kategori: "Remaja", 
                         usia: "15 Tahun", 
                         statusWeb: "ON", 
@@ -1855,7 +1897,7 @@
                     { 
                         id: "A6", 
                         nama: "Mbah Sastro", 
-                        nik: "3324010101900006", 
+
                         kategori: "Lansia", 
                         usia: "72 Tahun", 
                         statusWeb: "ON", 
@@ -1869,28 +1911,24 @@
         };
 
         let usulanDataMock = [
-            { id: 1, tgl: "22 Sep 2026", nama: "Dede Bayi Sujatno", nik: "3324010101900006", kategori: "Balita", jenis: "Tambah Anggota (Kelahiran Baru)", alasan: "Lahir tanggal 10 Sep 2026", konfirmasiKader: false, konfirmasiAdmin: false },
-            { id: 2, tgl: "20 Sep 2026", nama: "Siti Aminah", nik: "3324010101900099", kategori: "Lansia", jenis: "Hapus Anggota (Pindah Wilayah)", alasan: "Pindah tempat tinggal ke Kota Semarang", konfirmasiKader: true, konfirmasiAdmin: false }
+            { id: 1, tgl: "22 Sep 2026", nama: "Dede Bayi Sujatno",kategori: "Balita", jenis: "Tambah Anggota (Kelahiran Baru)", alasan: "Lahir tanggal 10 Sep 2026", konfirmasiKader: false, konfirmasiAdmin: false },
+            { id: 2, tgl: "20 Sep 2026", nama: "Siti Aminah",kategori: "Lansia", jenis: "Hapus Anggota (Pindah Wilayah)", alasan: "Pindah tempat tinggal ke Kota Semarang", konfirmasiKader: true, konfirmasiAdmin: false }
         ];
 
         let rekamKasusKhususMock = [
-            { id: 101, bulanTahun: "2026-09", tgl: "15 Sep 2026", posyandu: "Posyandu 1", nama: "Mbah Sastro", nik: "3324010101900006", kategori: "Lansia", kasusKey: "asam_urat_tinggi,kolesterol_tinggi", kasus: "Asam Urat Tinggi (7.2) & Kolesterol (210 mg/dL)", statusWeb: "ON" },
-            { id: 102, bulanTahun: "2026-09", tgl: "12 Sep 2026", posyandu: "Posyandu 2", nama: "Adik Farhan", nik: "3324010101900010", kategori: "Balita", kasusKey: "status_2t_o_b", kasus: "Status 2T (Tidak Naik 2 Bulan) & BB/U Kurang", statusWeb: "ON" },
-            { id: 103, bulanTahun: "2026-09", tgl: "18 Sep 2026", posyandu: "Posyandu 1", nama: "Siti Ratnah", nik: "3324010101900002", kategori: "Ibu Hamil", kasusKey: "hb_rendah", kasus: "Anemia Ringan (Hb 10.5 g/dL), Perlu TTD Tambahan", statusWeb: "ON" },
-            { id: 104, bulanTahun: "2026-09", tgl: "19 Sep 2026", posyandu: "Posyandu 1", nama: "Sri Wahyuni", nik: "3324010101900003", kategori: "Ibu Menyusui", kasusKey: "status_2t_o_b", kasus: "Konseling ASI Eksklusif & Pemantauan LILA", statusWeb: "ON" },
-            { id: 105, bulanTahun: "2026-09", tgl: "15 Sep 2026", posyandu: "Posyandu 1", nama: "Bp. Sujatno", nik: "3324010101900001", kategori: "Usia Produktif", kasusKey: "tensi_tinggi", kasus: "Hipertensi Derajat 1 (135/85 mmHg)", statusWeb: "ON" },
-            { id: 106, bulanTahun: "2026-09", tgl: "14 Sep 2026", posyandu: "Posyandu 2", nama: "Bp. Bambang Sutrisno", nik: "3324010101900002", kategori: "Usia Produktif", kasusKey: "gula_tinggi", kasus: "Gula Darah Puasa Tinggi (GDS 215 mg/dL)", statusWeb: "ON" },
-            { id: 107, bulanTahun: "2026-09", tgl: "10 Sep 2026", posyandu: "Posyandu 3", nama: "Dik Kenzo", nik: "3324010101900015", kategori: "Balita", kasusKey: "stunting", kasus: "Terindikasi Stunting (TB/U < -2 SD)", statusWeb: "ON" },
-            { id: 108, bulanTahun: "2026-09", tgl: "11 Sep 2026", posyandu: "Posyandu 4", nama: "Ibu Mariyam", nik: "3324010101900020", kategori: "Lansia", kasusKey: "tensi_tinggi", kasus: "Hipertensi Sedang (150/95 mmHg)", statusWeb: "ON" },
-            { id: 109, bulanTahun: "2026-09", tgl: "16 Sep 2026", posyandu: "Posyandu 5", nama: "Mbah Sukirman", nik: "3324010101900022", kategori: "Lansia", kasusKey: "kolesterol_tinggi", kasus: "Kolesterol Tinggi (240 mg/dL)", statusWeb: "ON" },
-            { id: 110, bulanTahun: "2026-09", tgl: "17 Sep 2026", posyandu: "Posyandu 6", nama: "Mbah Kartini", nik: "3324010101900030", kategori: "Lansia", kasusKey: "tensi_tinggi", kasus: "Tensi Tinggi 160/100 mmHg", statusWeb: "ON" }
+            { id: 101, bulanTahun: "2026-09", tgl: "15 Sep 2026", posyandu: "Posyandu 1", nama: "Mbah Sastro",kategori: "Lansia", kasusKey: "asam_urat_tinggi,kolesterol_tinggi", kasus: "Asam Urat Tinggi (7.2) & Kolesterol (210 mg/dL)", statusWeb: "ON" },
+            { id: 102, bulanTahun: "2026-09", tgl: "12 Sep 2026", posyandu: "Posyandu 2", nama: "Adik Farhan",kategori: "Balita", kasusKey: "status_2t_o_b", kasus: "Status 2T (Tidak Naik 2 Bulan) & BB/U Kurang", statusWeb: "ON" },
+            { id: 103, bulanTahun: "2026-09", tgl: "18 Sep 2026", posyandu: "Posyandu 1", nama: "Siti Ratnah",kategori: "Ibu Hamil", kasusKey: "hb_rendah", kasus: "Anemia Ringan (Hb 10.5 g/dL), Perlu TTD Tambahan", statusWeb: "ON" },
+            { id: 104, bulanTahun: "2026-09", tgl: "19 Sep 2026", posyandu: "Posyandu 1", nama: "Sri Wahyuni",kategori: "Ibu Menyusui", kasusKey: "status_2t_o_b", kasus: "Konseling ASI Eksklusif & Pemantauan LILA", statusWeb: "ON" },
+            { id: 105, bulanTahun: "2026-09", tgl: "15 Sep 2026", posyandu: "Posyandu 1", nama: "Bp. Sujatno",kategori: "Usia Produktif", kasusKey: "tensi_tinggi", kasus: "Hipertensi Derajat 1 (135/85 mmHg)", statusWeb: "ON" },
+            { id: 106, bulanTahun: "2026-09", tgl: "14 Sep 2026", posyandu: "Posyandu 2", nama: "Bp. Bambang Sutrisno",kategori: "Usia Produktif", kasusKey: "gula_tinggi", kasus: "Gula Darah Puasa Tinggi (GDS 215 mg/dL)", statusWeb: "ON" },
+            { id: 107, bulanTahun: "2026-09", tgl: "10 Sep 2026", posyandu: "Posyandu 3", nama: "Dik Kenzo",kategori: "Balita", kasusKey: "stunting", kasus: "Terindikasi Stunting (TB/U < -2 SD)", statusWeb: "ON" },
+            { id: 108, bulanTahun: "2026-09", tgl: "11 Sep 2026", posyandu: "Posyandu 4", nama: "Ibu Mariyam",kategori: "Lansia", kasusKey: "tensi_tinggi", kasus: "Hipertensi Sedang (150/95 mmHg)", statusWeb: "ON" },
+            { id: 109, bulanTahun: "2026-09", tgl: "16 Sep 2026", posyandu: "Posyandu 5", nama: "Mbah Sukirman",kategori: "Lansia", kasusKey: "kolesterol_tinggi", kasus: "Kolesterol Tinggi (240 mg/dL)", statusWeb: "ON" },
+            { id: 110, bulanTahun: "2026-09", tgl: "17 Sep 2026", posyandu: "Posyandu 6", nama: "Mbah Kartini",kategori: "Lansia", kasusKey: "tensi_tinggi", kasus: "Tensi Tinggi 160/100 mmHg", statusWeb: "ON" }
         ];
 
-        function maskNik(nik) {
-            if (!nik || nik.length < 8) return "332401******0001";
-            return nik.substring(0, 6) + "******" + nik.substring(nik.length - 4);
-        }
-
+        
         function getCategoryStyleConfig(category) {
             switch (category) {
                 case 'Balita':
@@ -2168,7 +2206,7 @@
                     <td class="p-2.5 font-bold text-deep-green">${item.tanggal}<br><span class="text-[10px] text-earth-brown font-medium">${item.waktu}</span></td>
                     <td class="p-2.5">
                         <div class="font-extrabold text-deep-green">${item.kkName}</div>
-                        <div class="text-[10px] text-olive-green font-mono">${maskNik(item.barcode)}</div>
+                        <div class="text-[10px] text-olive-green font-mono">Kartu ${item.barcode}</div>
                     </td>
                     <td class="p-2.5 text-[11px] font-medium text-earth-brown">${item.wilayah}</td>
                     <td class="p-2.5 text-center">
@@ -2213,9 +2251,9 @@
         }
 
         function prosesManualAbsenSubmit() {
-            const code = document.getElementById('input-manual-barcode').value.trim();
+            const code = document.getElementById('input-manual-barcode').value.trim().toUpperCase();
             if (!code) {
-                showToast("Ketikkan nomor barcode / KK terlebih dahulu!", "warning");
+                showToast("Ketikkan kode kartu keluarga terlebih dahulu!", "warning");
                 return;
             }
             prosesSimulasiAbsen(code);
@@ -2234,19 +2272,19 @@
         }
 
         function prosesSimulasiScanPemeriksaan() {
-            cariPesertaPemeriksaan("3324010101900001");
+            cariPesertaPemeriksaan("KRT-001");
         }
 
         function prosesUploadBarcodePemeriksaan(input) {
             if (input.files && input.files[0]) {
-                cariPesertaPemeriksaan("3324010101900001");
+                cariPesertaPemeriksaan("KRT-001");
             }
         }
 
         function cariPesertaPemeriksaan(barcodeVal) {
-            const val = barcodeVal || document.getElementById('input-pemeriksaan-barcode').value.trim();
+            const val = String(barcodeVal || document.getElementById('input-pemeriksaan-barcode').value).trim().toUpperCase();
             if (!val) {
-                showToast("Masukkan No. Barcode / No. KK / NIK sasaran!", "warning");
+                showToast("Masukkan kode kartu keluarga!", "warning");
                 return;
             }
             if (familyDataMock[val]) {
@@ -2305,17 +2343,17 @@
                             <div class="space-y-1">
                                 <label class="block text-[10px] font-extrabold text-earth-brown">Kategori / Peran Sasaran:</label>
                                 <select onchange="changeMemberCategory('${m.id}', this.value)" class="w-full p-1.5 bg-white/90 rounded-lg border border-olive-green/20 text-[11px] font-bold text-deep-green focus:outline-none cursor-pointer">
-                                    <option value="Balita" ${m.kategori === 'Balita' ? 'selected' : ''}>Balita (0-5 Thn)</option>
+                                    <option value="Balita" ${m.kategori === 'Balita' ? 'selected' : ''}>Balita & Baduta (0-59 Bln)</option>
                                     <option value="Remaja" ${m.kategori === 'Remaja' ? 'selected' : ''}>Remaja (10-18 Thn)</option>
-                                    <option value="Usia Produktif" ${m.kategori === 'Usia Produktif' ? 'selected' : ''}>Usia Produktif (Dewasa)</option>
+                                    <option value="Usia Produktif" ${m.kategori === 'Usia Produktif' ? 'selected' : ''}>Usia Produktif (15-59 Thn)</option>
                                     <option value="Ibu Hamil" ${m.kategori === 'Ibu Hamil' ? 'selected' : ''}>Ibu Hamil</option>
                                     <option value="Ibu Menyusui" ${m.kategori === 'Ibu Menyusui' ? 'selected' : ''}>Ibu Menyusui</option>
-                                    <option value="Lansia" ${m.kategori === 'Lansia' ? 'selected' : ''}>Lansia (>60 Thn)</option>
+                                    <option value="Lansia" ${m.kategori === 'Lansia' ? 'selected' : ''}>Lansia & PTM (60+ Thn)</option>
                                 </select>
                             </div>
 
                             <div class="text-[11px] text-earth-brown space-y-0.5 font-medium border-t border-olive-green/10 pt-2">
-                                <p><strong>NIK:</strong> <span class="font-mono text-deep-green">${maskNik(m.nik)}</span></p>
+                                
                                 <p><strong>Usia:</strong> ${m.usia}</p>
                             </div>
 
@@ -2338,89 +2376,99 @@
             }).join('');
         }
 
+
+        // ===== DETAIL PEMERIKSAAN PER KATEGORI (mengikuti layanan ILP Posyandu 1) =====
+        // [kunci, label, satuan, tipe, opsi]
+        const TENSI = {ph:'120/80', req:1, pat:'\d{2,3}/\d{2,3}'};
+        const PEM_SPEC = {
+            'Balita': [
+                ['bb','Berat Badan','kg','num',{step:.1,req:1,ph:'11.8'}], ['pb','Panjang / Tinggi Badan','cm','num',{step:.1,req:1,ph:'84.5'}],
+                ['lk','Lingkar Kepala','cm','num',{step:.1,ph:'47.2'}],
+                ['kms','Status Penimbangan (KMS)','','select',{o:['N|N - Naik','T|T - Tidak Naik','2T|2T - Tidak Naik 2x','O|O - Tidak Ditimbang','B|B - Baru Pertama Ditimbang']}],
+                ['asi','ASI Eksklusif (bayi 0-6 bln)','','select',{o:['Tidak berlaku','Ya','Tidak']}],
+                ['imun','Imunisasi','','select',{o:['Lengkap sesuai usia','Diberikan hari ini','Belum lengkap (dirujuk)','Belum jadwal']}],
+                ['vita','Vitamin A','','select',{o:['Belum jadwal','Biru (6-11 bln)','Merah (12-59 bln)','Belum diberikan']}],
+                ['pmt','PMT Pangan Lokal','','select',{o:['Diterima','Tidak diterima']}]],
+            'Remaja': [
+                ['bb','Berat Badan','kg','num',{step:.1,req:1,ph:'45.0'}], ['tb','Tinggi Badan','cm','num',{step:.1,req:1,ph:'155'}],
+                ['hb','Kadar Hb (cegah anemia)','g/dL','num',{step:.1,ph:'12.5'}], ['tensi','Tekanan Darah','mmHg','text',TENSI],
+                ['ttd','Tablet Tambah Darah','','select',{o:['Rutin diminum','Tidak rutin','Belum mendapat']}],
+                ['konsel','Edukasi & Konseling','','checks',{o:['Gizi diri','Kesehatan reproduksi','Kesehatan jiwa']}]],
+            'Usia Produktif': [
+                ['bb','Berat Badan','kg','num',{step:.1,req:1,ph:'62.0'}], ['tensi','Tekanan Darah','mmHg','text',TENSI],
+                ['gds','Gula Darah (GDS)','mg/dL','num',{ph:'110'}],
+                ['konsel','Konseling','','checks',{o:['Skrining PTM','Gizi & aktivitas fisik']}]],
+            'Ibu Hamil': [
+                ['usiaHamil','Usia Kehamilan','minggu','num',{req:1,ph:'24'}], ['tensi','Tekanan Darah','mmHg','text',TENSI],
+                ['bb','Berat Badan','kg','num',{step:.1,ph:'58.0'}], ['lila','LILA','cm','num',{step:.1,ph:'25.5'}],
+                ['hb','Kadar Hb','g/dL','num',{step:.1,ph:'11.5'}], ['ttd','Tablet Tambah Darah Diterima','tablet','num',{ph:'30'}],
+                ['emosi','Kondisi Emosional','','select',{o:['Tenang','Cemas, perlu pendampingan']}],
+                ['konsel','Edukasi & Konseling','','checks',{o:['ASI eksklusif','Gizi ibu hamil','Tanda bahaya kehamilan']}]],
+            'Ibu Menyusui': [
+                ['usiaBayi','Usia Bayi','bulan','num',{req:1,ph:'5'}], ['asi','Status ASI','','select',{o:['Eksklusif','Parsial','Tidak ASI']}],
+                ['tensi','Tekanan Darah','mmHg','text',TENSI], ['bb','Berat Badan','kg','num',{step:.1,ph:'55.0'}],
+                ['lila','LILA','cm','num',{step:.1,ph:'25.5'}], ['vitA','Vitamin A Nifas','','select',{o:['Lengkap','Belum']}],
+                ['emosi','Kondisi Emosional','','select',{o:['Tenang','Cemas, perlu pendampingan']}],
+                ['konsel','Edukasi & Konseling','','checks',{o:['ASI eksklusif','Gizi ibu menyusui']}]],
+            'Lansia': [
+                ['tensi','Tekanan Darah','mmHg','text',TENSI], ['gds','Gula Darah (GDS)','mg/dL','num',{ph:'140'}],
+                ['kol','Kolesterol','mg/dL','num',{ph:'190'}], ['au','Asam Urat','mg/dL','num',{step:.1,ph:'6.5'}],
+                ['bb','Berat Badan','kg','num',{step:.1,ph:'55.0'}],
+                ['senam','Senam Lansia','','select',{o:['Ikut','Tidak ikut']}]]
+        };
+        const pemSpecOf = k => PEM_SPEC[k] || PEM_SPEC['Usia Produktif'];
+
+        function pemCollect(spec) {
+            const v = {};
+            spec.forEach(([k,,,t]) => {
+                if (t === 'checks') v[k] = [...document.querySelectorAll(`input[name="pf-${k}"]:checked`)].map(i => i.value);
+                else { const e = document.getElementById('pf-' + k); if (e && e.value !== '') v[k] = e.value; }
+            });
+            return v;
+        }
+
+        function pemFlags(kat, v) {
+            const r = [], n = k => parseFloat(v[k]);
+            if (v.tensi) { const [s, d] = v.tensi.split('/').map(Number); if (s >= 140 || d >= 90) r.push(['tensi_tinggi', `Tensi tinggi (${v.tensi} mmHg)`]); }
+            if (n('gds') >= 200) r.push(['gula_tinggi', `Gula darah tinggi (${v.gds} mg/dL)`]);
+            if (n('kol') >= 200) r.push(['kolesterol_tinggi', `Kolesterol tinggi (${v.kol} mg/dL)`]);
+            if (n('au') > 7) r.push(['asam_urat_tinggi', `Asam urat tinggi (${v.au} mg/dL)`]);
+            if (n('hb') < (kat === 'Remaja' ? 12 : 11)) r.push(['hb_rendah', `Anemia (Hb ${v.hb} g/dL)`]);
+            if (n('lila') < 23.5) r.push(['kek', `LILA ${v.lila} cm (risiko KEK)`]);
+            if (['T','2T','O'].includes(v.kms)) r.push(['status_2t_o_b', `Status penimbangan ${v.kms}`]);
+            return r;
+        }
+
+        function pemLive() {
+            const m = selectedMemberForExam, box = document.getElementById('pf-alert');
+            if (!m || !box) return;
+            const fl = pemFlags(m.kategori, pemCollect(pemSpecOf(m.kategori)));
+            box.className = 'sm:col-span-2 p-3 rounded-xl text-[11px] font-bold border ' + (fl.length ? 'bg-amber-50 border-amber-300 text-amber-900' : 'bg-emerald-50 border-emerald-200 text-emerald-800');
+            box.innerHTML = fl.length ? '<i class="fa-solid fa-triangle-exclamation mr-1"></i>Perlu perhatian: ' + fl.map(x => x[1]).join('; ') : '<i class="fa-solid fa-circle-check mr-1"></i>Semua nilai yang diisi dalam batas normal.';
+        }
+
         function openModalPemeriksaan(memberId) {
             const family = familyDataMock[currentPemeriksaanBarcode];
             if (!family) return;
-            selectedMemberForExam = family.anggota.find(m => m.id === memberId);
-            if (!selectedMemberForExam) return;
-
-            document.getElementById('form-pemeriksaan-title').innerText = `Input Pemeriksaan: ${selectedMemberForExam.nama}`;
-            document.getElementById('form-pemeriksaan-kategori-badge').innerText = selectedMemberForExam.kategori;
-            document.getElementById('input-catatan-bidan').value = selectedMemberForExam.catatan || "";
-
-            const container = document.getElementById('form-fields-dynamic-container');
-            
-            if (selectedMemberForExam.kategori === 'Balita') {
-                container.innerHTML = `
-                    <div class="grid grid-cols-2 gap-2 text-xs">
-                        <div>
-                            <label class="block mb-1 font-bold text-deep-green">Berat Badan (kg):</label>
-                            <input type="number" step="0.1" value="11.8" class="w-full p-2 bg-white rounded-xl border border-olive-green/20 text-deep-green" required>
-                        </div>
-                        <div>
-                            <label class="block mb-1 font-bold text-deep-green">Tinggi/Panjang (cm):</label>
-                            <input type="number" step="0.1" value="84.5" class="w-full p-2 bg-white rounded-xl border border-olive-green/20 text-deep-green" required>
-                        </div>
-                        <div>
-                            <label class="block mb-1 font-bold text-deep-green">Lingkar Kepala (cm):</label>
-                            <input type="number" step="0.1" value="47.2" class="w-full p-2 bg-white rounded-xl border border-olive-green/20 text-deep-green">
-                        </div>
-                        <div>
-                            <label class="block mb-1 font-bold text-deep-green">Status BB/U:</label>
-                            <select class="w-full p-2 bg-white rounded-xl border border-olive-green/20 text-deep-green cursor-pointer">
-                                <option value="N">N (Naik)</option>
-                                <option value="T">T (Tidak Naik)</option>
-                                <option value="2T">2T (2x Tidak Naik)</option>
-                                <option value="O">O (Tidak Ditimbang)</option>
-                                <option value="B">B (Baru Pertama Ditimbang)</option>
-                            </select>
-                        </div>
-                    </div>
-                `;
-            } else if (selectedMemberForExam.kategori === 'Ibu Hamil') {
-                container.innerHTML = `
-                    <div class="grid grid-cols-2 gap-2 text-xs">
-                        <div>
-                            <label class="block mb-1 font-bold text-deep-green">Usia Hamil (Minggu):</label>
-                            <input type="number" value="24" class="w-full p-2 bg-white rounded-xl border border-olive-green/20 text-deep-green" required>
-                        </div>
-                        <div>
-                            <label class="block mb-1 font-bold text-deep-green">Tekanan Darah (mmHg):</label>
-                            <input type="text" value="115/75" class="w-full p-2 bg-white rounded-xl border border-olive-green/20 text-deep-green" required>
-                        </div>
-                        <div>
-                            <label class="block mb-1 font-bold text-deep-green">Kadar Hb (g/dL):</label>
-                            <input type="number" step="0.1" value="11.5" class="w-full p-2 bg-white rounded-xl border border-olive-green/20 text-deep-green">
-                        </div>
-                        <div>
-                            <label class="block mb-1 font-bold text-deep-green">LILA (cm):</label>
-                            <input type="number" step="0.1" value="25.5" class="w-full p-2 bg-white rounded-xl border border-olive-green/20 text-deep-green">
-                        </div>
-                    </div>
-                `;
-            } else {
-                container.innerHTML = `
-                    <div class="grid grid-cols-2 gap-2 text-xs">
-                        <div>
-                            <label class="block mb-1 font-bold text-deep-green">Tekanan Darah (mmHg):</label>
-                            <input type="text" value="135/85" class="w-full p-2 bg-white rounded-xl border border-olive-green/20 text-deep-green" required>
-                        </div>
-                        <div>
-                            <label class="block mb-1 font-bold text-deep-green">Gula Darah (GDS mg/dL):</label>
-                            <input type="number" value="140" class="w-full p-2 bg-white rounded-xl border border-olive-green/20 text-deep-green">
-                        </div>
-                        <div>
-                            <label class="block mb-1 font-bold text-deep-green">Kolesterol (mg/dL):</label>
-                            <input type="number" value="190" class="w-full p-2 bg-white rounded-xl border border-olive-green/20 text-deep-green">
-                        </div>
-                        <div>
-                            <label class="block mb-1 font-bold text-deep-green">Asam Urat (mg/dL):</label>
-                            <input type="number" step="0.1" value="6.5" class="w-full p-2 bg-white rounded-xl border border-olive-green/20 text-deep-green">
-                        </div>
-                    </div>
-                `;
-            }
-
+            const m = family.anggota.find(x => x.id === memberId);
+            if (!m) return;
+            selectedMemberForExam = m;
+            document.getElementById('form-pemeriksaan-title').innerText = `Input Pemeriksaan: ${m.nama}`;
+            document.getElementById('form-pemeriksaan-kategori-badge').innerText = m.kategori;
+            document.getElementById('input-catatan-bidan').value = m.catatan || "";
+            const h = m.hasil || {}, cls = 'w-full p-2.5 bg-white rounded-xl border border-olive-green/20 text-deep-green';
+            const html = pemSpecOf(m.kategori).map(([k, l, u, t, o = {}]) => {
+                const id = 'pf-' + k;
+                const lab = `<label for="${id}" class="block mb-1 font-bold text-deep-green">${l}${u ? ` (${u})` : ''}${o.req ? ' <span class="text-red-500">*</span>' : ''}</label>`;
+                if (t === 'select') return `<div>${lab}<select id="${id}" class="${cls} cursor-pointer">${o.o.map(x => { const [v, tx] = x.split('|'); return `<option value="${v}" ${h[k] === v ? 'selected' : ''}>${tx || v}</option>`; }).join('')}</select></div>`;
+                if (t === 'checks') return `<div class="sm:col-span-2"><span class="block mb-1 font-bold">${l}</span><div class="flex flex-wrap gap-2">${o.o.map(c => `<label class="flex items-center gap-2 px-3 py-2 bg-white rounded-xl border border-olive-green/20 cursor-pointer"><input type="checkbox" name="${id}" value="${c}" ${(h[k] || []).includes(c) ? 'checked' : ''} class="accent-[#7C9246] w-4 h-4"><span>${c}</span></label>`).join('')}</div></div>`;
+                const txt = t === 'text';
+                return `<div>${lab}<input id="${id}" type="${txt ? 'text' : 'number'}" ${o.step ? `step="${o.step}"` : ''} inputmode="${txt ? 'numeric' : 'decimal'}" ${o.pat ? `pattern="${o.pat}" title="Format: 120/80"` : ''} value="${h[k] ?? ''}" placeholder="Contoh: ${o.ph || ''}" ${o.req ? 'required' : ''} class="${cls}"></div>`;
+            }).join('');
+            const c = document.getElementById('form-fields-dynamic-container');
+            c.innerHTML = `<div class="grid sm:grid-cols-2 gap-3 text-xs">${html}<div id="pf-alert"></div></div>`;
+            c.oninput = c.onchange = pemLive;
+            pemLive();
             document.getElementById('modal-input-pemeriksaan').classList.remove('hidden');
         }
 
@@ -2430,23 +2478,30 @@
 
         function savePemeriksaanData(e) {
             e.preventDefault();
-            if (!selectedMemberForExam) return;
-
-            const catatan = document.getElementById('input-catatan-bidan').value;
-            selectedMemberForExam.sudahPemeriksaan = true;
-            selectedMemberForExam.catatan = catatan;
-            selectedMemberForExam.terakhirCatat = "Hari Ini (Posyandu)";
+            const m = selectedMemberForExam;
+            if (!m) return;
+            const spec = pemSpecOf(m.kategori), v = pemCollect(spec), fl = pemFlags(m.kategori, v);
+            m.hasil = v;
+            m.detailTerakhir = spec.map(([k, l, u, t]) => {
+                const x = v[k];
+                if (t === 'checks') return x && x.length ? `${l}: ${x.join(', ')}` : null;
+                return x ? `${l}: ${x}${u ? ' ' + u : ''}` : null;
+            }).filter(Boolean).join('; ');
+            const catatan = document.getElementById('input-catatan-bidan').value.trim();
+            m.catatan = catatan || (fl.length ? fl.map(x => x[1]).join('. ') + '. Disarankan konsultasi lanjutan.' : 'Kondisi baik, lanjutkan pemantauan rutin.');
+            m.sudahPemeriksaan = true;
+            m.terakhirCatat = "Hari Ini (Posyandu)";
+            if (fl.length) rekamKasusKhususMock.unshift({ id: Date.now(), bulanTahun: todayStr.slice(0, 7), tgl: "Hari ini", posyandu: "Posyandu 1", nama: m.nama, kategori: m.kategori, kasusKey: fl.map(x => x[0]).join(','), kasus: fl.map(x => x[1]).join(' & '), statusWeb: "ON" });
 
             if (konfirmasiState === 'CONFIRMED') {
                 konfirmasiState = 'EDITED';
                 updateAttendanceStatusForCurrentFamily("Konfirmasi Edit");
             }
-
             updateKonfirmasiButtonUI();
             closeModalPemeriksaan();
             renderPemeriksaanCards();
             renderTabelAbsenHariIni();
-            showToast(`Data pemeriksaan ${selectedMemberForExam.nama} berhasil disimpan!`, "success");
+            showToast(`Data pemeriksaan ${m.nama} berhasil disimpan!${fl.length ? ' Ada ' + fl.length + ' temuan perlu perhatian.' : ''}`, "success");
         }
 
         // HANDLER PEMERIKSAAN KHUSUS (TAB BARU)
@@ -2488,7 +2543,7 @@
                 const matchPosyandu = (posyanduVal === 'semua') || item.posyandu.includes(posyanduVal);
                 const matchMonth = (!monthVal) || (item.bulanTahun === monthVal);
                 const matchKeyword = item.nama.toLowerCase().includes(keywordVal) || 
-                                     item.nik.includes(keywordVal) || 
+                                     
                                      item.kasus.toLowerCase().includes(keywordVal);
                 return matchKasus && matchPosyandu && matchMonth && matchKeyword;
             });
@@ -2515,14 +2570,14 @@
                     </td>
                     <td class="p-3">
                         <div class="font-extrabold text-deep-green">${item.nama}</div>
-                        <div class="text-[10px] text-earth-brown font-mono">${maskNik(item.nik)}</div>
+                        <div class="text-[10px] text-earth-brown">${item.kategori}</div>
                     </td>
                     <td class="p-3">
                         <span class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-soft-green text-deep-green border border-olive-green/30">
                             ${item.kategori}
                         </span>
                     </td>
-                    <td class="p-3 text-xs font-semibold text-earth-brown">${item.kasus}</td>
+                    <td class="p-3 text-xs font-semibold text-earth-brown">${item.kasus}${item.khusus ? '<span class="ml-1.5 px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 border border-amber-300 text-[10px] font-extrabold">KHUSUS</span>' : ''}</td>
                     <td class="p-3 text-center">
                         <button onclick="toggleStatusWebSasaran(${item.id})" class="px-3 py-1 rounded-full text-[10px] font-black ${item.statusWeb === 'ON' ? 'bg-emerald-100 text-emerald-800 border-emerald-300' : 'bg-red-100 text-red-800 border-red-300'} border transition cursor-pointer">
                             ${item.statusWeb === 'ON' ? '🟢 ON (Tampil)' : '🔴 OFF (Sembunyi)'}
@@ -2631,7 +2686,7 @@
                     <td class="p-3 text-[11px] font-extrabold text-deep-green">${u.tgl}</td>
                     <td class="p-3">
                         <div class="font-extrabold text-deep-green">${u.nama}</div>
-                        <div class="text-[10px] text-earth-brown font-mono">${maskNik(u.nik)}</div>
+                        <div class="text-[10px] text-earth-brown">${u.kategori}</div>
                     </td>
                     <td class="p-3">
                         <span class="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-soft-green text-deep-green border border-olive-green/30">
@@ -2877,5 +2932,231 @@
             }, 3000);
         }
     </script>
+    <!-- MODAL V8: ATUR ITEM PEMERIKSAAN -->
+    <div id="modal-atur-item" class="fixed inset-0 z-50 bg-stone-900/40 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="white-card p-5 sm:p-6 max-w-2xl w-full bg-[#FAF7F0] space-y-4 border-2 border-olive-green/30 max-h-[92vh] overflow-y-auto">
+            <div class="flex items-center justify-between border-b border-olive-green/15 pb-3">
+                <div><h3 class="font-extrabold text-deep-green text-base sm:text-lg"><i class="fa-solid fa-sliders text-olive-green mr-2"></i>Atur Item Pemeriksaan</h3><p class="text-[11px] text-earth-brown font-medium">Tambah, ubah, urutkan, hapus, atau aktifkan item. Berlaku untuk tab Pemeriksaan dan Pemeriksaan Khusus.</p></div>
+                <button type="button" onclick="closeAturItem()" class="text-earth-brown hover:text-deep-green text-xl cursor-pointer" aria-label="Tutup"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="flex flex-col sm:flex-row gap-2 sm:items-end text-xs font-bold text-deep-green">
+                <div class="flex-1"><label class="block mb-1">Kategori sasaran:</label>
+                    <select id="cfg-kat" onchange="cfgHideForm();cfgRender()" class="w-full p-2.5 bg-white rounded-xl border border-olive-green/25 cursor-pointer">
+                        <option>Balita</option><option>Remaja</option><option>Usia Produktif</option><option>Ibu Hamil</option><option>Ibu Menyusui</option><option>Lansia</option>
+                    </select></div>
+                <button type="button" onclick="cfgEdit(-1)" class="btn-primary px-4 py-2.5 text-xs font-bold cursor-pointer"><i class="fa-solid fa-plus mr-1"></i>Tambah Item</button>
+            </div>
+            <div id="cfg-list" class="space-y-2"></div>
+            <div id="cfg-form" class="hidden p-4 rounded-2xl bg-white border-2 border-sun-yellow/40 space-y-3 text-xs font-bold text-deep-green">
+                <p id="cfg-form-title" class="font-extrabold text-sm text-earth-brown">Tambah item baru</p>
+                <div class="grid sm:grid-cols-2 gap-3">
+                    <div><label class="block mb-1">Nama item</label><input id="cfg-l" type="text" placeholder="Contoh: Lingkar Perut" class="w-full p-2.5 bg-base-cream rounded-xl border border-olive-green/25"></div>
+                    <div><label class="block mb-1">Satuan (opsional)</label><input id="cfg-u" type="text" placeholder="Contoh: cm" class="w-full p-2.5 bg-base-cream rounded-xl border border-olive-green/25"></div>
+                    <div><label class="block mb-1">Format pengisian</label>
+                        <select id="cfg-t" onchange="cfgTipe()" class="w-full p-2.5 bg-base-cream rounded-xl border border-olive-green/25 cursor-pointer">
+                            <option value="num">Angka (ketik)</option><option value="text">Teks (ketik manual)</option><option value="tensi">Tensi (otomatis 120/80)</option><option value="select">Pilihan (dropdown)</option><option value="checks">Ceklis (boleh pilih banyak)</option>
+                        </select></div>
+                    <div><label class="block mb-1">Contoh isian (opsional)</label><input id="cfg-ph" type="text" placeholder="Contoh: 80" class="w-full p-2.5 bg-base-cream rounded-xl border border-olive-green/25"></div>
+                </div>
+                <div id="cfg-opsi-wrap" class="hidden"><label class="block mb-1">Daftar pilihan (satu per baris)</label><textarea id="cfg-o" rows="4" class="w-full p-2.5 bg-base-cream rounded-xl border border-olive-green/25" placeholder="Ya&#10;Tidak"></textarea></div>
+                <label class="flex items-center gap-2 cursor-pointer"><input id="cfg-on" type="checkbox" checked class="accent-[#7C9246] w-5 h-5"> Aktif (tampil di formulir)</label>
+                <div class="flex justify-end gap-2"><button type="button" onclick="cfgHideForm()" class="px-4 py-2 bg-stone-200 rounded-xl cursor-pointer">Batal</button><button type="button" onclick="cfgSimpan()" class="btn-olive px-5 py-2 font-bold cursor-pointer">Simpan Item</button></div>
+            </div>
+            <div class="flex justify-between items-center gap-2 border-t border-olive-green/15 pt-3">
+                <button type="button" onclick="cfgReset()" class="text-[11px] font-bold text-red-700 underline cursor-pointer">Kembalikan ke default</button>
+                <button type="button" onclick="closeAturItem()" class="btn-primary px-5 py-2 text-xs font-bold cursor-pointer">Selesai</button>
+            </div>
+        </div>
+    </div>
+
+<script>
+// ===== V8: item pemeriksaan bisa diatur, opsi kosong, format otomatis, tab khusus =====
+const SKIP = ['Alat tidak ada', 'Alat habis', 'Tidak diperiksa'];
+const TIPE = {num:'Angka (ketik)', text:'Teks (ketik manual)', tensi:'Tensi (otomatis 120/80)', select:'Pilihan (dropdown)', checks:'Ceklis (boleh pilih banyak)'};
+const CFG_KEY = 'gp_kader_item_v8';
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function cfgDefault() {
+    const o = {};
+    Object.keys(PEM_SPEC).forEach(k => { o[k] = PEM_SPEC[k].map(([id, l, u, t, x = {}]) => ({id, l, u, t: id === 'tensi' ? 'tensi' : t, o: x.o || [], ph: x.ph || '', on: true})); });
+    o['Usia Produktif'].splice(3, 0, {id:'kol', l:'Kolesterol', u:'mg/dL', t:'num', o:[], ph:'190', on:true}, {id:'au', l:'Asam Urat', u:'mg/dL', t:'num', o:[], ph:'6.5', on:true});
+    return o;
+}
+let PCFG; try { PCFG = JSON.parse(localStorage.getItem(CFG_KEY)); } catch (e) {}
+if (!PCFG || !PCFG['Balita']) PCFG = cfgDefault();
+const cfgStore = () => { try { localStorage.setItem(CFG_KEY, JSON.stringify(PCFG)); } catch (e) {} };
+const pemFields = k => (PCFG[k] || PCFG['Usia Produktif']).filter(f => f.on);
+let pemMode = 'reguler', cfgIdx = -1;
+const PEM_LOG = [];
+
+// ---- format otomatis ----
+function fmtTensi(v) {
+    if (v.includes('/')) { const [a, b = ''] = v.split('/'); return a.replace(/\D/g, '').slice(0, 3) + '/' + b.replace(/\D/g, '').slice(0, 3); }
+    const d = v.replace(/\D/g, '').slice(0, 6), n = /^[12]/.test(d) ? 3 : 2;
+    return d.length <= n ? d : d.slice(0, n) + '/' + d.slice(n, n + 3);
+}
+const fmtNum = v => v.replace(',', '.').replace(/[^\d.]/g, '').replace(/(\..*)\./, '$1');
+
+function pemCollect(fl) {
+    const v = {_skip: {}};
+    fl.forEach(f => {
+        const sk = document.querySelector(`[data-skip="${f.id}"]`);
+        if (sk && sk.value) { v._skip[f.id] = sk.value; return; }
+        if (f.t === 'checks') v[f.id] = [...document.querySelectorAll(`input[name="pf-${f.id}"]:checked`)].map(i => i.value);
+        else { const e = document.getElementById('pf-' + f.id); if (e && e.value !== '') v[f.id] = e.value; }
+    });
+    return v;
+}
+function pemLive() {
+    const m = selectedMemberForExam, box = document.getElementById('pf-alert');
+    if (!m || !box) return;
+    const fl = pemFlags(m.kategori, pemCollect(pemFields(m.kategori)));
+    box.className = 'sm:col-span-2 p-3 rounded-xl text-[11px] font-bold border ' + (fl.length ? 'bg-amber-50 border-amber-300 text-amber-900' : 'bg-emerald-50 border-emerald-200 text-emerald-800');
+    box.innerHTML = fl.length ? '<i class="fa-solid fa-triangle-exclamation mr-1"></i>Perlu perhatian: ' + fl.map(x => x[1]).join('; ') : '<i class="fa-solid fa-circle-check mr-1"></i>Semua nilai yang diisi dalam batas normal.';
+}
+function pemOnInput(e) {
+    const t = e.target, k = t.dataset && t.dataset.t;
+    if (k === 'tensi') t.value = fmtTensi(t.value);
+    else if (k === 'num') t.value = fmtNum(t.value);
+    if (t.dataset && t.dataset.skip !== undefined) {
+        const w = t.closest('[data-f]'), off = !!t.value;
+        w.querySelectorAll('input,select:not([data-skip])').forEach(x => { x.disabled = off; if (off) { if (x.type === 'checkbox') x.checked = false; else x.value = ''; } });
+        w.classList.toggle('opacity-60', off);
+    }
+    pemLive();
+}
+
+function openModalPemeriksaan(memberId, khusus) {
+    const family = familyDataMock[currentPemeriksaanBarcode];
+    if (!family) return;
+    const m = family.anggota.find(x => x.id === memberId);
+    if (!m) return;
+    selectedMemberForExam = m;
+    pemMode = khusus ? 'khusus' : 'reguler';
+    document.getElementById('form-pemeriksaan-title').innerText = `${khusus ? 'Pemeriksaan Khusus' : 'Input Pemeriksaan'}: ${m.nama}`;
+    document.getElementById('form-pemeriksaan-kategori-badge').innerText = m.kategori;
+    document.getElementById('input-catatan-bidan').value = m.catatan || '';
+    const h = m.hasil || {}, sks = h._skip || {}, cls = 'w-full p-2.5 bg-white rounded-xl border border-olive-green/20 text-deep-green';
+    const fl = pemFields(m.kategori);
+    const rows = fl.map(f => {
+        const id = 'pf-' + f.id, sk = sks[f.id] || '', dis = sk ? 'disabled' : '';
+        const head = `<div class="flex items-center justify-between gap-2 mb-1"><label for="${id}" class="font-bold text-deep-green">${esc(f.l)}${f.u ? ` (${esc(f.u)})` : ''}</label><select data-skip="${f.id}" aria-label="Status ${esc(f.l)}" class="pf-skip"><option value="">Diisi</option>${SKIP.map(s => `<option ${sk === s ? 'selected' : ''}>${s}</option>`).join('')}</select></div>`;
+        let body;
+        if (f.t === 'select') body = `<select id="${id}" ${dis} class="${cls} cursor-pointer"><option value="">- pilih -</option>${f.o.map(x => { const [v, tx] = x.split('|'); return `<option value="${esc(v)}" ${h[f.id] === v ? 'selected' : ''}>${esc(tx || v)}</option>`; }).join('')}</select>`;
+        else if (f.t === 'checks') body = `<div class="flex flex-wrap gap-2">${f.o.map(c => `<label class="flex items-center gap-2 px-3 py-2 bg-white rounded-xl border border-olive-green/20 cursor-pointer"><input type="checkbox" ${dis} name="${id}" value="${esc(c)}" ${(h[f.id] || []).includes(c) ? 'checked' : ''} class="accent-[#7C9246] w-4 h-4"><span>${esc(c)}</span></label>`).join('')}</div>`;
+        else body = `<input id="${id}" ${dis} type="text" data-t="${f.t}" inputmode="${f.t === 'text' ? 'text' : f.t === 'tensi' ? 'numeric' : 'decimal'}" autocomplete="off" ${f.t === 'tensi' ? 'pattern="\\d{2,3}/\\d{2,3}" title="Format tensi: 120/80 (cukup ketik 12080)"' : ''} value="${esc(h[f.id] ?? '')}" placeholder="${f.t === 'tensi' ? 'Ketik 12080 → 120/80' : 'Contoh: ' + esc(f.ph)}" class="${cls}">`;
+        return `<div data-f="${f.id}" class="${f.t === 'checks' ? 'sm:col-span-2 ' : ''}${sk ? 'opacity-60' : ''}">${head}${body}</div>`;
+    }).join('');
+    const tags = [...document.querySelectorAll('#khusus-tags input:checked')].map(i => i.value);
+    const banner = khusus ? `<div class="sm:col-span-2 p-3 rounded-xl bg-soft-yellow border border-sun-yellow/50 text-[11px] font-bold text-earth-brown"><i class="fa-solid fa-star-of-life text-sun-yellow mr-1"></i>${esc(document.getElementById('agenda-nama').value)} - ${esc((tags.length ? tags : ['Pemeriksaan Khusus']).join(' + '))}</div>` : '';
+    const c = document.getElementById('form-fields-dynamic-container');
+    c.innerHTML = `<div class="grid sm:grid-cols-2 gap-3 text-xs">${banner}${rows || '<p class="sm:col-span-2 text-center py-4 text-earth-brown">Belum ada item aktif. Aktifkan lewat tombol "Atur Item Pemeriksaan".</p>'}<div id="pf-alert"></div></div>`;
+    c.oninput = c.onchange = pemOnInput;
+    pemLive();
+    document.getElementById('modal-input-pemeriksaan').classList.remove('hidden');
+}
+
+function savePemeriksaanData(e) {
+    e.preventDefault();
+    const m = selectedMemberForExam;
+    if (!m) return;
+    const fields = pemFields(m.kategori), v = pemCollect(fields), fl = pemFlags(m.kategori, v), khusus = pemMode === 'khusus';
+    m.hasil = v;
+    m.detailTerakhir = fields.map(f => {
+        if (v._skip[f.id]) return `${f.l}: ${v._skip[f.id]}`;
+        const x = v[f.id];
+        if (f.t === 'checks') return x && x.length ? `${f.l}: ${x.join(', ')}` : null;
+        return x ? `${f.l}: ${x}${f.u ? ' ' + f.u : ''}` : null;
+    }).filter(Boolean).join('; ') || 'Tidak ada data terisi';
+    const catatan = document.getElementById('input-catatan-bidan').value.trim();
+    m.catatan = catatan || (fl.length ? fl.map(x => x[1]).join('. ') + '. Disarankan konsultasi lanjutan.' : 'Kondisi baik, lanjutkan pemantauan rutin.');
+    m.sudahPemeriksaan = true;
+    m.terakhirCatat = khusus ? 'Hari Ini (Sesi Khusus)' : 'Hari Ini (Posyandu)';
+    const g = id => (document.getElementById(id) || {}).value || '';
+    let tanda = [...document.querySelectorAll('#khusus-tags input:checked')].map(i => i.value);
+    if (khusus && !tanda.length) tanda = ['Pemeriksaan Khusus'];
+    PEM_LOG.unshift({jenis: khusus ? 'KHUSUS' : 'REGULER', tgl: khusus ? g('agenda-tanggal') : todayStr, agenda: khusus ? g('agenda-nama') : 'Posyandu rutin', label: khusus ? g('agenda-tanda') : '', tanda, kode: currentPemeriksaanBarcode, nama: m.nama, kategori: m.kategori, detail: m.detailTerakhir, catatan: m.catatan});
+    if (fl.length) rekamKasusKhususMock.unshift({id: Date.now(), bulanTahun: todayStr.slice(0, 7), tgl: 'Hari ini', posyandu: 'Posyandu 1', nama: m.nama, kategori: m.kategori, kasusKey: fl.map(x => x[0]).join(','), kasus: fl.map(x => x[1]).join(' & '), statusWeb: 'ON', khusus});
+    if (!khusus && konfirmasiState === 'CONFIRMED') { konfirmasiState = 'EDITED'; updateAttendanceStatusForCurrentFamily('Konfirmasi Edit'); }
+    updateKonfirmasiButtonUI();
+    closeModalPemeriksaan();
+    renderPemeriksaanCards();
+    renderTabelAbsenHariIni();
+    renderRekapKhusus();
+    showToast(`Data ${khusus ? 'pemeriksaan khusus' : 'pemeriksaan'} ${m.nama} berhasil disimpan!${fl.length ? ' Ada ' + fl.length + ' temuan perlu perhatian.' : ''}`, 'success');
+}
+
+// ---- tab Pemeriksaan Khusus: kartu anggota sama dengan tab Pemeriksaan ----
+const _rc = renderPemeriksaanCards;
+renderPemeriksaanCards = function () {
+    _rc();
+    const a = document.getElementById('grid-cards-pemeriksaan'), b = document.getElementById('grid-cards-khusus');
+    if (a && b) b.innerHTML = a.innerHTML.replace(/openModalPemeriksaan\('(\w+)'\)/g, "openModalPemeriksaan('$1',true)").replace(/Input Data Pemeriksaan/g, 'Input Pemeriksaan Khusus');
+};
+function cariPesertaPemeriksaanKhusus(code) {
+    const v = (code || document.getElementById('input-khusus-search').value || '').trim();
+    if (!v) { showToast('Ketikkan kode kartu keluarga terlebih dahulu!', 'warning'); return; }
+    cariPesertaPemeriksaan(v);
+}
+function renderRekapKhusus() {
+    const b = document.getElementById('tbody-rekap-khusus');
+    if (!b) return;
+    const r = PEM_LOG.filter(x => x.jenis === 'KHUSUS');
+    b.innerHTML = r.length ? r.map(x => `<tr><td class="p-2.5 whitespace-nowrap">${esc(x.tgl)}</td><td class="p-2.5 font-bold">${esc(x.nama)}<div class="text-[10px] font-normal text-earth-brown">${esc(x.kategori)}</div></td><td class="p-2.5">${x.tanda.map(t => `<span class="inline-block mr-1 mb-1 px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 border border-amber-300 text-[10px] font-extrabold">${esc(t)}</span>`).join('')}<div class="text-[10px] text-earth-brown">${esc(x.agenda)}</div></td><td class="p-2.5 text-[11px]">${esc(x.detail)}</td></tr>`).join('')
+        : '<tr><td colspan="4" class="p-5 text-center italic text-earth-brown">Belum ada catatan khusus pada sesi ini.</td></tr>';
+}
+function unduhCsvKhusus() {
+    const r = PEM_LOG.filter(x => x.jenis === 'KHUSUS');
+    if (!r.length) { showToast('Belum ada catatan khusus untuk diunduh.', 'warning'); return; }
+    const rows = [['Tanggal', 'Acara', 'Tanda', 'Label', 'Kode Kartu', 'Nama', 'Kategori', 'Hasil', 'Catatan']].concat(r.map(x => [x.tgl, x.agenda, x.tanda.join(' + '), x.label, x.kode, x.nama, x.kategori, x.detail, x.catatan]));
+    const csv = '\ufeff' + rows.map(x => x.map(c => `"${String(c ?? '').replace(/"/g, '""')}"`).join(',')).join('\n');
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([csv], {type: 'text/csv;charset=utf-8'}));
+    a.download = 'laporan-pemeriksaan-khusus.csv';
+    a.click();
+}
+
+// ---- pengelola item pemeriksaan ----
+const cfgKat = () => document.getElementById('cfg-kat').value;
+function openAturItem() { cfgHideForm(); cfgRender(); document.getElementById('modal-atur-item').classList.remove('hidden'); }
+function closeAturItem() { document.getElementById('modal-atur-item').classList.add('hidden'); if (selectedMemberForExam) renderPemeriksaanCards(); }
+function cfgRender() {
+    const L = PCFG[cfgKat()] || [];
+    document.getElementById('cfg-list').innerHTML = L.length ? L.map((f, i) => `
+        <div class="flex items-center gap-2 p-2.5 rounded-xl border ${f.on ? 'bg-white border-olive-green/25' : 'bg-stone-100 border-stone-200 opacity-70'}">
+            <label class="flex items-center cursor-pointer" title="Aktifkan / nonaktifkan"><input type="checkbox" ${f.on ? 'checked' : ''} onchange="cfgToggle(${i})" class="accent-[#7C9246] w-5 h-5"></label>
+            <div class="flex-1 min-w-0"><div class="font-extrabold text-deep-green text-xs truncate">${esc(f.l)}${f.u ? ` <span class="font-medium">(${esc(f.u)})</span>` : ''}</div><div class="text-[10px] text-earth-brown">${TIPE[f.t]}${f.o.length ? ' - ' + f.o.length + ' pilihan' : ''}</div></div>
+            <button type="button" onclick="cfgMove(${i},-1)" class="cfg-btn" aria-label="Naik"><i class="fa-solid fa-chevron-up"></i></button>
+            <button type="button" onclick="cfgMove(${i},1)" class="cfg-btn" aria-label="Turun"><i class="fa-solid fa-chevron-down"></i></button>
+            <button type="button" onclick="cfgEdit(${i})" class="cfg-btn text-amber-700" aria-label="Edit"><i class="fa-solid fa-pen"></i></button>
+            <button type="button" onclick="cfgDel(${i})" class="cfg-btn text-red-600" aria-label="Hapus"><i class="fa-solid fa-trash"></i></button>
+        </div>`).join('') : '<p class="text-center text-xs italic text-earth-brown py-4">Belum ada item. Tekan "Tambah Item".</p>';
+}
+function cfgHideForm() { document.getElementById('cfg-form').classList.add('hidden'); }
+function cfgTipe() { document.getElementById('cfg-opsi-wrap').classList.toggle('hidden', !['select', 'checks'].includes(document.getElementById('cfg-t').value)); }
+function cfgEdit(i) {
+    cfgIdx = i;
+    const f = i < 0 ? {l: '', u: '', t: 'num', o: [], ph: '', on: true} : PCFG[cfgKat()][i];
+    document.getElementById('cfg-l').value = f.l; document.getElementById('cfg-u').value = f.u;
+    document.getElementById('cfg-t').value = f.t; document.getElementById('cfg-o').value = f.o.join('\n');
+    document.getElementById('cfg-ph').value = f.ph; document.getElementById('cfg-on').checked = f.on;
+    document.getElementById('cfg-form-title').innerText = i < 0 ? 'Tambah item baru' : 'Edit item';
+    cfgTipe(); document.getElementById('cfg-form').classList.remove('hidden');
+    document.getElementById('cfg-l').focus();
+}
+function cfgSimpan() {
+    const L = PCFG[cfgKat()], t = document.getElementById('cfg-t').value, l = document.getElementById('cfg-l').value.trim();
+    const o = ['select', 'checks'].includes(t) ? document.getElementById('cfg-o').value.split('\n').map(x => x.trim()).filter(Boolean) : [];
+    if (!l) { showToast('Nama item wajib diisi.', 'warning'); return; }
+    if (['select', 'checks'].includes(t) && !o.length) { showToast('Isi minimal satu pilihan (satu per baris).', 'warning'); return; }
+    const f = {id: cfgIdx < 0 ? 'x' + Date.now().toString(36) : L[cfgIdx].id, l, u: document.getElementById('cfg-u').value.trim(), t, o, ph: document.getElementById('cfg-ph').value.trim(), on: document.getElementById('cfg-on').checked};
+    if (cfgIdx < 0) L.push(f); else L[cfgIdx] = f;
+    cfgStore(); cfgHideForm(); cfgRender(); showToast('Item pemeriksaan disimpan.', 'success');
+}
+function cfgDel(i) { const L = PCFG[cfgKat()]; if (confirm(`Hapus item "${L[i].l}" dari kategori ${cfgKat()}?`)) { L.splice(i, 1); cfgStore(); cfgRender(); } }
+function cfgToggle(i) { const f = PCFG[cfgKat()][i]; f.on = !f.on; cfgStore(); cfgRender(); }
+function cfgMove(i, d) { const L = PCFG[cfgKat()], j = i + d; if (j < 0 || j >= L.length) return; [L[i], L[j]] = [L[j], L[i]]; cfgStore(); cfgRender(); }
+function cfgReset() { if (confirm('Kembalikan semua item pemeriksaan ke pengaturan awal?')) { PCFG = cfgDefault(); cfgStore(); cfgHideForm(); cfgRender(); } }
+renderPemeriksaanCards(); renderRekapKhusus();
+</script>
 </body>
 </html>
