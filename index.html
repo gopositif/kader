@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="Content-Security-Policy" content="object-src 'none'; base-uri 'self'; form-action 'self'">
     <title>Kader Posyandu - GO-Positif Gonoharjo</title>
 
     <!-- Favicon Logo Tab Browser -->
@@ -33,7 +34,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Quicksand:wght@600;700;800&display=swap" rel="stylesheet">
 
     <script>
@@ -284,8 +285,53 @@
         @media (max-width: 640px) { .pf-skip { max-width: 96px; } header nav .nav-tab { padding: 8px 11px; } }
         @media (min-width: 1024px) and (max-width: 1279px) { header nav { max-width: 520px !important; } }
         @media (prefers-reduced-motion: reduce) { header nav .nav-tab { transform: none !important; } }
+        /* ===== V9: header, pencarian khusus, peserta ===== */
+        header.sticky > div { flex-wrap: wrap; row-gap: 8px; }
+        header.sticky nav { order: 3; flex: 1 1 100%; max-width: 100% !important; justify-content: flex-start; }
+        @media (min-width: 640px) { header.sticky nav { justify-content: safe center; } }
+        @media (min-width: 1536px) { header.sticky nav { order: 0; flex: 0 1 auto; } }
+        .ks-mode { display: flex; align-items: center; justify-content: center; gap: 6px; padding: 10px 6px; border-radius: 10px; font-size: 11px; font-weight: 800; color: var(--earth-brown); cursor: pointer; transition: background .15s, transform .15s; }
+        .ks-mode:hover { background: #EBF2DF; }
+        .ks-mode.on { background: var(--deep-green); color: #fff; box-shadow: 0 4px 10px -4px rgba(30,70,32,.6); }
+        .ks-row { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 14px; background: #fff; border: 1px solid rgba(124,146,70,.22); }
+        .ks-badge { padding: 1px 8px; border-radius: 999px; font-size: 10px; font-weight: 800; background: #EBF2DF; color: var(--deep-green); border: 1px solid rgba(124,146,70,.3); }
+        .ks-lnk { font-size: 11px; font-weight: 800; color: var(--olive-green); text-decoration: underline; cursor: pointer; }
+        .cfg-btn:disabled { opacity: .4; cursor: not-allowed; }
+        @media (max-width: 480px) { .ks-row { flex-wrap: wrap; } .ks-row .btn-olive { flex: 1; } }
+        i.fa-solid, i.fa-regular, i.fa-brands { display: inline-block; line-height: 1; flex-shrink: 0; }
+        /* ===== V10: ikon lencana, banner keluarga, ekspor, scan ===== */
+        .ico-badge { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 14px; flex-shrink: 0; color: #fff; font-size: 18px; background: linear-gradient(135deg, #8AA352, #1E4620); box-shadow: 0 6px 14px -6px rgba(30,70,32,.6), inset 0 1px 0 rgba(255,255,255,.35); }
+        .ico-badge.sm { width: 30px; height: 30px; border-radius: 10px; font-size: 13px; background: linear-gradient(135deg, #F3A94B, #C77C1E); }
+        .fam-banner { display: flex; align-items: center; gap: 12px; padding: 10px 14px; min-width: 0; border-radius: 16px; background: linear-gradient(135deg, #FFF6DF, #F1F6E4); border: 1px solid rgba(243,169,75,.45); box-shadow: inset 0 1px 0 #fff, 0 8px 16px -12px rgba(30,70,32,.5); }
+        .fam-ico { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 12px; flex-shrink: 0; color: #fff; background: linear-gradient(135deg, #F3A94B, #C77C1E); box-shadow: inset 0 1px 0 rgba(255,255,255,.4); }
+        .fam-txt { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+        .fam-lbl { font-size: 10px; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; color: var(--olive-green); }
+        .fam-nm { font-size: 15px; font-weight: 800; line-height: 1.2; color: var(--deep-green); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .fam-chips { display: flex; flex-wrap: wrap; gap: 5px; }
+        .fam-chip { display: inline-flex; align-items: center; gap: 5px; padding: 1px 9px; border-radius: 999px; background: #fff; border: 1px solid rgba(124,146,70,.3); font-size: 10px; font-weight: 700; color: var(--earth-brown); }
+        #btn-konfirmasi-pemeriksaan, .pem-act { justify-content: center; min-height: 40px; }
+        .exp-btn { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 9px 4px; border-radius: 12px; font-size: 10px; font-weight: 800; background: #fff; border: 1px solid rgba(124,146,70,.28); color: var(--deep-green); cursor: pointer; transition: transform .15s, box-shadow .15s; }
+        .exp-btn i { font-size: 16px; }
+        .exp-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 14px -8px rgba(30,70,32,.5); }
+        .step { display: flex; gap: 9px; align-items: flex-start; }
+        .step b { flex: 0 0 20px; height: 20px; border-radius: 50%; background: var(--deep-green); color: #fff; font-size: 10px; display: flex; align-items: center; justify-content: center; margin-top: 1px; }
+        .scan-box { position: relative; border-radius: 18px; overflow: hidden; background: #111; aspect-ratio: 1 / 1; max-height: 56vh; width: 100%; }
+        .scan-box video { width: 100%; height: 100%; object-fit: cover; }
+        .scan-frame { position: absolute; inset: 18%; border: 3px solid #F3A94B; border-radius: 16px; box-shadow: 0 0 0 999px rgba(0,0,0,.38); pointer-events: none; }
+        @media (max-width: 480px) { .fam-nm { font-size: 14px; } .ico-badge { width: 40px; height: 40px; } }
+        /* ===== V11: status penanda ===== */
+        .st { display: inline-flex; align-items: center; gap: 5px; padding: 2px 9px; border-radius: 999px; font-size: 10px; font-weight: 800; border: 1px solid; white-space: nowrap; flex-shrink: 0; }
+        .st i { font-size: 9px; }
+        .st-ok { background: #D1FAE5; color: #065F46; border-color: #6EE7B7; }
+        .st-edit { background: #E0E7FF; color: #3730A3; border-color: #A5B4FC; }
+        .st-no { background: #FEF3C7; color: #92400E; border-color: #FCD34D; }
+        .st-legend { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; font-size: 10px; font-weight: 700; color: var(--earth-brown); }
+        #lap-pages { max-width: none; }
     </style>
 </head>
+
+
+
 
 <body class="min-h-screen flex flex-col justify-between antialiased bg-[#FAF7F0]">
 
@@ -957,26 +1003,19 @@
 
                     <div class="lg:col-span-8 space-y-5">
                         <div class="white-card p-5 md:p-6 space-y-5 border-2 border-olive-green/20 shadow-md">
-                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-olive-green/15 pb-4">
-                                <div class="space-y-0.5">
-                                    <div class="flex items-center space-x-2 text-deep-green">
-                                        <i class="fa-solid fa-users text-lg text-olive-green"></i>
-                                        <h3 class="font-extrabold text-deep-green text-base md:text-lg">Pilih Anggota Keluarga yang Akan Diinput Pemeriksaannya</h3>
+                            <div class="flex flex-col gap-4 border-b border-olive-green/15 pb-4">
+                                <div class="flex items-start gap-3"><span class="ico-badge"><i class="fa-solid fa-users"></i></span>
+                                    <div class="min-w-0"><h3 class="font-extrabold text-deep-green text-base md:text-lg leading-tight">Pilih Anggota Keluarga yang Akan Diinput Pemeriksaannya</h3><p class="text-xs text-earth-brown font-medium mt-1">Klik tombol <span class="text-earth-brown font-bold underline">"Input Data Pemeriksaan"</span> atau ubah kategori sasaran langsung pada kartu di bawah.</p></div></div>
+                                <div class="grid gap-3 md:grid-cols-[minmax(0,1fr)_auto] md:items-center">
+                                    <span id="pemeriksaan-kk-info" class="fam-banner"><span class="fam-ico"><i class="fa-solid fa-house-user"></i></span><span class="fam-txt"><span class="fam-lbl">Kepala Keluarga</span><span class="fam-nm">Bp. Sujatno</span><span class="fam-chips"><span class="fam-chip"><i class="fa-solid fa-location-dot"></i>RT 02 / RW 01</span></span></span></span>
+                                    <div class="grid grid-cols-1 min-[420px]:grid-cols-2 md:flex gap-2">
+                                        <button type="button" onclick="openAturItem()" class="pem-act btn-brown px-3.5 py-2 text-xs font-bold flex items-center gap-1.5 cursor-pointer"><i class="fa-solid fa-sliders text-sun-yellow"></i><span>Atur Item Pemeriksaan</span></button>
+                                        <button id="btn-konfirmasi-pemeriksaan" onclick="handleKonfirmasiPemeriksaanClick()" class="bg-amber-500 text-white px-4 py-2 text-xs font-extrabold rounded-xl flex items-center space-x-2 cursor-pointer"><span>Konfirmasi Data ?</span></button>
                                     </div>
-                                    <p class="text-xs text-earth-brown font-medium">Klik tombol <span class="text-earth-brown font-bold underline">"Input Data Pemeriksaan"</span> atau ubah kategori sasaran langsung pada kartu di bawah.</p>
-                                </div>
-
-                                <div class="flex flex-wrap items-center gap-2">
-                                    <button type="button" onclick="openAturItem()" class="btn-brown px-3.5 py-2 text-xs font-bold flex items-center gap-1.5 cursor-pointer"><i class="fa-solid fa-sliders text-sun-yellow"></i><span>Atur Item Pemeriksaan</span></button><span id="pemeriksaan-kk-info" class="text-xs px-3 py-1.5 bg-soft-yellow rounded-xl font-bold text-earth-brown border border-sun-yellow/40 shadow-xs">
-                                        Keluarga Bp. Sujatno (RT 02 / RW 01)
-                                    </span>
-                                    
-                                    <button id="btn-konfirmasi-pemeriksaan" onclick="handleKonfirmasiPemeriksaanClick()" class="bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 text-xs font-extrabold rounded-xl flex items-center space-x-2 shadow-md hover:scale-105 transition-all duration-200 border border-amber-400/30 cursor-pointer">
-                                        <span>Konfirmasi Data ?</span>
-                                    </button>
                                 </div>
                             </div>
 
+                            <div class="st-legend"><span>Status:</span><span class="st st-no"><i class="fa-regular fa-clock"></i>Belum diinput</span><span class="st st-ok"><i class="fa-solid fa-check"></i>Selesai</span><span class="st st-edit"><i class="fa-solid fa-pen"></i>Selesai (pernah diubah)</span></div>
                             <div id="grid-cards-pemeriksaan" class="grid sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4">
                             </div>
                         </div>
@@ -990,11 +1029,11 @@
                 <div class="grid lg:grid-cols-12 gap-6 items-start">
                     
                     <!-- SISI KIRI: FORM DETAIL AGENDA / ACARA KHUSUS -->
-                    <div class="lg:col-span-5 white-card p-5 md:p-6 space-y-5 border-2 border-sun-yellow/40 shadow-md bg-soft-yellow/20">
+                    <div class="lg:col-span-5 lg:col-start-1 lg:row-start-1 min-w-0 white-card p-5 md:p-6 space-y-5 border-2 border-sun-yellow/40 shadow-md bg-soft-yellow/20">
                         <div class="border-b border-sun-yellow/30 pb-3">
                             <div class="flex items-center space-x-2.5 text-earth-brown">
                                 <div class="w-9 h-9 rounded-xl bg-soft-yellow flex items-center justify-center font-bold text-lg shadow-xs">
-                                    <i class="fa-solid fa-calendar-star text-sun-yellow"></i>
+                                    <i class="fa-solid fa-calendar-days text-sun-yellow"></i>
                                 </div>
                                 <div>
                                     <h3 class="font-extrabold text-deep-green text-base md:text-lg">Detail Sesi / Acara Khusus</h3>
@@ -1016,12 +1055,14 @@
                                 </div>
                                 <div class="space-y-1.5">
                                     <label class="block text-earth-brown font-extrabold">Tanda / Label Khusus:</label>
-                                    <select id="agenda-tanda" class="w-full p-2.5 bg-white rounded-xl border border-sun-yellow/40 focus:outline-none focus:ring-2 focus:ring-sun-yellow shadow-xs cursor-pointer text-deep-green">
+                                    <select id="agenda-tanda" onchange="agendaTandaChange()" class="w-full p-2.5 bg-white rounded-xl border border-sun-yellow/40 focus:outline-none focus:ring-2 focus:ring-sun-yellow shadow-xs cursor-pointer text-deep-green">
                                         <option value="Puskesmas">Tim Puskesmas</option>
                                         <option value="BidanDesa">Bidan Desa</option>
                                         <option value="Penyuluhan">Penyuluhan Khusus</option>
                                         <option value="ImunisasiMassal">Imunisasi Massal</option>
+                                    <option value="Lainnya">Lainnya (ketik manual)</option>
                                     </select>
+                                    <input type="text" id="agenda-tanda-manual" maxlength="40" autocomplete="off" placeholder="Ketik label khusus..." class="hidden mt-2 w-full p-2.5 bg-white rounded-xl border border-sun-yellow/40 text-deep-green shadow-xs">
                                 </div>
                             </div>
 
@@ -1032,6 +1073,7 @@
                                     <label class="flex items-center gap-2 px-3 py-2 bg-white rounded-xl border border-sun-yellow/40 cursor-pointer"><input type="checkbox" value="Acara Khusus" class="accent-[#F3A94B] w-4 h-4"><span>Acara Khusus</span></label>
                                     <label class="flex items-center gap-2 px-3 py-2 bg-white rounded-xl border border-sun-yellow/40 cursor-pointer"><input type="checkbox" value="Sesi Khusus" class="accent-[#F3A94B] w-4 h-4"><span>Sesi Khusus</span></label>
                                 </div>
+                                <div class="flex gap-2 pt-1"><input type="text" id="tag-manual" maxlength="30" autocomplete="off" onkeydown="if(event.key==='Enter'){event.preventDefault();tambahTag()}" placeholder="Tambah tanda lain (ketik manual)..." class="flex-1 min-w-0 p-2.5 bg-white rounded-xl border border-sun-yellow/40 text-deep-green shadow-xs"><button type="button" onclick="tambahTag()" class="btn-brown px-4 py-2.5 text-xs font-bold cursor-pointer shrink-0"><i class="fa-solid fa-plus mr-1"></i>Tambah</button></div>
                             </div>
 
                             <div class="space-y-1.5">
@@ -1044,37 +1086,75 @@
                                 <textarea id="agenda-keterangan" rows="3" class="w-full p-2.5 bg-white rounded-xl border border-sun-yellow/40 focus:outline-none shadow-xs text-deep-green">Pemeriksaan khusus USG portabel, skrining Hb bumil, dan pembagian vitamin penambah darah gratis.</textarea>
                             </div>
 
-                            <div class="p-3 rounded-xl bg-white border border-sun-yellow/40 text-[11px] text-earth-brown space-y-1 shadow-xs">
-                                <p class="font-extrabold text-deep-green flex items-center gap-1.5"><i class="fa-solid fa-circle-info text-sun-yellow"></i> Logika Web Admin:</p>
-                                <p class="text-earth-brown font-medium">Tanggal acara & detail sesi khusus ini akan dikelompokkan terpisah dalam rekapitulasi laporan resmi di Web Admin.</p>
+                            <div class="rounded-2xl bg-white border border-sun-yellow/40 p-3.5 space-y-2.5 shadow-xs">
+                                <p class="font-extrabold text-deep-green flex items-center gap-2 text-xs"><span class="ico-badge sm"><i class="fa-solid fa-circle-info"></i></span>Info Sistem</p>
+                                <ol class="space-y-2 text-[11px] text-earth-brown font-medium leading-relaxed">
+                                    <li class="step"><b>1</b><span>Isi <strong>detail sesi</strong> ini: nama acara, tanggal, label, dan tanda catatan.</span></li>
+                                    <li class="step"><b>2</b><span><strong>Panggil data peserta</strong> lewat nama, kode kartu, scan QR, atau unggah gambar, lalu centang yang ikut.</span></li>
+                                    <li class="step"><b>3</b><span>Tekan <strong>Input</strong> pada tiap peserta untuk mengisi hasil pemeriksaan. Hasilnya masuk ke <strong>Rekap Catatan Khusus</strong>.</span></li>
+                                </ol>
                             </div>
                         </div>
                     </div>
 
-                    <!-- SISI KANAN: PENCARIAN & KARTU SASARAN PEMERIKSAAN KHUSUS -->
-                    <div class="lg:col-span-7 space-y-5">
-                        <div class="white-card p-5 md:p-6 space-y-5 border-2 border-olive-green/20 shadow-md">
-                            <div class="space-y-3 border-b border-olive-green/15 pb-4">
-                                <div class="flex flex-wrap items-center justify-between gap-2">
-                                    <div class="flex items-center gap-2 text-deep-green"><i class="fa-solid fa-notes-medical text-lg text-olive-green"></i><h3 class="font-extrabold text-base md:text-lg">Input Pemeriksaan Sesuai Sesi Khusus</h3></div>
-                                    <button type="button" onclick="openAturItem()" class="btn-brown px-3.5 py-2 text-xs font-bold flex items-center gap-1.5 cursor-pointer"><i class="fa-solid fa-sliders text-sun-yellow"></i><span>Atur Item Pemeriksaan</span></button>
+                    <!-- SISI KANAN: CARI SASARAN & PESERTA SESI KHUSUS -->
+                    <div class="lg:col-span-7 lg:col-start-6 lg:row-start-1 lg:row-span-2 space-y-5 min-w-0">
+                        <div class="white-card p-5 md:p-6 space-y-4 border-2 border-olive-green/20 shadow-md">
+                            <div class="flex flex-wrap items-start justify-between gap-2">
+                                <div class="flex items-center gap-2.5 text-deep-green">
+                                    <span class="w-9 h-9 rounded-xl bg-soft-green flex items-center justify-center shrink-0"><i class="fa-solid fa-user-plus text-olive-green"></i></span>
+                                    <div><h3 class="font-extrabold text-base md:text-lg leading-tight">Input Pemeriksaan Sesuai Sesi Khusus</h3><p class="text-[11px] text-earth-brown font-medium">Cari sasaran, centang yang ikut, lalu input pemeriksaan.</p></div>
                                 </div>
-                                <p class="text-xs text-earth-brown font-medium">Cari keluarga yang hadir, lalu input pemeriksaan tiap anggota. Catatan otomatis diberi tanda sesi khusus di kiri.</p>
-                                <div class="flex flex-col sm:flex-row gap-2">
-                                    <div class="relative flex-1"><i class="fa-solid fa-magnifying-glass absolute left-3 top-3.5 text-olive-green text-xs"></i><input type="text" id="input-khusus-search" onkeydown="if(event.key==='Enter')cariPesertaPemeriksaanKhusus()" placeholder="Ketik kode kartu keluarga..." class="w-full pl-9 pr-3 py-2.5 bg-base-cream rounded-xl border border-olive-green/25 text-xs font-bold"></div>
-                                    <button onclick="cariPesertaPemeriksaanKhusus()" class="btn-olive px-4 py-2.5 text-xs font-bold cursor-pointer">Cari</button>
-                                    <button onclick="cariPesertaPemeriksaanKhusus('KRT-001')" class="px-3 py-2.5 text-xs font-bold bg-white border border-olive-green/30 rounded-xl text-olive-green cursor-pointer"><i class="fa-solid fa-barcode mr-1"></i>Kode Demo</button>
-                                </div>
+                                <button type="button" onclick="openAturItem()" class="btn-brown px-3.5 py-2 text-xs font-bold flex items-center gap-1.5 cursor-pointer"><i class="fa-solid fa-sliders text-sun-yellow"></i><span>Atur Item Pemeriksaan</span></button>
                             </div>
-                            <div id="grid-cards-khusus" class="grid sm:grid-cols-2 xl:grid-cols-3 gap-4"></div>
+                            <div id="ks-modes" class="grid grid-cols-2 sm:grid-cols-4 gap-1.5 p-1 bg-base-cream rounded-xl border border-olive-green/20">
+                                <button type="button" data-m="nama" onclick="ksMode('nama')" class="ks-mode"><i class="fa-solid fa-user"></i><span>Nama</span></button>
+                                <button type="button" data-m="kode" onclick="ksMode('kode')" class="ks-mode"><i class="fa-solid fa-keyboard"></i><span>Kode Kartu</span></button>
+                                <button type="button" data-m="scan" onclick="ksMode('scan')" class="ks-mode"><i class="fa-solid fa-camera"></i><span>Scan</span></button>
+                                <button type="button" data-m="unggah" onclick="ksMode('unggah')" class="ks-mode"><i class="fa-solid fa-file-arrow-up"></i><span>Unggah</span></button>
+                            </div>
+                            <div id="ks-p-nama" class="flex flex-col sm:flex-row gap-2">
+                                <div class="relative flex-1"><i class="fa-solid fa-magnifying-glass absolute left-3 top-3.5 text-olive-green text-xs"></i><input type="text" id="ks-nama" maxlength="60" autocomplete="off" onkeydown="if(event.key==='Enter')ksCariNama()" placeholder="Ketik nama sasaran atau kepala keluarga..." class="w-full pl-9 pr-3 py-2.5 bg-base-cream rounded-xl border border-olive-green/25 text-xs font-bold"></div>
+                                <button type="button" onclick="ksCariNama()" class="btn-olive px-5 py-2.5 text-xs font-bold cursor-pointer">Cari</button>
+                            </div>
+                            <div id="ks-p-kode" class="hidden flex flex-col sm:flex-row gap-2">
+                                <div class="relative flex-1"><i class="fa-solid fa-barcode absolute left-3 top-3.5 text-olive-green text-xs"></i><input type="text" id="ks-kode" maxlength="20" autocomplete="off" onkeydown="if(event.key==='Enter')ksCariKode()" placeholder="Kode kartu keluarga, contoh: KRT-001" class="w-full pl-9 pr-3 py-2.5 bg-base-cream rounded-xl border border-olive-green/25 text-xs font-bold uppercase"></div>
+                                <button type="button" onclick="ksCariKode()" class="btn-olive px-5 py-2.5 text-xs font-bold cursor-pointer">Cari</button>
+                                <button type="button" onclick="ksCariKode('KRT-001')" class="px-3 py-2.5 text-xs font-bold bg-white border border-olive-green/30 rounded-xl text-olive-green cursor-pointer">Kode Demo</button>
+                            </div>
+                            <div id="ks-p-scan" class="hidden"><button type="button" onclick="ksScan()" class="btn-primary w-full py-3 text-xs font-bold flex items-center justify-center gap-2 cursor-pointer"><i class="fa-solid fa-camera"></i><span>Mulai Scan Kartu Keluarga</span></button></div>
+                            <div id="ks-p-unggah" class="hidden"><label class="flex items-center justify-center gap-2 w-full py-3 text-xs font-bold bg-white border-2 border-dashed border-olive-green/40 rounded-xl text-deep-green cursor-pointer hover:bg-soft-green"><i class="fa-solid fa-file-arrow-up text-olive-green"></i><span>Pilih gambar kartu (PNG/JPG, maks. 5 MB)</span><input type="file" accept="image/png,image/jpeg,image/webp" class="hidden" onchange="ksUnggah(this)"></label></div>
+                            <div id="ks-hasil" class="hidden space-y-2 pt-1"></div>
                         </div>
                         <div class="white-card p-5 md:p-6 space-y-3 border-2 border-sun-yellow/30">
                             <div class="flex flex-wrap items-center justify-between gap-2">
-                                <div><h3 class="font-extrabold text-deep-green text-sm md:text-base"><i class="fa-solid fa-clipboard-list text-sun-yellow mr-2"></i>Rekap Catatan Khusus (Laporan Admin)</h3><p class="text-[11px] text-earth-brown font-medium">Tiap catatan membawa tanda sesi khusus agar mudah disaring admin.</p></div>
-                                <button onclick="unduhCsvKhusus()" class="btn-primary px-3.5 py-2 text-xs font-bold cursor-pointer"><i class="fa-solid fa-file-csv mr-1"></i>Unduh CSV</button>
+                                <h3 class="font-extrabold text-deep-green text-sm md:text-base"><i class="fa-solid fa-users text-sun-yellow mr-2"></i>Peserta Sesi <span id="ks-count" class="ml-1 px-2 py-0.5 rounded-full bg-soft-yellow text-earth-brown text-[10px] font-extrabold border border-sun-yellow/40">0 orang</span></h3>
+                                <button type="button" onclick="ksClear()" class="ks-lnk text-red-700">Kosongkan daftar</button>
                             </div>
-                            <div class="overflow-x-auto rounded-xl border border-olive-green/15"><table class="w-full text-left text-xs"><thead class="bg-soft-green text-deep-green font-extrabold"><tr><th class="p-2.5">Tanggal</th><th class="p-2.5">Sasaran</th><th class="p-2.5">Tanda / Acara</th><th class="p-2.5">Hasil</th></tr></thead><tbody id="tbody-rekap-khusus"></tbody></table></div>
+                            <div class="grid sm:grid-cols-3 gap-2">
+                                <input type="text" id="ks-filter" maxlength="60" oninput="ksPage=1;renderSesi()" placeholder="Saring nama / keluarga..." class="sm:col-span-1 w-full p-2.5 bg-base-cream rounded-xl border border-olive-green/25 text-xs font-bold">
+                                <select id="ks-fkat" onchange="ksPage=1;renderSesi()" class="w-full p-2.5 bg-base-cream rounded-xl border border-olive-green/25 text-xs font-bold cursor-pointer"><option value="">Semua kategori</option><option>Balita</option><option>Remaja</option><option>Usia Produktif</option><option>Ibu Hamil</option><option>Ibu Menyusui</option><option>Lansia</option></select>
+                                <select id="ks-fstat" onchange="ksPage=1;renderSesi()" class="w-full p-2.5 bg-base-cream rounded-xl border border-olive-green/25 text-xs font-bold cursor-pointer"><option value="">Semua status</option><option value="belum">Belum diperiksa</option><option value="sudah">Sudah diperiksa</option></select>
+                            </div>
+                            <div class="st-legend"><span>Status:</span><span class="st st-no"><i class="fa-regular fa-clock"></i>Belum diinput</span><span class="st st-ok"><i class="fa-solid fa-check"></i>Selesai</span><span class="st st-edit"><i class="fa-solid fa-pen"></i>Selesai (pernah diubah)</span></div>
+                            <div id="ks-peserta" class="space-y-2"></div>
+                            <div id="ks-pager" class="flex items-center justify-between gap-2 text-xs font-bold text-earth-brown"></div>
                         </div>
+                    </div>
+
+                    <!-- REKAP CATATAN KHUSUS: di bawah Detail Sesi (HP: paling bawah) -->
+                    <div class="lg:col-span-5 lg:col-start-1 lg:row-start-2 white-card p-5 md:p-6 space-y-3 border-2 border-sun-yellow/30 min-w-0">
+                        <div class="flex flex-wrap items-start justify-between gap-2">
+                            <div><h3 class="font-extrabold text-deep-green text-sm md:text-base"><i class="fa-solid fa-clipboard-list text-sun-yellow mr-2"></i>Rekap Catatan Khusus <span id="rekap-count" class="ml-1 px-2 py-0.5 rounded-full bg-soft-yellow text-earth-brown text-[10px] font-extrabold border border-sun-yellow/40">0</span></h3><p class="text-[11px] text-earth-brown font-medium">Satu laporan resmi: hal. 1 detail sesi, hal. berikutnya data peserta.</p></div>
+                            
+                        </div>
+                        <div class="grid grid-cols-4 gap-1.5">
+                            <button type="button" onclick="rekapCetak()" class="exp-btn"><i class="fa-solid fa-print text-stone-600"></i><span>Cetak</span></button>
+                            <button type="button" onclick="rekapExcel()" class="exp-btn"><i class="fa-solid fa-file-excel text-emerald-600"></i><span>Excel</span></button>
+                            <button type="button" onclick="rekapWord()" class="exp-btn"><i class="fa-solid fa-file-word text-blue-600"></i><span>Word</span></button>
+                            <button type="button" onclick="rekapPdf()" class="exp-btn"><i class="fa-solid fa-file-pdf text-red-600"></i><span>PDF</span></button>
+                        </div>
+                        <div id="list-rekap-khusus" class="space-y-2 max-h-[26rem] overflow-y-auto pr-1"></div>
                     </div>
                 </div>
             </section>
@@ -1206,7 +1286,7 @@
                             <span class="px-3 py-1 rounded-full text-[10px] font-black bg-soft-yellow text-earth-brown border border-sun-yellow/40">
                                 Verifikasi Berjenjang (Dual Confirmation)
                             </span>
-                            <h3 class="font-extrabold text-deep-green text-lg md:text-xl">Konfirmasi Usulan Perubahan Data Keluarga Sasaran</h3>
+                            <div class="flex items-center gap-3"><span class="ico-badge"><i class="fa-solid fa-user-pen"></i></span><h3 class="font-extrabold text-deep-green text-lg md:text-xl leading-tight">Konfirmasi Usulan Perubahan Data Keluarga Sasaran</h3></div>
                             <p class="text-xs text-earth-brown font-medium">Daftar permohonan penambahan / pengurangan / perbaikan data dari Web Sasaran yang membutuhkan persetujuan Kader & Admin Web.</p>
                         </div>
                     </div>
@@ -1756,6 +1836,11 @@
 
     <!-- JAVASCRIPT LOGIC & STATE SYSTEM WEB KADER UTUH -->
     <script>
+        function pemSt(m) { return m.st !== undefined ? m.st : (m.sudahPemeriksaan ? 'selesai' : ''); }
+        function pemStore(m, kh) { return kh ? (m.kh = m.kh || {}) : m; }
+        function stBadge(st) { return st === 'diubah' ? '<span class="st st-edit" title="Selesai, data pernah diubah"><i class="fa-solid fa-pen"></i>Selesai</span>' : st === 'selesai' ? '<span class="st st-ok"><i class="fa-solid fa-check"></i>Selesai</span>' : '<span class="st st-no"><i class="fa-regular fa-clock"></i>Belum</span>'; }
+        function famBanner(f) { return `<span class="fam-ico"><i class="fa-solid fa-house-user"></i></span><span class="fam-txt"><span class="fam-lbl">Kepala Keluarga</span><span class="fam-nm">Bp. ${escHtml(f.kepalaKeluarga)}</span><span class="fam-chips"><span class="fam-chip"><i class="fa-solid fa-location-dot"></i>${escHtml(f.dusun)}</span><span class="fam-chip"><i class="fa-solid fa-id-card-clip"></i>${escHtml(f.kk)}</span></span></span>`; }
+        function escHtml(s) { return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
         let isKaderLoggedIn = false;
         let currentKaderNama = "Ani Setyowati";
         let currentPosyanduBertugas = "Posyandu 1 (Dusun Gonoharjo RW 01)";
@@ -2205,7 +2290,7 @@
                     <td class="p-2.5 text-center font-bold text-deep-green">${idx + 1}</td>
                     <td class="p-2.5 font-bold text-deep-green">${item.tanggal}<br><span class="text-[10px] text-earth-brown font-medium">${item.waktu}</span></td>
                     <td class="p-2.5">
-                        <div class="font-extrabold text-deep-green">${item.kkName}</div>
+                        <div class="font-extrabold text-deep-green">${escHtml(item.kkName)}</div>
                         <div class="text-[10px] text-olive-green font-mono">Kartu ${item.barcode}</div>
                     </td>
                     <td class="p-2.5 text-[11px] font-medium text-earth-brown">${item.wilayah}</td>
@@ -2304,7 +2389,7 @@
                 }
 
                 const fam = familyDataMock[val];
-                document.getElementById('pemeriksaan-kk-info').innerText = `Keluarga Bp. ${fam.kepalaKeluarga} (${fam.dusun})`;
+                document.getElementById('pemeriksaan-kk-info').innerHTML = famBanner(fam);
                 renderPemeriksaanCards();
                 updateKonfirmasiButtonUI();
                 showToast(`Data keluarga Bp. ${fam.kepalaKeluarga} berhasil dimuat!`, "success");
@@ -2333,11 +2418,9 @@
                                     <span class="w-7 h-7 rounded-lg ${cfg.accentBg} flex items-center justify-center text-xs">
                                         ${cfg.icon}
                                     </span>
-                                    <span class="text-xs font-black ${cfg.headingText}">${m.nama}</span>
+                                    <span class="text-xs font-black ${cfg.headingText}">${escHtml(m.nama)}</span>
                                 </div>
-                                <span class="text-[10px] font-bold px-2 py-0.5 rounded-full ${m.sudahPemeriksaan ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'} border">
-                                    ${m.sudahPemeriksaan ? '✔️ Selesai' : '❌ Belum'}
-                                </span>
+                                ${stBadge(pemSt(m))}
                             </div>
 
                             <div class="space-y-1">
@@ -2360,16 +2443,16 @@
                             <div class="p-2.5 rounded-xl ${cfg.noteBg} border ${cfg.noteBorder} space-y-1 text-[10px]">
                                 <p class="font-bold ${cfg.noteTitle} flex items-center justify-between">
                                     <span>Hasil Pemeriksaan:</span>
-                                    <span class="text-[9px] font-normal opacity-80">${m.terakhirCatat}</span>
+                                    <span class="text-[9px] font-normal opacity-80">${escHtml(m.terakhirCatat)}</span>
                                 </p>
-                                <p class="font-semibold ${cfg.noteText}">${m.detailTerakhir}</p>
-                                <p class="italic text-earth-brown border-t border-earth-brown/10 pt-1 mt-1">${m.catatan}</p>
+                                <p class="font-semibold ${cfg.noteText}">${escHtml(m.detailTerakhir)}</p>
+                                <p class="italic text-earth-brown border-t border-earth-brown/10 pt-1 mt-1">${escHtml(m.catatan)}</p>
                             </div>
                         </div>
 
                         <button onclick="openModalPemeriksaan('${m.id}')" class="w-full btn-olive py-2 text-xs font-bold flex items-center justify-center space-x-1 shadow-xs mt-2 cursor-pointer">
-                            <i class="fa-solid fa-pen-to-square text-sun-yellow"></i>
-                            <span>Input Data Pemeriksaan</span>
+                            <i class="fa-solid ${pemSt(m) ? 'fa-pen' : 'fa-pen-to-square'} text-sun-yellow"></i>
+                            <span>${pemSt(m) ? 'Edit Data Pemeriksaan' : 'Input Data Pemeriksaan'}</span>
                         </button>
                     </div>
                 `;
@@ -2453,10 +2536,10 @@
             const m = family.anggota.find(x => x.id === memberId);
             if (!m) return;
             selectedMemberForExam = m;
-            document.getElementById('form-pemeriksaan-title').innerText = `Input Pemeriksaan: ${m.nama}`;
+            document.getElementById('form-pemeriksaan-title').innerText = `Input Pemeriksaan: ${escHtml(m.nama)}`;
             document.getElementById('form-pemeriksaan-kategori-badge').innerText = m.kategori;
             document.getElementById('input-catatan-bidan').value = m.catatan || "";
-            const h = m.hasil || {}, cls = 'w-full p-2.5 bg-white rounded-xl border border-olive-green/20 text-deep-green';
+            const h = pemStore(m, khusus).hasil || {}, cls = 'w-full p-2.5 bg-white rounded-xl border border-olive-green/20 text-deep-green';
             const html = pemSpecOf(m.kategori).map(([k, l, u, t, o = {}]) => {
                 const id = 'pf-' + k;
                 const lab = `<label for="${id}" class="block mb-1 font-bold text-deep-green">${l}${u ? ` (${u})` : ''}${o.req ? ' <span class="text-red-500">*</span>' : ''}</label>`;
@@ -2501,7 +2584,7 @@
             closeModalPemeriksaan();
             renderPemeriksaanCards();
             renderTabelAbsenHariIni();
-            showToast(`Data pemeriksaan ${m.nama} berhasil disimpan!${fl.length ? ' Ada ' + fl.length + ' temuan perlu perhatian.' : ''}`, "success");
+            showToast(`Data pemeriksaan ${escHtml(m.nama)} berhasil disimpan!${fl.length ? ' Ada ' + fl.length + ' temuan perlu perhatian.' : ''}`, "success");
         }
 
         // HANDLER PEMERIKSAAN KHUSUS (TAB BARU)
@@ -2569,7 +2652,7 @@
                         <div class="text-[10px] text-olive-green font-bold">${item.posyandu}</div>
                     </td>
                     <td class="p-3">
-                        <div class="font-extrabold text-deep-green">${item.nama}</div>
+                        <div class="font-extrabold text-deep-green">${escHtml(item.nama)}</div>
                         <div class="text-[10px] text-earth-brown">${item.kategori}</div>
                     </td>
                     <td class="p-3">
@@ -2577,7 +2660,7 @@
                             ${item.kategori}
                         </span>
                     </td>
-                    <td class="p-3 text-xs font-semibold text-earth-brown">${item.kasus}${item.khusus ? '<span class="ml-1.5 px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 border border-amber-300 text-[10px] font-extrabold">KHUSUS</span>' : ''}</td>
+                    <td class="p-3 text-xs font-semibold text-earth-brown">${escHtml(item.kasus)}${item.khusus ? '<span class="ml-1.5 px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 border border-amber-300 text-[10px] font-extrabold">KHUSUS</span>' : ''}</td>
                     <td class="p-3 text-center">
                         <button onclick="toggleStatusWebSasaran(${item.id})" class="px-3 py-1 rounded-full text-[10px] font-black ${item.statusWeb === 'ON' ? 'bg-emerald-100 text-emerald-800 border-emerald-300' : 'bg-red-100 text-red-800 border-red-300'} border transition cursor-pointer">
                             ${item.statusWeb === 'ON' ? '🟢 ON (Tampil)' : '🔴 OFF (Sembunyi)'}
@@ -2610,7 +2693,7 @@
             if (item) {
                 item.statusWeb = (item.statusWeb === 'ON') ? 'OFF' : 'ON';
                 renderTabelCekSasaran();
-                showToast(`Status tampilan ${item.nama} diubah ke ${item.statusWeb}`, "info");
+                showToast(`Status tampilan ${escHtml(item.nama)} diubah ke ${item.statusWeb}`, "info");
             }
         }
 
@@ -2685,7 +2768,7 @@
                 <tr class="hover:bg-soft-yellow/20 transition">
                     <td class="p-3 text-[11px] font-extrabold text-deep-green">${u.tgl}</td>
                     <td class="p-3">
-                        <div class="font-extrabold text-deep-green">${u.nama}</div>
+                        <div class="font-extrabold text-deep-green">${escHtml(u.nama)}</div>
                         <div class="text-[10px] text-earth-brown">${u.kategori}</div>
                     </td>
                     <td class="p-3">
@@ -2822,7 +2905,7 @@
                 div.className = "flex items-start space-x-2 justify-end";
                 div.innerHTML = `
                     <div class="bg-deep-green text-white p-3 rounded-2xl rounded-tr-none shadow-xs max-w-[85%] leading-relaxed font-bold">
-                        ${text}
+                        ${escHtml(text)}
                     </div>
                 `;
             } else {
@@ -2973,7 +3056,7 @@
 // ===== V8: item pemeriksaan bisa diatur, opsi kosong, format otomatis, tab khusus =====
 const SKIP = ['Alat tidak ada', 'Alat habis', 'Tidak diperiksa'];
 const TIPE = {num:'Angka (ketik)', text:'Teks (ketik manual)', tensi:'Tensi (otomatis 120/80)', select:'Pilihan (dropdown)', checks:'Ceklis (boleh pilih banyak)'};
-const CFG_KEY = 'gp_kader_item_v8';
+const CFG_KEY = 'gp_kader_item_v9';
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 function cfgDefault() {
     const o = {};
@@ -2981,9 +3064,22 @@ function cfgDefault() {
     o['Usia Produktif'].splice(3, 0, {id:'kol', l:'Kolesterol', u:'mg/dL', t:'num', o:[], ph:'190', on:true}, {id:'au', l:'Asam Urat', u:'mg/dL', t:'num', o:[], ph:'6.5', on:true});
     return o;
 }
-let PCFG; try { PCFG = JSON.parse(localStorage.getItem(CFG_KEY)); } catch (e) {}
-if (!PCFG || !PCFG['Balita']) PCFG = cfgDefault();
-const cfgStore = () => { try { localStorage.setItem(CFG_KEY, JSON.stringify(PCFG)); } catch (e) {} };
+const hsh = s => { let h = 2166136261; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return (h >>> 0).toString(36); };
+const cl = (v, n) => String(v ?? '').replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F\u200B-\u200F\u202A-\u202E]/g, '').replace(/<[^>]*>?|[<>`\\]|\$\{|javascript\s*:|data\s*:\s*text\/html|\bon[a-z]{3,20}\s*=/gi, '').slice(0, n);
+const clt = (v, n) => cl(v, n).trim();
+function cfgValid(o) {
+    const d = cfgDefault(), r = {};
+    for (const k of Object.keys(d)) {
+        const L = o && Array.isArray(o[k]) ? o[k].slice(0, 40) : null;
+        if (!L) return null;
+        r[k] = L.filter(f => f && typeof f === 'object').map(f => ({id: /^[a-z0-9_]{1,24}$/i.test(f.id) ? f.id : 'x' + Math.random().toString(36).slice(2, 8), l: clt(f.l, 60), u: clt(f.u, 15), t: TIPE[f.t] ? f.t : 'text', o: Array.isArray(f.o) ? f.o.slice(0, 30).map(x => clt(x, 60)).filter(Boolean) : [], ph: clt(f.ph, 20), on: f.on !== false})).filter(f => f.l);
+    }
+    return r;
+}
+let PCFG = null;
+try { const raw = JSON.parse(localStorage.getItem(CFG_KEY)); if (raw && typeof raw.d === 'string' && raw.h === hsh(raw.d)) PCFG = cfgValid(JSON.parse(raw.d)); } catch (e) {}
+if (!PCFG) PCFG = cfgDefault();
+const cfgStore = () => { try { const d = JSON.stringify(PCFG); localStorage.setItem(CFG_KEY, JSON.stringify({d, h: hsh(d)})); } catch (e) {} };
 const pemFields = k => (PCFG[k] || PCFG['Usia Produktif']).filter(f => f.on);
 let pemMode = 'reguler', cfgIdx = -1;
 const PEM_LOG = [];
@@ -3032,9 +3128,9 @@ function openModalPemeriksaan(memberId, khusus) {
     if (!m) return;
     selectedMemberForExam = m;
     pemMode = khusus ? 'khusus' : 'reguler';
-    document.getElementById('form-pemeriksaan-title').innerText = `${khusus ? 'Pemeriksaan Khusus' : 'Input Pemeriksaan'}: ${m.nama}`;
+    document.getElementById('form-pemeriksaan-title').innerText = `${khusus ? ((m.kh || {}).st ? 'Edit Pemeriksaan Khusus' : 'Pemeriksaan Khusus') : (pemSt(m) ? 'Edit Pemeriksaan' : 'Input Pemeriksaan')}: ${escHtml(m.nama)}`;
     document.getElementById('form-pemeriksaan-kategori-badge').innerText = m.kategori;
-    document.getElementById('input-catatan-bidan').value = m.catatan || '';
+    document.getElementById('input-catatan-bidan').value = pemStore(m, khusus).catatanInput || '';
     const h = m.hasil || {}, sks = h._skip || {}, cls = 'w-full p-2.5 bg-white rounded-xl border border-olive-green/20 text-deep-green';
     const fl = pemFields(m.kategori);
     const rows = fl.map(f => {
@@ -3074,7 +3170,7 @@ function savePemeriksaanData(e) {
     const g = id => (document.getElementById(id) || {}).value || '';
     let tanda = [...document.querySelectorAll('#khusus-tags input:checked')].map(i => i.value);
     if (khusus && !tanda.length) tanda = ['Pemeriksaan Khusus'];
-    PEM_LOG.unshift({jenis: khusus ? 'KHUSUS' : 'REGULER', tgl: khusus ? g('agenda-tanggal') : todayStr, agenda: khusus ? g('agenda-nama') : 'Posyandu rutin', label: khusus ? g('agenda-tanda') : '', tanda, kode: currentPemeriksaanBarcode, nama: m.nama, kategori: m.kategori, detail: m.detailTerakhir, catatan: m.catatan});
+    PEM_LOG.unshift({jenis: khusus ? 'KHUSUS' : 'REGULER', tgl: khusus ? g('agenda-tanggal') : todayStr, agenda: khusus ? g('agenda-nama') : 'Posyandu rutin', label: khusus ? agendaLabel() : '', tanda, kode: currentPemeriksaanBarcode, nama: m.nama, kategori: m.kategori, detail: m.detailTerakhir, catatan: m.catatan});
     if (fl.length) rekamKasusKhususMock.unshift({id: Date.now(), bulanTahun: todayStr.slice(0, 7), tgl: 'Hari ini', posyandu: 'Posyandu 1', nama: m.nama, kategori: m.kategori, kasusKey: fl.map(x => x[0]).join(','), kasus: fl.map(x => x[1]).join(' & '), statusWeb: 'ON', khusus});
     if (!khusus && konfirmasiState === 'CONFIRMED') { konfirmasiState = 'EDITED'; updateAttendanceStatusForCurrentFamily('Konfirmasi Edit'); }
     updateKonfirmasiButtonUI();
@@ -3082,7 +3178,7 @@ function savePemeriksaanData(e) {
     renderPemeriksaanCards();
     renderTabelAbsenHariIni();
     renderRekapKhusus();
-    showToast(`Data ${khusus ? 'pemeriksaan khusus' : 'pemeriksaan'} ${m.nama} berhasil disimpan!${fl.length ? ' Ada ' + fl.length + ' temuan perlu perhatian.' : ''}`, 'success');
+    showToast(`Data ${khusus ? 'pemeriksaan khusus' : 'pemeriksaan'} ${escHtml(m.nama)} berhasil disimpan!${fl.length ? ' Ada ' + fl.length + ' temuan perlu perhatian.' : ''}`, 'success');
 }
 
 // ---- tab Pemeriksaan Khusus: kartu anggota sama dengan tab Pemeriksaan ----
@@ -3103,16 +3199,6 @@ function renderRekapKhusus() {
     const r = PEM_LOG.filter(x => x.jenis === 'KHUSUS');
     b.innerHTML = r.length ? r.map(x => `<tr><td class="p-2.5 whitespace-nowrap">${esc(x.tgl)}</td><td class="p-2.5 font-bold">${esc(x.nama)}<div class="text-[10px] font-normal text-earth-brown">${esc(x.kategori)}</div></td><td class="p-2.5">${x.tanda.map(t => `<span class="inline-block mr-1 mb-1 px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 border border-amber-300 text-[10px] font-extrabold">${esc(t)}</span>`).join('')}<div class="text-[10px] text-earth-brown">${esc(x.agenda)}</div></td><td class="p-2.5 text-[11px]">${esc(x.detail)}</td></tr>`).join('')
         : '<tr><td colspan="4" class="p-5 text-center italic text-earth-brown">Belum ada catatan khusus pada sesi ini.</td></tr>';
-}
-function unduhCsvKhusus() {
-    const r = PEM_LOG.filter(x => x.jenis === 'KHUSUS');
-    if (!r.length) { showToast('Belum ada catatan khusus untuk diunduh.', 'warning'); return; }
-    const rows = [['Tanggal', 'Acara', 'Tanda', 'Label', 'Kode Kartu', 'Nama', 'Kategori', 'Hasil', 'Catatan']].concat(r.map(x => [x.tgl, x.agenda, x.tanda.join(' + '), x.label, x.kode, x.nama, x.kategori, x.detail, x.catatan]));
-    const csv = '\ufeff' + rows.map(x => x.map(c => `"${String(c ?? '').replace(/"/g, '""')}"`).join(',')).join('\n');
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(new Blob([csv], {type: 'text/csv;charset=utf-8'}));
-    a.download = 'laporan-pemeriksaan-khusus.csv';
-    a.click();
 }
 
 // ---- pengelola item pemeriksaan ----
@@ -3144,11 +3230,11 @@ function cfgEdit(i) {
     document.getElementById('cfg-l').focus();
 }
 function cfgSimpan() {
-    const L = PCFG[cfgKat()], t = document.getElementById('cfg-t').value, l = document.getElementById('cfg-l').value.trim();
-    const o = ['select', 'checks'].includes(t) ? document.getElementById('cfg-o').value.split('\n').map(x => x.trim()).filter(Boolean) : [];
+    const L = PCFG[cfgKat()], t = document.getElementById('cfg-t').value, l = clt(document.getElementById('cfg-l').value, 60);
+    const o = ['select', 'checks'].includes(t) ? document.getElementById('cfg-o').value.split('\n').map(x => clt(x, 60)).filter(Boolean).slice(0, 30) : [];
     if (!l) { showToast('Nama item wajib diisi.', 'warning'); return; }
     if (['select', 'checks'].includes(t) && !o.length) { showToast('Isi minimal satu pilihan (satu per baris).', 'warning'); return; }
-    const f = {id: cfgIdx < 0 ? 'x' + Date.now().toString(36) : L[cfgIdx].id, l, u: document.getElementById('cfg-u').value.trim(), t, o, ph: document.getElementById('cfg-ph').value.trim(), on: document.getElementById('cfg-on').checked};
+    const f = {id: cfgIdx < 0 ? 'x' + Date.now().toString(36) : L[cfgIdx].id, l, u: clt(document.getElementById('cfg-u').value, 15), t, o, ph: clt(document.getElementById('cfg-ph').value, 20), on: document.getElementById('cfg-on').checked};
     if (cfgIdx < 0) L.push(f); else L[cfgIdx] = f;
     cfgStore(); cfgHideForm(); cfgRender(); showToast('Item pemeriksaan disimpan.', 'success');
 }
@@ -3157,6 +3243,399 @@ function cfgToggle(i) { const f = PCFG[cfgKat()][i]; f.on = !f.on; cfgStore(); c
 function cfgMove(i, d) { const L = PCFG[cfgKat()], j = i + d; if (j < 0 || j >= L.length) return; [L[i], L[j]] = [L[j], L[i]]; cfgStore(); cfgRender(); }
 function cfgReset() { if (confirm('Kembalikan semua item pemeriksaan ke pengaturan awal?')) { PCFG = cfgDefault(); cfgStore(); cfgHideForm(); cfgRender(); } }
 renderPemeriksaanCards(); renderRekapKhusus();
+</script>
+<script>
+// ===== V9: pencarian sasaran sesi khusus, daftar peserta ringkas, pengamanan input =====
+let pemPrev = null, ksPage = 1;
+const SESI = [], KS_PAGE = 8;
+const kidx = (kode, id) => kode + '|' + id;
+const badge = t => `<span class="inline-block mr-1 mb-1 px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 border border-amber-300 text-[10px] font-extrabold">${esc(t)}</span>`;
+
+// data demo keluarga tambahan (ada nama kembar agar pilihan keluarga terlihat)
+(function () {
+    const mk = (id, nama, kategori, usia) => ({id, nama, kategori, usia, statusWeb: 'ON', terakhirCatat: '-', detailTerakhir: 'Belum ada data pemeriksaan', catatan: '-', sudahPemeriksaan: false});
+    const fam = (kode, kepala, dusun, anggota) => { familyDataMock[kode] = {kk: kode, kepalaKeluarga: kepala, posyandu: 'Posyandu 1', dusun, sudahAbsen: true, anggota}; };
+    fam('KRT-002', 'Bambang Sutrisno', 'Gonoharjo RT 01 / RW 01', [mk('B1', 'Bambang Sutrisno', 'Usia Produktif', '45 Tahun'), mk('B2', 'Siti Ratnah', 'Ibu Menyusui', '33 Tahun'), mk('B3', 'Dimas Sutrisno', 'Balita', '14 Bulan'), mk('B4', 'Mbah Karto', 'Lansia', '68 Tahun')]);
+    fam('KRT-003', 'Slamet Riyadi', 'Gonoharjo RT 03 / RW 01', [mk('C1', 'Slamet Riyadi', 'Usia Produktif', '50 Tahun'), mk('C2', 'Rina Slamet', 'Ibu Hamil', '26 Tahun'), mk('C3', 'Ayu Slamet', 'Remaja', '13 Tahun')]);
+    fam('KRT-004', 'Wahyudi', 'Gonoharjo RT 02 / RW 02', [mk('D1', 'Wahyudi', 'Usia Produktif', '39 Tahun'), mk('D2', 'Siti Ratnah', 'Ibu Hamil', '24 Tahun'), mk('D3', 'Naila Wahyudi', 'Balita', '30 Bulan')]);
+})();
+
+// ---- pengamanan input: buang tag/skrip/karakter aneh dari semua kolom teks ----
+document.addEventListener('input', e => {
+    const t = e.target;
+    if (!t || !t.matches || !t.matches('input,textarea') || t.id === 'login-password') return;
+    if (t.tagName === 'INPUT' && !['text', 'search', 'tel', 'email', 'url'].includes(t.type || 'text')) return;
+    if (t.dataset && (t.dataset.t === 'tensi' || t.dataset.t === 'num')) return;
+    const v = cl(t.value, t.maxLength > 0 ? t.maxLength : (t.tagName === 'TEXTAREA' ? 600 : 150));
+    if (v !== t.value) t.value = v;
+}, true);
+
+// ---- mode pencarian ----
+function ksMode(m) {
+    ['nama', 'kode', 'scan', 'unggah'].forEach(x => {
+        document.getElementById('ks-p-' + x).classList.toggle('hidden', x !== m);
+        document.querySelector(`#ks-modes [data-m="${x}"]`).classList.toggle('on', x === m);
+    });
+}
+const ksRows = () => Object.entries(familyDataMock).flatMap(([kode, f]) => f.anggota.map(m => ({kode, m, f})));
+function ksShow(rows, judul) {
+    const box = document.getElementById('ks-hasil');
+    box.classList.remove('hidden');
+    if (!rows.length) { box.innerHTML = '<p class="text-center text-xs italic text-earth-brown py-4">Tidak ada sasaran yang cocok. Coba nama lain atau gunakan kode kartu.</p>'; return; }
+    box.innerHTML = `<div class="flex flex-wrap items-center justify-between gap-2"><p class="text-xs font-extrabold text-deep-green">${esc(judul)}</p><div class="flex gap-3"><button type="button" onclick="ksCheckAll(true)" class="ks-lnk">Pilih semua</button><button type="button" onclick="ksCheckAll(false)" class="ks-lnk">Batal pilih</button></div></div>
+        <div class="max-h-72 overflow-y-auto space-y-1.5 pr-1">${rows.map(({kode, m, f}) => {
+            const k = kidx(kode, m.id), ada = SESI.some(s => s.key === k);
+            return `<label class="ks-row ${ada ? 'opacity-60' : 'cursor-pointer'}"><input type="checkbox" class="ks-cb accent-[#7C9246] w-5 h-5 shrink-0" value="${esc(k)}" ${ada ? 'checked disabled' : ''}><div class="min-w-0 flex-1"><div class="flex flex-wrap items-center gap-1.5"><span class="font-extrabold text-deep-green text-xs">${esc(m.nama)}</span><span class="ks-badge">${esc(m.kategori)}</span><span class="text-[10px] text-earth-brown">${esc(m.usia)}</span></div><div class="text-[11px] text-earth-brown">Keluarga Bp. ${esc(f.kepalaKeluarga)} - ${esc(f.dusun)} - ${esc(kode)}</div></div>${ada ? '<span class="text-[10px] font-bold text-emerald-700 shrink-0">Sudah ada</span>' : ''}</label>`;
+        }).join('')}</div>
+        <button type="button" onclick="ksTambah()" class="btn-primary w-full py-2.5 text-xs font-bold cursor-pointer"><i class="fa-solid fa-plus mr-1"></i>Tambahkan yang dicentang ke peserta sesi</button>`;
+}
+function ksCariNama() {
+    const q = clt(document.getElementById('ks-nama').value, 60).toLowerCase();
+    if (q.length < 2) { showToast('Ketik minimal 2 huruf nama.', 'warning'); return; }
+    const r = ksRows().filter(x => x.m.nama.toLowerCase().includes(q) || x.f.kepalaKeluarga.toLowerCase().includes(q));
+    ksShow(r, `${r.length} sasaran ditemukan. Cek kepala keluarga dan alamat sebelum memilih.`);
+}
+function ksCariKode(code) {
+    const k = clt(code ?? document.getElementById('ks-kode').value, 20).toUpperCase();
+    if (!/^[A-Z0-9-]{3,20}$/.test(k)) { showToast('Format kode kartu tidak valid. Contoh: KRT-001', 'warning'); return; }
+    const f = familyDataMock[k];
+    if (!f) { ksShow([], ''); showToast('Kode kartu tidak ditemukan.', 'error'); return; }
+    ksShow(f.anggota.map(m => ({kode: k, m, f})), `Keluarga Bp. ${f.kepalaKeluarga} (${f.dusun}). Centang anggota yang ikut sesi.`);
+}
+function ksScan() { showToast('Kartu terbaca (simulasi scan).', 'info'); ksCariKode('KRT-002'); }
+function ksUnggah(inp) {
+    const f = inp.files && inp.files[0];
+    inp.value = '';
+    if (!f) return;
+    if (!/^image\/(png|jpe?g|webp)$/.test(f.type) || f.size > 5 * 1048576) { showToast('Gunakan gambar PNG/JPG/WEBP, maksimal 5 MB.', 'error'); return; }
+    showToast('Gambar kartu diterima (simulasi baca).', 'info');
+    ksCariKode('KRT-003');
+}
+const ksCheckAll = v => document.querySelectorAll('#ks-hasil .ks-cb:not(:disabled)').forEach(c => c.checked = v);
+function ksTambah() {
+    const ks = [...document.querySelectorAll('#ks-hasil .ks-cb:checked:not(:disabled)')].map(c => c.value);
+    if (!ks.length) { showToast('Centang sasaran yang ikut sesi terlebih dahulu.', 'warning'); return; }
+    let n = 0;
+    ks.forEach(k => { const [kode, id] = k.split('|'); if (familyDataMock[kode] && !SESI.some(s => s.key === k)) { SESI.push({key: k, kode, id}); n++; } });
+    ksPage = 1; renderSesi();
+    document.getElementById('ks-hasil').classList.add('hidden');
+    showToast(`${n} peserta ditambahkan ke sesi.`, 'success');
+}
+
+// ---- daftar peserta ringkas (berhalaman) ----
+const ksDone = k => { const [c, i] = k.split('|'), f = familyDataMock[c], m = f && f.anggota.find(a => a.id === i); return (m && m.kh && m.kh.st) || ''; };
+function renderSesi() {
+    const val = id => (document.getElementById(id) || {}).value || '';
+    const q = clt(val('ks-filter'), 60).toLowerCase(), fk = val('ks-fkat'), fs = val('ks-fstat');
+    const all = SESI.map(s => { const f = familyDataMock[s.kode]; return {...s, f, m: f.anggota.find(a => a.id === s.id), done: ksDone(s.key)}; });
+    document.getElementById('ks-count').textContent = `${SESI.length} orang, ${all.filter(x => x.done).length} selesai`;
+    const r = all.filter(x => (!q || x.m.nama.toLowerCase().includes(q) || x.f.kepalaKeluarga.toLowerCase().includes(q)) && (!fk || x.m.kategori === fk) && (!fs || (fs === 'sudah') === !!x.done));
+    const pages = Math.max(1, Math.ceil(r.length / KS_PAGE));
+    ksPage = Math.min(Math.max(1, ksPage), pages);
+    const cur = r.slice((ksPage - 1) * KS_PAGE, ksPage * KS_PAGE);
+    document.getElementById('ks-peserta').innerHTML = cur.length ? cur.map(x => `
+        <div class="ks-row"><div class="min-w-0 flex-1"><div class="flex flex-wrap items-center gap-1.5"><span class="font-extrabold text-deep-green text-xs">${esc(x.m.nama)}</span><span class="ks-badge">${esc(x.m.kategori)}</span><span class="text-[10px] text-earth-brown">${esc(x.m.usia)}</span></div><div class="text-[11px] text-earth-brown truncate">Bp. ${esc(x.f.kepalaKeluarga)} - ${esc(x.f.dusun)}</div></div>
+        ${stBadge(x.done)}
+        <button type="button" onclick="ksInput('${x.key}')" class="btn-olive px-3 py-2 text-[11px] font-bold shrink-0 cursor-pointer"><i class="fa-solid ${x.done ? 'fa-pen' : 'fa-pen-to-square'} mr-1"></i>${x.done ? 'Edit' : 'Input'}</button>
+        <button type="button" onclick="ksHapus('${x.key}')" class="cfg-btn text-red-600" aria-label="Keluarkan dari sesi"><i class="fa-solid fa-xmark"></i></button></div>`).join('')
+        : `<p class="text-center text-xs italic text-earth-brown py-6">${SESI.length ? 'Tidak ada peserta yang cocok dengan saringan.' : 'Belum ada peserta. Cari sasaran di atas lalu tambahkan.'}</p>`;
+    document.getElementById('ks-pager').innerHTML = pages > 1 ? `<button type="button" class="cfg-btn" ${ksPage <= 1 ? 'disabled' : ''} onclick="ksPage--;renderSesi()" aria-label="Sebelumnya"><i class="fa-solid fa-chevron-left"></i></button><span>Halaman ${ksPage} dari ${pages} (${r.length} peserta)</span><button type="button" class="cfg-btn" ${ksPage >= pages ? 'disabled' : ''} onclick="ksPage++;renderSesi()" aria-label="Berikutnya"><i class="fa-solid fa-chevron-right"></i></button>` : '';
+}
+function ksInput(k) {
+    const [kode, id] = k.split('|');
+    if (!familyDataMock[kode]) return;
+    pemPrev = currentPemeriksaanBarcode;
+    currentPemeriksaanBarcode = kode;
+    openModalPemeriksaan(id, true);
+}
+function ksHapus(k) { const i = SESI.findIndex(s => s.key === k); if (i > -1) SESI.splice(i, 1); renderSesi(); }
+function ksClear() { if (SESI.length && confirm('Kosongkan seluruh daftar peserta sesi?')) { SESI.length = 0; renderSesi(); } }
+
+// pulihkan konteks tab Pemeriksaan setelah modal ditutup; tandai catatan dengan kunci peserta
+const _cl9 = closeModalPemeriksaan;
+closeModalPemeriksaan = function () { _cl9(); if (pemPrev) { currentPemeriksaanBarcode = pemPrev; pemPrev = null; } };
+const _sv9 = savePemeriksaanData;
+savePemeriksaanData = function (e) {
+    const key = kidx(currentPemeriksaanBarcode, selectedMemberForExam && selectedMemberForExam.id), n = PEM_LOG.length, kh = pemMode === 'khusus';
+    _sv9(e);
+    if (kh && PEM_LOG.length > n) PEM_LOG[0].key = key;
+    renderSesi();
+};
+
+// ---- rekap & CSV ----
+function renderRekapKhusus() {
+    const b = document.getElementById('list-rekap-khusus');
+    if (!b) return;
+    const r = PEM_LOG.filter(x => x.jenis === 'KHUSUS');
+    document.getElementById('rekap-count').textContent = r.length;
+    b.innerHTML = r.length ? r.map(x => `<div class="p-3 rounded-xl bg-white border border-sun-yellow/30 space-y-1"><div class="font-extrabold text-deep-green text-xs">${esc(x.nama)}</div><div class="text-[10px] text-earth-brown">${esc(x.kategori)} - ${esc(x.tgl)}</div><div>${x.tanda.map(badge).join('')}</div><div class="text-[10px] font-bold text-earth-brown">${esc(x.agenda)}</div><div class="text-[11px] text-deep-green break-words line-clamp-3">${esc(x.detail)}</div></div>`).join('')
+        : '<p class="text-center text-xs italic text-earth-brown py-5">Belum ada catatan khusus pada sesi ini.</p>';
+}
+ksMode('nama'); renderSesi(); renderRekapKhusus();
+</script>
+    <!-- MODAL V10: SCAN QR KARTU KELUARGA -->
+    <div id="modal-scan-qr" class="fixed inset-0 z-[60] bg-stone-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="white-card w-full max-w-md p-5 space-y-3 bg-[#FAF7F0] border-2 border-olive-green/30">
+            <div class="flex items-center justify-between gap-3">
+                <div class="flex items-center gap-2.5"><span class="ico-badge sm"><i class="fa-solid fa-qrcode"></i></span><h3 class="font-extrabold text-deep-green text-base">Scan QR Kartu Keluarga</h3></div>
+                <button type="button" onclick="stopScan()" class="text-earth-brown text-xl cursor-pointer" aria-label="Tutup"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="scan-box"><video id="scan-video" playsinline muted></video><div class="scan-frame"></div></div>
+            <p id="scan-status" class="text-xs text-center font-bold text-earth-brown min-h-[2.5em]">Meminta izin kamera...</p>
+            <div class="grid grid-cols-2 gap-2">
+                <button type="button" onclick="stopScan();ksMode('kode')" class="py-2.5 text-xs font-bold bg-white border border-olive-green/30 rounded-xl text-olive-green cursor-pointer"><i class="fa-solid fa-keyboard mr-1"></i>Ketik Kode</button>
+                <button type="button" onclick="stopScan()" class="btn-primary py-2.5 text-xs font-bold cursor-pointer">Tutup</button>
+            </div>
+        </div>
+    </div>
+<script>
+// ===== V10: scan QR kamera (popup), ekspor rekap, label manual =====
+const lib = src => new Promise((ok, no) => {
+    if (document.querySelector(`script[src="${src}"]`)) return ok();
+    const s = document.createElement('script'); s.src = src; s.onload = ok; s.onerror = no; document.head.appendChild(s);
+});
+// ---- label / tanda manual ----
+function agendaLabel() {
+    const s = document.getElementById('agenda-tanda');
+    if (!s) return '';
+    return s.value === 'Lainnya' ? (clt((document.getElementById('agenda-tanda-manual') || {}).value, 40) || 'Lainnya') : s.options[s.selectedIndex].text;
+}
+function agendaTandaChange() {
+    const m = document.getElementById('agenda-tanda-manual');
+    m.classList.toggle('hidden', document.getElementById('agenda-tanda').value !== 'Lainnya');
+    if (!m.classList.contains('hidden')) m.focus();
+}
+function tambahTag() {
+    const i = document.getElementById('tag-manual'), t = clt(i.value, 30), box = document.getElementById('khusus-tags');
+    if (!t) return;
+    const ada = [...box.querySelectorAll('input')];
+    if (ada.some(x => x.value.toLowerCase() === t.toLowerCase())) { showToast('Tanda itu sudah ada.', 'warning'); return; }
+    if (ada.length >= 10) { showToast('Maksimal 10 tanda.', 'warning'); return; }
+    const l = document.createElement('label'), c = document.createElement('input'), sp = document.createElement('span');
+    l.className = 'flex items-center gap-2 px-3 py-2 bg-white rounded-xl border border-sun-yellow/40 cursor-pointer';
+    c.type = 'checkbox'; c.value = t; c.checked = true; c.className = 'accent-[#F3A94B] w-4 h-4';
+    sp.textContent = t; l.append(c, sp); box.appendChild(l); i.value = '';
+}
+
+// ---- scan QR kartu keluarga (kamera, popup) ----
+let scanStream = null, scanRaf = 0, scanDet = null, scanBusy = false;
+function stopScan() {
+    if (scanStream) scanStream.getTracks().forEach(t => t.stop());
+    scanStream = null; cancelAnimationFrame(scanRaf);
+    const v = document.getElementById('scan-video'); if (v) v.srcObject = null;
+    document.getElementById('modal-scan-qr').classList.add('hidden');
+}
+async function ksScan() {
+    const st = document.getElementById('scan-status'), v = document.getElementById('scan-video');
+    document.getElementById('modal-scan-qr').classList.remove('hidden');
+    scanBusy = false; scanDet = null;
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) { st.textContent = 'Kamera tidak didukung di browser ini. Gunakan kode manual atau unggah gambar.'; return; }
+    st.textContent = 'Meminta izin kamera...';
+    try { scanStream = await navigator.mediaDevices.getUserMedia({video: {facingMode: {ideal: 'environment'}}, audio: false}); }
+    catch (e) { st.textContent = 'Kamera tidak bisa dibuka. Izinkan akses kamera di browser, atau gunakan kode manual.'; return; }
+    v.srcObject = scanStream; await v.play().catch(() => {});
+    if ('BarcodeDetector' in window) { try { scanDet = new BarcodeDetector({formats: ['qr_code']}); } catch (e) {} }
+    if (!scanDet) { try { await lib('https://cdnjs.cloudflare.com/ajax/libs/jsQR/1.4.0/jsQR.min.js'); } catch (e) { st.textContent = 'Pembaca QR gagal dimuat. Periksa koneksi atau gunakan kode manual.'; return; } }
+    st.textContent = 'Arahkan kamera ke QR kartu keluarga...';
+    const cv = document.createElement('canvas'), cx = cv.getContext('2d', {willReadFrequently: true});
+    const loop = async () => {
+        if (!scanStream) return;
+        if (v.readyState >= 2 && !scanBusy) {
+            scanBusy = true;
+            try {
+                let txt = '';
+                if (scanDet) { const r = await scanDet.detect(v); txt = r[0] ? r[0].rawValue : ''; }
+                else if (window.jsQR && v.videoWidth) {
+                    const sc = Math.min(1, 480 / v.videoWidth); cv.width = v.videoWidth * sc; cv.height = v.videoHeight * sc;
+                    cx.drawImage(v, 0, 0, cv.width, cv.height);
+                    const r = jsQR(cx.getImageData(0, 0, cv.width, cv.height).data, cv.width, cv.height); txt = r ? r.data : '';
+                }
+                if (txt) {
+                    const k = clt(txt, 40).toUpperCase();
+                    if (/^[A-Z0-9-]{3,20}$/.test(k)) { stopScan(); ksCariKode(k); return; }
+                    st.textContent = 'QR bukan kartu keluarga yang dikenal. Coba lagi.';
+                }
+            } catch (e) {}
+            scanBusy = false;
+        }
+        scanRaf = requestAnimationFrame(loop);
+    };
+    loop();
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && scanStream) stopScan(); });
+
+</script>
+    <!-- MODAL V11: PRATINJAU LAPORAN SESI KHUSUS -->
+    <div id="modal-lap" class="fixed inset-0 z-[60] bg-stone-900/75 backdrop-blur-sm hidden flex flex-col">
+        <div class="flex flex-wrap items-center justify-between gap-2 px-3 sm:px-5 py-3 bg-[#FAF7F0] border-b border-olive-green/25 shrink-0">
+            <div class="flex items-center gap-2.5 min-w-0"><span class="ico-badge sm"><i class="fa-solid fa-file-lines"></i></span><div class="min-w-0"><p class="font-extrabold text-deep-green text-sm truncate">Pratinjau Laporan Sesi Khusus</p><p id="lap-meta" class="text-[11px] text-earth-brown font-medium"></p></div></div>
+            <div class="flex items-center gap-1.5">
+                <button type="button" onclick="rekapCetak()" class="exp-btn !flex-row !gap-1.5 !px-3"><i class="fa-solid fa-print text-stone-600"></i><span>Cetak</span></button>
+                <button type="button" onclick="rekapPdf()" class="exp-btn !flex-row !gap-1.5 !px-3"><i class="fa-solid fa-file-pdf text-red-600"></i><span>PDF</span></button>
+                <button type="button" onclick="lapTutup()" class="cfg-btn" aria-label="Tutup pratinjau"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+        </div>
+        <div id="lap-scroll" class="flex-1 overflow-auto p-2 sm:p-6"><div id="lap-pages" style="width:210mm;margin:0 auto"></div></div>
+    </div>
+<script>
+// ===== V11: status Selesai / diperbarui + laporan resmi sesi khusus =====
+const ST_TXT = {'': 'Belum', selesai: 'Selesai', diubah: 'Selesai (diperbarui)'};
+const ID_BLN = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+const ROMAWI = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII'], LAP_ROWS = 9;
+const KOP = {l1: 'PEMERINTAH KABUPATEN KENDAL', l2: 'KECAMATAN LIMBANGAN - DESA GONOHARJO', l3: 'POSYANDU INTEGRASI LAYANAN PRIMER (ILP)', l4: 'Sekretariat: Jl. Raya Gonoharjo No. 12, Limbangan, Kendal. Email: posyandu.gonoharjo@gmail.com', ki: 'https://lh3.googleusercontent.com/d/1Pu9EO5ArNXsAwCYr7mRLfeVc0OV3L5_w', ka: 'https://lh3.googleusercontent.com/d/1r5Z3o71WH4mpF5qn1Dfeav_V7qNnYldv', kiri: 'Posyandu Desa Gonoharjo', kanan: '© 2026 GO-POSITIF by @KreasiCahNdeso. All rights reserved.'};
+const TTD_P1 = [['Mengetahui Kepala Desa', 'H. Sukirman, S.Sos'], ['Ketua Kader Posyandu', 'Siti Rahmawati, S.Kep']], TTD_P2 = [['Ketua Kader Posyandu', 'Siti Rahmawati, S.Kep'], ['Bidan Desa Gonoharjo', 'Bdn. Anisa Putri, S.Tr.Keb']];
+const LAP_CSS = `.lap-page{background:#fff;color:#0f172a;box-sizing:border-box;width:210mm;height:297mm;padding:15mm;margin:0 auto 24px;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;font-family:"Times New Roman",Georgia,serif;font-size:11px;line-height:1.5;box-shadow:0 10px 30px rgba(0,0,0,.2)}
+.lap-page table{border-collapse:collapse;width:100%}.lap-page tbody tr{background:transparent!important}.lap-page img{display:block;margin:auto}
+.lap-kop td{border-bottom:3px double #000;padding-bottom:8px;font-family:Arial,sans-serif;text-align:center;vertical-align:middle}.lap-kop td.lg{width:62px}.lap-kop img{width:54px;height:54px;object-fit:contain}
+.lap-kop h4{font-size:11px;margin:0;letter-spacing:.05em}.lap-kop h3{font-size:13px;margin:0}.lap-kop h2{font-size:15px;margin:0;font-weight:900}.lap-kop p{font-size:9px;margin:2px 0 0;color:#475569}
+.lap-judul{text-align:center;margin:12px 0}.lap-judul h3{font-size:14px;text-decoration:underline;margin:0;font-weight:900}.lap-judul p{margin:2px 0 0;font-weight:700}
+.lap-sub{font-weight:900;margin:12px 0 5px;text-transform:uppercase}
+.lap-kv td{border:1px solid #94a3b8;padding:4px 8px;vertical-align:top}.lap-kv td:first-child{width:34%;font-weight:700;background:#f1f5f9}
+.lap-tb{font-family:Arial,sans-serif;font-size:9.5px}.lap-tb th{background:#e2e8f0;border:1px solid #94a3b8;padding:4px;text-transform:uppercase;font-size:8.5px}.lap-tb td{border:1px solid #cbd5e1;padding:4px 5px;vertical-align:top}
+.lap-ttd{margin-top:26px;text-align:center}.lap-ttd td{width:auto;vertical-align:top}.lap-ttd p{margin:0}.lap-ttd .sp{height:46px}
+.lap-foot{border-top:1px solid #cbd5e1;margin-top:10px;font:9px Arial,sans-serif;color:#64748b}.lap-foot td{padding-top:6px;vertical-align:top}`;
+const PRINT_CSS = '@page{size:A4;margin:15mm}body{margin:0;background:#fff}.lap-page{width:auto;height:266mm;padding:0;margin:0;box-shadow:none;page-break-after:always}.lap-page:last-child{page-break-after:auto}';
+const WORD_CSS = '@page{size:210mm 297mm;margin:15mm}.lap-page{width:auto;height:auto;padding:0;margin:0;box-shadow:none;display:block;page-break-after:always}';
+document.head.appendChild(Object.assign(document.createElement('style'), {textContent: LAP_CSS}));
+
+// ---- simpan: status berubah hanya jika data benar-benar diisi / diubah ----
+savePemeriksaanData = function (e) {
+    e.preventDefault();
+    const m = selectedMemberForExam;
+    if (!m) return;
+    const khusus = pemMode === 'khusus', ST = pemStore(m, khusus), fields = pemFields(m.kategori), v = pemCollect(fields);
+    const cat = clt(document.getElementById('input-catatan-bidan').value, 600);
+    const has = o => !!o && (Object.keys(o._skip || {}).length > 0 || Object.keys(o).some(k => k !== '_skip' && (Array.isArray(o[k]) ? o[k].length : o[k])));
+    const cur = khusus ? (ST.st || '') : pemSt(m);
+    if ((!has(v) && !has(ST.hasil)) || JSON.stringify([ST.hasil || {_skip: {}}, ST.catatanInput || '']) === JSON.stringify([v, cat])) {
+        closeModalPemeriksaan();
+        showToast(has(v) || has(ST.hasil) ? 'Tidak ada perubahan data, status tetap.' : 'Belum ada data yang diisi, status tetap.', 'info');
+        return;
+    }
+    const fl = pemFlags(m.kategori, v);
+    ST.detail = fields.map(f => {
+        if (v._skip[f.id]) return `${f.l}: ${v._skip[f.id]}`;
+        const x = v[f.id];
+        if (f.t === 'checks') return x && x.length ? `${f.l}: ${x.join(', ')}` : null;
+        return x ? `${f.l}: ${x}${f.u ? ' ' + f.u : ''}` : null;
+    }).filter(Boolean).join('; ') || 'Tidak ada data terisi';
+    ST.hasil = v; ST.catatanInput = cat; ST.flags = fl.map(x => x[1]);
+    ST.catatan = cat || (fl.length ? fl.map(x => x[1]).join('. ') + '. Disarankan konsultasi lanjutan.' : 'Kondisi baik, lanjutkan pemantauan rutin.');
+    ST.st = cur ? 'diubah' : 'selesai';
+    if (!khusus) { m.detailTerakhir = ST.detail; m.sudahPemeriksaan = true; m.terakhirCatat = 'Hari Ini (Posyandu)'; }
+    for (let i = rekamKasusKhususMock.length - 1; i >= 0; i--) { const x = rekamKasusKhususMock[i]; if (x.autoPem && x.nama === m.nama && x.kategori === m.kategori && !!x.khusus === khusus) rekamKasusKhususMock.splice(i, 1); }
+    if (fl.length) rekamKasusKhususMock.unshift({id: Date.now(), bulanTahun: todayStr.slice(0, 7), tgl: 'Hari ini', posyandu: 'Posyandu 1', nama: m.nama, kategori: m.kategori, kasusKey: fl.map(x => x[0]).join(','), kasus: fl.map(x => x[1]).join(' & '), statusWeb: 'ON', khusus, autoPem: true});
+    if (!khusus && konfirmasiState === 'CONFIRMED') { konfirmasiState = 'EDITED'; updateAttendanceStatusForCurrentFamily('Konfirmasi Edit'); }
+    updateKonfirmasiButtonUI(); closeModalPemeriksaan(); renderPemeriksaanCards(); renderTabelAbsenHariIni(); renderSesi();
+    showToast(`Data ${khusus ? 'pemeriksaan khusus' : 'pemeriksaan'} ${m.nama} ${cur ? 'berhasil diperbarui' : 'berhasil disimpan'}!${fl.length ? ' Ada ' + fl.length + ' temuan perlu perhatian.' : ''}`, 'success');
+};
+const _rs11 = renderSesi;
+renderSesi = function () { _rs11(); renderRekapKhusus(); };
+
+// ---- data laporan ----
+function lapDetail() {
+    const g = (id, n) => clt((document.getElementById(id) || {}).value, n || 150);
+    const tags = [...document.querySelectorAll('#khusus-tags input:checked')].map(i => i.value);
+    return {nama: g('agenda-nama') || 'Sesi Khusus', tgl: g('agenda-tanggal', 12), label: agendaLabel(), tags: tags.length ? tags : ['Pemeriksaan Khusus'], pengisi: g('agenda-pengisi'), ket: g('agenda-keterangan', 600)};
+}
+const tglID = d => { const x = new Date(d); return isNaN(x) ? '-' : `${x.getDate()} ${ID_BLN[x.getMonth()]} ${x.getFullYear()}`; };
+function lapRows() {
+    return SESI.map(s => {
+        const f = familyDataMock[s.kode], m = f.anggota.find(a => a.id === s.id), K = m.kh || {};
+        return {nama: m.nama, kat: m.kategori, usia: m.usia, kel: `Bp. ${f.kepalaKeluarga} - ${f.dusun}`, hasil: K.detail || '-', temuan: K.flags || [], cat: K.catatanInput || '', st: K.st || ''};
+    });
+}
+function lapStat() {
+    const r = lapRows(), c = k => r.filter(x => x.st === k).length, kat = {};
+    r.forEach(x => kat[x.kat] = (kat[x.kat] || 0) + 1);
+    return {r, n: r.length, ok: c('selesai'), ed: c('diubah'), no: c(''), fl: r.filter(x => x.temuan.length).length, kat, pages: 1 + Math.max(1, Math.ceil(r.length / LAP_ROWS))};
+}
+function lapPages() {
+    const d = lapDetail(), S = lapStat(), now = new Date(), p2 = n => String(n).padStart(2, '0'), bd = isNaN(new Date(d.tgl)) ? now : new Date(d.tgl);
+    const ts = `${p2(now.getDate())}/${p2(now.getMonth() + 1)}/${now.getFullYear()} ${p2(now.getHours())}:${p2(now.getMinutes())} WIB`;
+    const kop = `<table class="lap-kop"><tr><td class="lg"><img src="${KOP.ki}" alt=""></td><td><h4>${esc(KOP.l1)}</h4><h3>${esc(KOP.l2)}</h3><h2>${esc(KOP.l3)}</h2><p>${esc(KOP.l4)}</p></td><td class="lg"><img src="${KOP.ka}" alt=""></td></tr></table>`;
+    const foot = n => `<table class="lap-foot"><tr><td style="text-align:left">${ts} - ${esc(KOP.kiri)}</td><td style="text-align:center">Halaman ${n} dari ${S.pages}</td><td style="text-align:right">${esc(KOP.kanan)}</td></tr></table>`;
+    const ttd = a => `<table class="lap-ttd"><tr>${a.map(([r, nm]) => `<td><p><b>${esc(r)}</b></p><div class="sp"></div><p><u><b>${esc(nm)}</b></u></p></td>`).join('')}</tr></table>`;
+    const kv = a => `<table class="lap-kv">${a.map(([k, v]) => `<tr><td>${esc(k)}</td><td>${esc(v)}</td></tr>`).join('')}</table>`;
+    let h = `<section class="lap-page"><div>${kop}<div class="lap-judul"><h3>LAPORAN PELAKSANAAN PEMERIKSAAN KHUSUS</h3><p>Nomor: LPK/POS-GON/${ROMAWI[bd.getMonth()]}/${bd.getFullYear()}</p></div>
+        <div class="lap-sub">A. Detail Sesi / Acara Khusus</div>${kv([['Nama Acara', d.nama], ['Tanggal Acara', tglID(d.tgl)], ['Label Khusus', d.label], ['Tanda Catatan', d.tags.join(' + ')], ['Penanggung Jawab', d.pengisi || '-'], ['Keterangan', d.ket || '-']])}
+        <div class="lap-sub">B. Ringkasan Pelaksanaan</div>${kv([['Jumlah Peserta', `${S.n} orang`], ['Selesai', `${S.ok} orang`], ['Selesai (diperbarui)', `${S.ed} orang`], ['Belum Diperiksa', `${S.no} orang`], ['Temuan Perlu Perhatian', `${S.fl} orang`], ['Sebaran Kategori', Object.entries(S.kat).map(([k, v]) => `${k}: ${v}`).join(', ') || '-']])}
+        ${ttd(TTD_P1)}</div>${foot(1)}</section>`;
+    const chunks = []; for (let i = 0; i < S.r.length; i += LAP_ROWS) chunks.push(S.r.slice(i, i + LAP_ROWS));
+    if (!chunks.length) chunks.push([]);
+    chunks.forEach((c, ci) => {
+        const rows = c.length ? c.map((x, i) => `<tr><td style="text-align:center">${ci * LAP_ROWS + i + 1}</td><td><b>${esc(x.nama)}</b><br>${esc(x.kat)} - ${esc(x.usia)}</td><td>${esc(x.kel)}</td><td>${esc(x.hasil)}${x.temuan.length ? `<br><b style="color:#b91c1c">Temuan: ${esc(x.temuan.join('; '))}</b>` : ''}</td><td><b>${ST_TXT[x.st]}</b>${x.cat ? `<br>${esc(x.cat)}` : ''}</td></tr>`).join('') : '<tr><td colspan="5" style="text-align:center;font-style:italic">Belum ada peserta pada sesi ini.</td></tr>';
+        h += `<section class="lap-page"><div>${kop}<div class="lap-judul"><h3>DAFTAR PESERTA & HASIL PEMERIKSAAN KHUSUS</h3><p>${esc(d.nama)} - ${esc(tglID(d.tgl))}</p></div>
+            <table class="lap-tb"><thead><tr><th style="width:6%">No</th><th style="width:22%">Nama Sasaran</th><th style="width:20%">Keluarga / Alamat</th><th>Hasil Pemeriksaan</th><th style="width:20%">Status & Catatan</th></tr></thead><tbody>${rows}</tbody></table>
+            ${ci === chunks.length - 1 ? ttd(TTD_P2) : ''}</div>${foot(ci + 2)}</section>`;
+    });
+    return h;
+}
+const lapDoc = extra => `<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word"><head><meta charset="utf-8"><title>${esc(lapDetail().nama)}</title><style>${LAP_CSS}${extra}</style></head><body>${lapPages()}</body></html>`;
+
+// ---- tampilan rekap: satu laporan ----
+function renderRekapKhusus() {
+    const b = document.getElementById('list-rekap-khusus');
+    if (!b) return;
+    const d = lapDetail(), S = lapStat(), chip = (t, c) => `<span class="st ${c}">${t}</span>`;
+    document.getElementById('rekap-count').textContent = '1 laporan';
+    b.innerHTML = `<div class="rounded-2xl bg-white border border-sun-yellow/40 p-3.5 space-y-3">
+        <div class="flex items-start gap-3"><span class="ico-badge"><i class="fa-solid fa-file-lines"></i></span><div class="min-w-0"><p class="font-extrabold text-deep-green text-sm leading-snug break-words">${esc(d.nama)}</p><p class="text-[11px] text-earth-brown font-medium">${esc(tglID(d.tgl))} - ${esc(d.label)}</p></div></div>
+        <div class="flex flex-wrap gap-1.5">${chip(S.n + ' peserta', 'st-no')}${chip(S.ok + ' selesai', 'st-ok')}${chip(S.ed + ' diperbarui', 'st-edit')}${chip(S.no + ' belum', 'st-no')}</div>
+        <p class="text-[11px] text-earth-brown font-medium">Format resmi ${S.pages} halaman: hal. 1 detail sesi, hal. 2-${S.pages} data peserta, lengkap dengan kop dan footer.</p>
+        <button type="button" onclick="lapPreview()" class="btn-primary w-full py-2.5 text-xs font-bold cursor-pointer"><i class="fa-solid fa-eye mr-1.5"></i>Pratinjau Laporan</button></div>`;
+}
+function lapFit() { const s = document.getElementById('lap-scroll'), p = document.getElementById('lap-pages'); p.style.zoom = Math.min(1, (s.clientWidth - 16) / 794); }
+function lapPreview() {
+    const S = lapStat();
+    document.getElementById('lap-pages').innerHTML = lapPages();
+    document.getElementById('lap-meta').textContent = `${S.pages} halaman, ${S.n} peserta`;
+    document.getElementById('modal-lap').classList.remove('hidden'); lapFit();
+}
+const lapTutup = () => document.getElementById('modal-lap').classList.add('hidden');
+window.addEventListener('resize', () => { if (!document.getElementById('modal-lap').classList.contains('hidden')) lapFit(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') lapTutup(); });
+['agenda-nama', 'agenda-tanggal', 'agenda-tanda', 'agenda-tanda-manual', 'agenda-pengisi', 'agenda-keterangan', 'khusus-tags'].forEach(id => { const e = document.getElementById(id); if (e) ['input', 'change'].forEach(ev => e.addEventListener(ev, renderRekapKhusus)); });
+
+// ---- ekspor & cetak ----
+const lapKosong = () => { if (SESI.length) return false; showToast('Tambahkan peserta sesi terlebih dahulu.', 'warning'); return true; };
+function unduhFile(nama, mime, isi) { const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob(['\ufeff' + isi], {type: mime + ';charset=utf-8'})); a.download = nama; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 4000); }
+const rekapWord = () => { if (!lapKosong()) unduhFile('laporan-pemeriksaan-khusus.doc', 'application/msword', lapDoc(WORD_CSS)); };
+function rekapCetak() {
+    if (lapKosong()) return;
+    const f = document.createElement('iframe');
+    f.style.cssText = 'position:fixed;right:0;bottom:0;width:0;height:0;border:0';
+    document.body.appendChild(f);
+    f.onload = () => { f.contentWindow.focus(); f.contentWindow.print(); setTimeout(() => f.remove(), 3000); };
+    f.srcdoc = lapDoc(PRINT_CSS);
+}
+async function rekapExcel() {
+    if (lapKosong()) return;
+    const d = lapDetail(), S = lapStat();
+    try {
+        await lib('https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js');
+        const w1 = XLSX.utils.aoa_to_sheet([['LAPORAN PELAKSANAAN PEMERIKSAAN KHUSUS'], [KOP.l3], [], ['Nama Acara', d.nama], ['Tanggal Acara', tglID(d.tgl)], ['Label Khusus', d.label], ['Tanda Catatan', d.tags.join(' + ')], ['Penanggung Jawab', d.pengisi], ['Keterangan', d.ket], [], ['Jumlah Peserta', S.n], ['Selesai', S.ok], ['Selesai (diperbarui)', S.ed], ['Belum Diperiksa', S.no], ['Temuan Perlu Perhatian', S.fl]]);
+        const w2 = XLSX.utils.aoa_to_sheet([['No', 'Nama', 'Kategori', 'Usia', 'Keluarga / Alamat', 'Hasil Pemeriksaan', 'Temuan', 'Catatan', 'Status'], ...S.r.map((x, i) => [i + 1, x.nama, x.kat, x.usia, x.kel, x.hasil, x.temuan.join('; '), x.cat, ST_TXT[x.st]])]);
+        w1['!cols'] = [{wch: 26}, {wch: 60}]; w2['!cols'] = [5, 22, 16, 12, 34, 60, 34, 30, 20].map(wch => ({wch}));
+        const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, w1, 'Detail Sesi'); XLSX.utils.book_append_sheet(wb, w2, 'Data Peserta');
+        XLSX.writeFile(wb, 'laporan-pemeriksaan-khusus.xlsx');
+    } catch (e) { unduhFile('laporan-pemeriksaan-khusus.xls', 'application/vnd.ms-excel', lapDoc('')); showToast('Pustaka Excel tidak termuat, file .xls sederhana diunduh.', 'warning'); }
+}
+async function rekapPdf() {
+    if (lapKosong()) return;
+    let wrap;
+    try {
+        await lib('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js');
+        await lib('https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js');
+        wrap = document.createElement('div'); wrap.style.cssText = 'position:fixed;left:-99999px;top:0'; wrap.innerHTML = lapPages(); document.body.appendChild(wrap);
+        const pdf = new window.jspdf.jsPDF({unit: 'mm', format: 'a4'}), ps = [...wrap.querySelectorAll('.lap-page')];
+        showToast('Menyusun PDF, mohon tunggu...', 'info');
+        for (let i = 0; i < ps.length; i++) { const c = await html2canvas(ps[i], {scale: 2, useCORS: true, backgroundColor: '#ffffff'}); if (i) pdf.addPage(); pdf.addImage(c.toDataURL('image/jpeg', .92), 'JPEG', 0, 0, 210, 297); }
+        pdf.save('laporan-pemeriksaan-khusus.pdf');
+    } catch (e) { showToast('PDF gagal dibuat. Gunakan Cetak lalu pilih "Simpan sebagai PDF".', 'error'); }
+    if (wrap) wrap.remove();
+}
+renderSesi(); renderRekapKhusus();
 </script>
 </body>
 </html>
