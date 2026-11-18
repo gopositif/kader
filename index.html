@@ -370,8 +370,12 @@
         .rk-tbl thead th { background: #EBF2DF; color: var(--deep-green); text-align: left; padding: 10px 12px; font-size: 11px; font-weight: 800; }
         .rk-tbl tbody tr { border-top: 1px solid rgba(124,146,70,.15); }
         #rekap-pager { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 11px; font-weight: 700; color: var(--earth-brown); }
+        /* ===== V14: ASTI & Kartu Karta ===== */
+        .asti-warn { background: #FEF3C7; border: 1px solid #FCD34D; border-left: 5px solid #D97706; border-radius: 12px; padding: 8px 10px; color: #92400E; }
+        #chat-input:disabled, #btn-chat-send:disabled { opacity: .55; cursor: not-allowed; }
     </style>
 </head>
+
 
 
 
@@ -522,7 +526,7 @@
                             </p>
                             <div class="grid grid-cols-3 gap-1.5 sm:gap-2">
                                 <!-- 1. Portal Utama -->
-                                <a href="https://gopositif.github.io/" class="px-2 sm:px-3 py-2.5 bg-black/50 hover:bg-black/70 border border-white/20 rounded-xl text-[10px] sm:text-xs font-bold text-teal-200 text-center transition flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-1.5 shadow-lg group cursor-pointer">
+                                <a href="https://gopositif.github.io" class="px-2 sm:px-3 py-2.5 bg-black/50 hover:bg-black/70 border border-white/20 rounded-xl text-[10px] sm:text-xs font-bold text-teal-200 text-center transition flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-1.5 shadow-lg group cursor-pointer">
                                     <i class="fas fa-house text-teal-400 text-xs sm:text-sm group-hover:scale-110 transition-transform"></i> 
                                     <span class="truncate">Portal Utama</span>
                                 </a>
@@ -1433,7 +1437,7 @@
                                 </div>
                                 <div class="text-right">
                                     <span id="asti-status-badge" class="text-[10px] bg-soft-green text-deep-green px-2.5 py-1 rounded-full font-bold border border-olive-green/30">Online</span>
-                                    <p id="asti-limit-counter" class="text-[9px] text-earth-brown font-semibold mt-1">Kuota Sesi: <span id="asti-remaining-count">5</span>/5 Tanya</p>
+                                    <p id="asti-limit-counter" class="text-[9px] text-earth-brown font-semibold mt-1">Kuota Sesi: <span id="asti-remaining-count">10</span>/10 Tanya</p>
                                 </div>
                             </div>
 
@@ -1443,7 +1447,7 @@
                                         <img src="https://lh3.googleusercontent.com/d/1AW-1Z0iV8ygSM47sk8KSDu_nD2lKFHDi" alt="ASTI" class="w-full h-full object-cover rounded-full">
                                     </div>
                                     <div class="bg-white p-3 rounded-2xl rounded-tl-none shadow-xs text-deep-green max-w-[85%] leading-relaxed border border-olive-green/10 font-medium">
-                                        Halo Kader! Saya <strong>ASTI</strong> 👩‍⚕️. Silakan tanyakan seputar standar pengukuran balita, kriteria stunting, atau petunjuk input data kader! <em>(Dilengkapi Sistem Anti-Spam)</em>
+                                        Halo Kader! Saya <strong>ASTI</strong> 👩‍⚕️. Silakan tanyakan seputar <strong>alur kerja Web Kader</strong>: kehadiran, pemeriksaan, sesi khusus, cek sasaran, konfirmasi, dan Kartu Karta, atau standar pengukuran. Pertanyaan di luar itu tidak dijawab. <strong>Jangan menanyakan ID atau password.</strong> <em>(Sistem Anti-Spam dan Anti-Kode aktif)</em>
                                     </div>
                                 </div>
                             </div>
@@ -1464,7 +1468,7 @@
                                 <div class="website-field-hp">
                                     <input type="text" id="hp-asti-check" autocomplete="off">
                                 </div>
-                                <input type="text" id="chat-input" placeholder="Tanyakan seputar tugas kader..." class="w-full px-4 py-2.5 text-xs text-deep-green font-medium focus:outline-none bg-base-cream rounded-xl border border-olive-green/20" required>
+                                <input type="text" id="chat-input" placeholder="Tanyakan seputar alur kerja web kader..." class="w-full px-4 py-2.5 text-xs text-deep-green font-medium focus:outline-none bg-base-cream rounded-xl border border-olive-green/20" required>
                                 <button type="submit" id="btn-chat-send" class="btn-primary px-4 py-2.5 text-xs font-bold flex items-center space-x-1 flex-shrink-0 cursor-pointer">
                                     <span>Kirim</span>
                                     <i class="fa-solid fa-paper-plane text-xs text-sun-yellow"></i>
@@ -1815,7 +1819,7 @@
 
             <div class="space-y-2.5 text-xs">
                 <!-- 1. PORTAL UTAMA -->
-                <a href="https://gopositif.github.io/" class="w-full p-3 bg-white text-earth-brown font-bold rounded-xl flex items-center justify-between hover:bg-base-cream border border-olive-green/20 shadow-xs cursor-pointer">
+                <a href="https://gopositif.github.io" class="w-full p-3 bg-white text-earth-brown font-bold rounded-xl flex items-center justify-between hover:bg-base-cream border border-olive-green/20 shadow-xs cursor-pointer">
                     <span class="flex items-center space-x-2">
                         <i class="fa-solid fa-house text-olive-green"></i>
                         <span>1. PORTAL UTAMA POSYANDU</span>
@@ -1893,7 +1897,7 @@
         
         // SISTEM ANTI-SPAM & LIMIT KUOTA CHAT TANYA ASTI KADER
         let astiChatCount = 0;
-        const maxAstiQuota = 5;
+        const maxAstiQuota = 10;
         let lastChatTimestamp = 0;
         const minChatIntervalMs = 2500;
 
@@ -2919,7 +2923,7 @@
         }
 
         function triggerAstiQuotaLimit() {
-            appendChatMessage('bot', '🔒 <strong>Batas Pertanyaan Sesi Digital Tercapai</strong><br>Untuk menjaga stabilitas sistem dan efisiensi kuota layanan AI, sesi tanya jawab otomatis dibatasi (5/5). Silakan hubungi Bidan Desa Gonoharjo secara langsung.');
+            appendChatMessage('bot', '🔒 <strong>Batas Pertanyaan Sesi Digital Tercapai</strong><br>Untuk menjaga stabilitas sistem dan efisiensi kuota layanan AI, sesi tanya jawab otomatis dibatasi (10/10). Silakan hubungi Bidan Desa Gonoharjo secara langsung.');
             
             const form = document.getElementById('asti-chat-form');
             const quickBtns = document.getElementById('asti-quick-buttons');
@@ -3779,7 +3783,7 @@ const ALUR = [
     ['fa-star-of-life', 'Alur Pemeriksaan Khusus', 'pemeriksaan-khusus', '#D97706', ['Isi detail sesi dan tanda catatan.', 'Panggil peserta lewat nama, kode, scan, atau unggah.', 'Input hasil lalu cetak atau ekspor laporan.']],
     ['fa-magnifying-glass-chart', 'Alur Cek Sasaran', 'cek-sasaran', '#7C3AED', ['Saring data sasaran dan kasus.', 'Periksa temuan yang perlu perhatian.', 'Ubah status web atau koreksi data.']],
     ['fa-clipboard-check', 'Alur Konfirmasi Data', 'konfirmasi', '#DB2777', ['Pengajuan dari Web Sasaran masuk dengan angka notifikasi.', 'Setujui, tolak, atau edit pengajuan.', 'Admin memberi konfirmasi akhir.']],
-    ['fa-id-card-clip', 'Alur Kartu Karta', 'kartu', '#0891B2', ['Buka tab Kartu Karta lalu tekan Buka Aplikasi Kartu Karta.', 'Daftarkan keluarga baru atau cari data warga untuk cetak ulang.', 'Cetak atau ekspor kartu. QR pada kartu dipindai kader saat absen.']]
+    ['fa-id-card-clip', 'Alur Kartu Karta', 'kartu', '#0891B2', ['Buka tab Kartu Karta lalu tekan Buka Kartu Karta. Anda langsung diarahkan ke web Kartu Karta.', 'Daftarkan keluarga baru atau cari data warga untuk cetak ulang.', 'Cetak atau ekspor kartu. QR pada kartu dipindai kader saat absen.']]
 ];
 const alurBox = `<div class="white-card p-5 md:p-6 space-y-4 border-t-4 border-olive-green"><div class="flex items-center gap-3"><span class="ico-badge"><i class="fa-solid fa-diagram-project"></i></span><div><h3 class="font-extrabold text-deep-green text-base md:text-lg leading-tight">ALUR SISTEM WEB KADER</h3><p class="text-[11px] text-earth-brown font-medium">Ringkas langkah kerja kader di lapangan.</p></div></div><div class="grid sm:grid-cols-2 xl:grid-cols-3 gap-3">${ALUR.map(([ic, t, tab, c, s]) => `<div class="al-b" style="--c:${c}"><div class="flex items-center gap-2"><span class="al-i"><i class="fa-solid ${ic}"></i></span><p class="font-extrabold text-xs text-deep-green leading-tight">${t}</p></div><ol class="space-y-1.5 mt-2.5">${s.map((x, i) => `<li class="step"><b style="background:var(--c)">${i + 1}</b><span class="text-[11px] text-earth-brown font-medium">${x}</span></li>`).join('')}</ol><button type="button" onclick="switchTab('${tab}')" class="al-go">Buka tab <i class="fa-solid fa-arrow-right ml-1"></i></button></div>`).join('')}</div></div>`;
 
@@ -3999,10 +4003,74 @@ usulanDataMock.forEach(u => { if (u.adminStatus === undefined) u.adminStatus = u
 // ---- tab Kartu Karta ----
 $('content-konfirmasi').insertAdjacentHTML('afterend', `<section id="content-kartu" class="hidden space-y-5"><div class="white-card p-5 md:p-7 space-y-5 border-t-4 border-cyan-600">
 <div class="flex items-start gap-4"><span class="ico-badge" style="background:linear-gradient(135deg,#06B6D4,#0E7490)"><i class="fa-solid fa-id-card-clip"></i></span><div class="min-w-0"><span class="st st-edit">GO-POSITIF</span><h3 class="font-extrabold text-deep-green text-xl md:text-2xl leading-tight mt-1">Kartu Karta</h3><p class="text-xs md:text-sm text-earth-brown font-medium mt-1">KARTA adalah Kartu Akses dan Rekam Terpadu Warga, identitas resmi warga untuk pelayanan terpadu desa dan posyandu.</p></div></div>
-<div class="grid sm:grid-cols-2 gap-3"><a href="${KARTA_URL}" class="btn-primary px-5 py-3.5 text-sm font-extrabold flex items-center justify-center gap-2"><i class="fa-solid fa-arrow-right"></i>Buka Aplikasi Kartu Karta</a><button type="button" onclick="salinKarta()" class="px-5 py-3.5 text-sm font-extrabold bg-white border-2 border-cyan-600/40 rounded-xl text-cyan-800 flex items-center justify-center gap-2 cursor-pointer"><i class="fa-regular fa-copy"></i>Salin Tautan</button></div>
+<div class="grid sm:grid-cols-2 gap-3"><a href="${KARTA_URL}" class="btn-primary px-5 py-3.5 text-sm font-extrabold flex items-center justify-center gap-2 cursor-pointer"><i class="fa-solid fa-id-card-clip"></i><span>Portal Kartu Karta</span></a><button type="button" onclick="salinKarta()" class="px-5 py-3.5 text-sm font-extrabold bg-white border-2 border-cyan-600/40 rounded-xl text-cyan-800 flex items-center justify-center gap-2 cursor-pointer"><i class="fa-regular fa-copy"></i>Salin Tautan</button></div>
 <p class="text-[11px] font-semibold text-earth-brown break-all"><i class="fa-solid fa-link mr-1 text-cyan-600"></i>${KARTA_URL}</p></div>
 <div class="grid md:grid-cols-3 gap-4">${[['fa-qrcode', '#0891B2', 'Isi Kartu', 'Kartu memuat ID Akses Web (contoh GP-0001) dan QR untuk dipindai kader. PIN default diberikan terpisah kepada warga.'], ['fa-people-arrows', '#16A34A', 'Kegunaan', 'Dipindai kader saat absen dan pemeriksaan. Warga memakai ID dan PIN untuk layanan mandiri di Web Posyandu dan Web Pelayanan Desa.'], ['fa-screwdriver-wrench', '#D97706', 'Di Aplikasi Kartu Karta', 'Buat dan desain kartu baru, cari data warga untuk cetak ulang, ubah data dan anggota keluarga, lalu cetak atau ekspor PNG dan PDF.']].map(([ic, c, t, d]) => `<div class="al-b" style="--c:${c}"><div class="flex items-center gap-2"><span class="al-i"><i class="fa-solid ${ic}"></i></span><p class="font-extrabold text-sm text-deep-green">${t}</p></div><p class="text-[12px] text-earth-brown font-medium mt-2.5 leading-relaxed">${d}</p></div>`).join('')}</div></section>`);
 function salinKarta() { (navigator.clipboard ? navigator.clipboard.writeText(KARTA_URL) : Promise.reject()).then(() => showToast('Tautan Kartu Karta disalin.', 'success')).catch(() => showToast('Salin manual: ' + KARTA_URL, 'info')); }
-boxRender(); renderRingkasan(); renderRekapKhusus(); renderTabelKonfirmasi();</script>
+boxRender(); renderRingkasan(); renderRekapKhusus(); renderTabelKonfirmasi();
+</script>
+<script>
+// ===== V14: Tanya ASTI (kuota 10, batas topik, anti-kode) + Kartu Karta dalam halaman =====
+let astiStrike = 0, astiLastWarn = 0, astiLastStrike = 0, astiLock = 0;
+const ASTI_KODE = /<|>|`|[{}\\]|\$\{|\bjavascript\s*:|\bdata\s*:\s*text|\bon[a-z]{3,20}\s*=|\b(eval|alert|prompt|confirm|fetch|xmlhttprequest|settimeout|setinterval|constructor|require|document|window|localstorage|sessionstorage|cookie|innerhtml|outerhtml|iframe|script)\b\s*[(.\[=]|\b(select\b[^.?!]{0,40}\bfrom|insert\s+into|delete\s+from|drop\s+(table|database)|update\s+\w+\s+set|union\s+select)\b|\.\.[\/\\]|\|\||&&|;\s*(drop|delete|shutdown|rm)\b/i;
+const ASTI_AKUN = /\b(password|passwd|pass\s*word|kata\s*sandi|sandi|pin|otp|token|kredensial|credential|api\s*key|apikey|secret|rahasia|username|user\s*id|id\s*(admin|kader|login|akses)|akun\s*(admin|kader)|bobol|jebol|retas|hack(er|ing)?|bypass)\b/i;
+const ASTI_SALAM = /^\s*(halo|hai|hi|hei|selamat\s+(pagi|siang|sore|malam)|assalamu\S*|permisi|terima\s*kasih|makasih|thanks|oke|ok|siap)\b[\s\S]{0,25}$/i;
+const ASTI_TOPIK = /\b(absen|hadir|kehadiran|pemeriksaan|memeriksa|periksa|khusus|sesi|acara|jadwal|posyandu|kartu|karta|qr|scan|barcode|kode|sasaran|balita|baduta|remaja|bumil|hamil|menyusui|busui|produktif|lansia|stunting|gizi|timbang\w*|berat badan|tensi|tekanan darah|hipertensi|gula|kolesterol|asam urat|hb|anemia|lila|kek|vitamin|imunisasi|ttd|pmt|konfirmasi|usulan|pengajuan|notifikasi|laporan|rekap|cetak|ekspor|export|excel|pdf|word|pengumuman|tab|tombol|menu|beranda|grafik|ringkasan|peserta|keluarga|alamat|kader|admin|bidan|web|aplikasi|kuota|asti|z-?score|sd|perbarui|selesai|atur item)\b|\balat\s+(habis|tidak|rusak)/i;
+const ASTI_FAQ = [
+    [/stunting|z-?score|\bsd\b/i, 'Kriteria Stunting pada Balita ditentukan jika Panjang/Tinggi Badan menurut Usia (PB/U atau TB/U) berada di bawah -2 Standard Deviation (Z-Score < -2 SD).'],
+    [/hipertensi|tensi|tekanan darah|gula|kolesterol|asam urat|\bhb\b|anemia|lila|\bkek\b/i, 'Penilaian otomatis di formulir: tensi tinggi mulai 140/90 mmHg, gula darah (GDS) 200 mg/dL ke atas, kolesterol 200 mg/dL ke atas, asam urat di atas 7 mg/dL, Hb di bawah 11 g/dL (ibu hamil) atau 12 g/dL (remaja), LILA di bawah 23,5 cm (risiko KEK). Untuk tensi cukup ketik <strong>12080</strong>, otomatis menjadi 120/80. Ini penilaian awal, bukan diagnosis. Rujuk ke bidan jika tinggi.'],
+    [/konfirmasi|usulan|pengajuan|notifikasi/i, 'Verifikasi usulan memakai Dual Confirmation: persetujuan Kader di Web Kader DAN Admin di Web Admin. Kader bisa <strong>Setujui</strong>, <strong>Tolak</strong> (isi alasan), atau <strong>Edit</strong> (bertanda Diedit, admin memeriksa ulang). Angka merah pada tab Konfirmasi adalah pengajuan yang menunggu. Jika kader dan admin sama-sama setuju atau tolak, baris terkunci dan hilang setelah 24 jam.'],
+    [/khusus|sesi|acara|rekap|laporan|ekspor|export|cetak|excel|pdf|word|peserta/i, 'Pemeriksaan Khusus: (1) isi detail sesi: nama, tanggal, jam opsional, label, dan tanda catatan; (2) panggil peserta lewat nama, kode kartu, scan QR, atau unggah gambar, lalu centang yang ikut; (3) tekan Input atau Edit pada tiap peserta, kemudian <strong>Simpan Sesi ke Rekap</strong>; (4) di tabel Rekap pilih Pratinjau, Word, PDF, Excel, atau Cetak.'],
+    [/absen|hadir|kehadiran|scan|\bqr\b|barcode|\bkode\b/i, 'Input Absen: scan QR kartu, unggah gambar kartu, atau ketik kode kartu keluarga (contoh KRT-001), pilih anggota yang hadir, lalu konfirmasi. NIK dan No. KK tidak ditampilkan.'],
+    [/pemeriksaan|memeriksa|periksa|selesai|alat\s+(habis|tidak|rusak)|atur item/i, 'Input Pemeriksaan: cari keluarga dengan kode kartu, lalu tekan <strong>Input Data Pemeriksaan</strong> pada anggota. Isi, lalu Simpan. Status menjadi <strong>Selesai</strong> (hijau) dan tombol berubah menjadi Edit. Jika data diubah dan disimpan, tanda Selesai berwarna biru. Jika tidak ada perubahan, status tetap. Alat tidak ada atau habis: pilih statusnya di samping item. Item bisa diatur lewat Atur Item Pemeriksaan.'],
+    [/cek sasaran|kasus|temuan/i, 'Cek Sasaran: saring data sasaran dan jenis kasus, periksa temuan yang perlu perhatian, lalu ubah status web atau koreksi data bila perlu.'],
+    [/kartu|karta/i, 'Kartu Karta: buka tab Kartu Karta lalu tekan <strong>Buka Kartu Karta</strong>. Anda langsung diarahkan ke web Kartu Karta di tab yang sama, tanpa membuka tab baru. Pakai untuk membuat kartu baru, cetak ulang, dan ekspor kartu.'],
+    [/jadwal|pengumuman|perbarui/i, 'Di Beranda, tekan <strong>Perbarui</strong> pada box Pengumuman, Info Khusus Kader, Jadwal Posyandu, atau Jadwal Khusus / Acara. Di popup tersedia Tambah, Edit, dan Hapus. Jadwal memilih Posyandu 1-6 atau Acara (ketik manual).'],
+    [/grafik|ringkasan|beranda/i, 'Grafik Kehadiran di Beranda: atur rentang tanggal, nama posyandu, dan sasaran. Ringkasan Catatan Khusus menghitung temuan dari hasil pemeriksaan.'],
+    [/kuota|asti/i, 'ASTI menjawab 10 pertanyaan per sesi (muat ulang halaman untuk sesi baru), khusus seputar alur kerja Web Kader.']
+];
+const ASTI_WARN = {
+    topik: '⚠️ <strong>Di luar alur kerja Web Kader</strong><br>ASTI hanya menjawab seputar alur kerja web ini: kehadiran, pemeriksaan, pemeriksaan khusus, cek sasaran, konfirmasi data, Kartu Karta, jadwal dan pengumuman, serta standar pengukuran. Contoh: <em>"Cara input pemeriksaan khusus"</em>. Pertanyaan ini tidak dihitung dalam kuota.',
+    akun: '🔒 <strong>Peringatan Keamanan</strong><br>ASTI tidak memberikan atau menanyakan ID, password, PIN, atau kode akses. Jangan bagikan data login kepada siapa pun. Jika lupa akses, hubungi Bidan Desa atau Admin Desa Gonoharjo.',
+    kode: '🚫 <strong>Input Ditolak</strong><br>Skrip, kode, atau karakter berbahaya tidak diizinkan di kolom ini. Tulis pertanyaan dengan kalimat biasa.'
+};
+const astiJawab = q => { const f = ASTI_FAQ.find(([r]) => r.test(q)); return f ? f[1] : 'Saya belum punya panduan rinci untuk itu. Coba tanyakan lewat kata kunci seperti absen, pemeriksaan, pemeriksaan khusus, cek sasaran, konfirmasi, atau Kartu Karta. Untuk kasus medis, hubungi Bidan Desa.'; };
+function astiPeringatan(k) {
+    const now = Date.now(); if (now - astiLastWarn < 1200) return; astiLastWarn = now;
+    appendChatMessage('bot', `<div class="asti-warn">${ASTI_WARN[k]}</div>`);
+    showToast(k === 'kode' ? 'Input berbahaya ditolak.' : k === 'akun' ? 'Pertanyaan tentang ID/password tidak dilayani.' : 'Pertanyaan di luar alur kerja web.', 'warning');
+}
+function astiKunci(on) { ['chat-input', 'btn-chat-send'].forEach(id => { const e = $(id); if (e) e.disabled = on; }); $('chat-input').placeholder = on ? 'Input dikunci sementara...' : 'Tanyakan seputar alur kerja web kader...'; }
+function astiBlokir() {
+    astiPeringatan('kode');
+    const now = Date.now(); if (now - astiLastStrike < 1200) return; astiLastStrike = now;
+    if (++astiStrike >= 3) { astiStrike = 0; astiLock = now + 60000; astiKunci(true); appendChatMessage('bot', '⏳ Terlalu banyak input berbahaya. Kolom tanya dikunci <strong>60 detik</strong>.'); setTimeout(() => astiKunci(false), 60000); }
+}
+function handleChatSubmit(e) {
+    e.preventDefault();
+    if ($('hp-asti-check').value !== '') return false;
+    const input = $('chat-input'), raw = String(input.value || '');
+    if (Date.now() < astiLock) { showToast('Kolom tanya sedang dikunci sementara.', 'warning'); return; }
+    if (ASTI_KODE.test(raw)) { input.value = ''; astiBlokir(); return; }
+    const msg = clt(raw, 200).replace(/\s+/g, ' ').trim();
+    if (!msg) return;
+    if (astiChatCount >= maxAstiQuota) { triggerAstiQuotaLimit(); return; }
+    if (ASTI_AKUN.test(msg)) { input.value = ''; astiPeringatan('akun'); return; }
+    const topik = ASTI_TOPIK.test(msg), salam = ASTI_SALAM.test(msg) && !topik;
+    if (!topik && !salam) { input.value = ''; astiPeringatan('topik'); return; }
+    const now = Date.now();
+    if (now - lastChatTimestamp < minChatIntervalMs) { showToast('Anti-Spam: Ketik dengan tenang (tunggu sebentar antar pertanyaan).', 'warning'); return; }
+    lastChatTimestamp = now; input.value = '';
+    appendChatMessage('user', msg);
+    if (!salam) { astiChatCount++; updateAstiCounter(); }
+    setTimeout(() => { appendChatMessage('bot', salam ? 'Halo Kader! Silakan tanyakan seputar alur kerja Web Kader, misalnya <em>"Cara input absen"</em> atau <em>"Alur pemeriksaan khusus"</em>.' : astiJawab(msg)); if (astiChatCount >= maxAstiQuota) setTimeout(triggerAstiQuotaLimit, 1000); }, 600);
+}
+(function () {
+    const i = $('chat-input'); i.setAttribute('maxlength', '200'); i.setAttribute('autocomplete', 'off'); i.setAttribute('spellcheck', 'false'); i.placeholder = 'Tanyakan seputar alur kerja web kader...';
+    i.addEventListener('beforeinput', e => { let t = e.data || ''; if (!t && e.dataTransfer) { try { t = e.dataTransfer.getData('text'); } catch (x) {} } if (t && ASTI_KODE.test(t)) { e.preventDefault(); astiBlokir(); } });
+    i.addEventListener('paste', e => { const t = (e.clipboardData || window.clipboardData).getData('text'); if (ASTI_KODE.test(t)) { e.preventDefault(); astiBlokir(); } });
+    const q = $('asti-quick-buttons'); if (q) q.insertAdjacentHTML('beforeend', '<button onclick="sendQuickChat(\'Cara Input Pemeriksaan\')" class="px-2.5 py-1 text-[11px] bg-white text-deep-green font-bold rounded-lg border border-olive-green/20 hover:bg-base-cream transition cursor-pointer">📝 Input Pemeriksaan</button><button onclick="sendQuickChat(\'Alur Pemeriksaan Khusus\')" class="px-2.5 py-1 text-[11px] bg-soft-yellow text-earth-brown font-bold rounded-lg border border-sun-yellow/40 hover:bg-white transition cursor-pointer">⭐ Sesi Khusus</button>');
+})();
+</script>
 </body>
 </html>
