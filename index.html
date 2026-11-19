@@ -415,6 +415,39 @@
         .kd-sr { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
         @keyframes kdPulse { 0%, 100% { filter: brightness(.76) saturate(.9) drop-shadow(0 3px 6px rgba(153,27,27,.25)); } 50% { filter: brightness(1.22) saturate(1.15) drop-shadow(0 0 16px rgba(248,113,113,.95)); } }
         @keyframes kdRing { 0% { transform: scale(1); opacity: .85; } 70%, 100% { transform: scale(1.7); opacity: 0; } }
+
+        /* ===== V17: kartu Karta kain biru pastel, footer navigasi 2 kolom ===== */
+        .ft-grid { grid-template-columns: minmax(0, 1fr); grid-template-areas: "brand" "nav" "siklus" "kontak"; gap: 16px; }
+        .ft-brand { grid-area: brand; } .ft-nav { grid-area: nav; } .ft-siklus { grid-area: siklus; } .ft-kontak { grid-area: kontak; }
+        .ft-h { font-size: 12.5px; }
+        .ft-2col { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: repeat(4, auto); grid-auto-flow: column; column-gap: 6px; row-gap: 2px; margin-inline: -8px; }
+        .ft-2col .ft-link { margin-inline: 0; padding: 5px 8px; gap: 7px; font-size: 11.5px; line-height: 1.3; }
+        .ft-siklus .ft-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 14px; }
+        @media (min-width: 768px) { .ft-grid { grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); grid-template-areas: "brand kontak" "nav siklus"; gap: 18px clamp(16px, 2.4vw, 40px); } .ft-siklus .ft-list { grid-template-columns: minmax(0, 1fr); } }
+        @media (min-width: 1100px) { .ft-grid { grid-template-columns: minmax(0, 1.1fr) minmax(0, 2fr) minmax(0, .9fr) minmax(0, 1.3fr); grid-template-areas: "brand nav siklus kontak"; } }
+
+        .kk-stage { display: flex; justify-content: center; padding: 4px 0; }
+        .kk-card { --r: clamp(18px, 4.5vw, 26px); position: relative; isolation: isolate; overflow: hidden; width: min(100%, 520px); aspect-ratio: 1.586 / 1; display: flex; flex-direction: column; justify-content: space-between; gap: 14px; padding: clamp(16px, 4.2vw, 26px); border-radius: var(--r); color: #1F4260; border: 1px solid rgba(255,255,255,.85);
+            background: radial-gradient(110% 80% at 0% 0%, rgba(255,255,255,.8), transparent 58%), radial-gradient(90% 80% at 100% 100%, rgba(190,200,236,.75), transparent 62%), linear-gradient(150deg, #E7F2FB, #D2E6F6 52%, #C0DAF0);
+            box-shadow: 0 24px 36px -22px rgba(47,100,150,.6), 0 3px 6px rgba(47,100,150,.12), inset 0 2px 0 rgba(255,255,255,.8), inset 0 -3px 6px rgba(90,140,190,.18); }
+        .kk-card::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; opacity: .6;
+            background-image: repeating-linear-gradient(0deg, rgba(255,255,255,.38) 0 1px, transparent 1px 3px), repeating-linear-gradient(90deg, rgba(95,140,190,.14) 0 1px, transparent 1px 3px), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85 .55' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .32 0 0 0 0 .5 0 0 0 0 .72 0 0 0 .5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E"); background-size: auto, auto, 140px 140px; }
+        .kk-card::after { content: ""; position: absolute; inset: 9px; z-index: -1; pointer-events: none; border: 1.5px dashed rgba(255,255,255,.9); border-radius: calc(var(--r) - 8px); }
+        .kk-top { display: flex; align-items: center; gap: 12px; text-align: left; }
+        .kk-chip, .kk-qr { width: 42px; height: 42px; border-radius: 13px; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .kk-chip { font-size: 18px; color: #fff; background: linear-gradient(135deg, #5B9BCB, #2F6A9B); box-shadow: 0 6px 12px -6px rgba(31,78,121,.6), inset 0 1px 0 rgba(255,255,255,.4); }
+        .kk-qr { font-size: 22px; color: #2F6A9B; background: rgba(255,255,255,.7); border: 1px solid rgba(255,255,255,.9); }
+        .kk-ttl { min-width: 0; flex: 1; display: flex; flex-direction: column; line-height: 1.25; }
+        .kk-ttl b { font-family: 'Quicksand', sans-serif; font-size: 20px; font-weight: 800; letter-spacing: .06em; color: #1B3D5A; }
+        .kk-ttl span { font-size: 11px; font-weight: 600; color: #3F6584; }
+        .kk-act { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+        .kk-btn { display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 10px 14px; border-radius: 14px; font-size: 13px; font-weight: 800; text-align: center; text-decoration: none; cursor: pointer; transition: transform .15s, box-shadow .15s; }
+        .kk-btn-main { color: #fff; background: linear-gradient(180deg, #2F72A3, #234F75); box-shadow: 0 8px 14px -8px rgba(31,78,121,.7), inset 0 1px 0 rgba(255,255,255,.35); }
+        .kk-btn-ghost { color: #1F4D70; background: rgba(255,255,255,.85); border: 1.5px solid rgba(63,131,182,.4); }
+        .kk-btn:hover { transform: translateY(-2px); }
+        .kk-url { margin: 0; font-size: 11px; font-weight: 600; text-align: center; color: #2D5878; word-break: break-all; }
+        .kk-url i { margin-right: 6px; color: #2F6A9B; }
+        @media (max-width: 479px) { .kk-act { grid-template-columns: minmax(0, 1fr); } }
     </style>
 </head>
 
@@ -1367,13 +1400,15 @@
             <!-- ================= TAB 5: KONFIRMASI DATA SASARAN ================= -->
             <section id="content-konfirmasi" class="hidden space-y-8">
                 <div class="white-card p-6 md:p-8 space-y-6 border-2 border-sun-yellow/40">
-                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-olive-green/10 pb-4">
-                        <div class="space-y-1">
-                            <span class="px-3 py-1 rounded-full text-[10px] font-black bg-soft-yellow text-earth-brown border border-sun-yellow/40">
-                                Verifikasi Berjenjang (Dual Confirmation)
-                            </span>
-                            <div class="flex items-center gap-3"><span class="ico-badge"><i class="fa-solid fa-user-pen"></i></span><h3 class="font-extrabold text-deep-green text-lg md:text-xl leading-tight">Konfirmasi Usulan Perubahan Data Keluarga Sasaran</h3></div>
-                            <p class="text-xs text-earth-brown font-medium">Daftar permohonan penambahan / pengurangan / perbaikan data dari Web Sasaran yang membutuhkan persetujuan Kader & Admin Web.</p>
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-olive-green/15 pb-4">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-11 h-11 rounded-2xl bg-soft-yellow text-earth-brown flex items-center justify-center font-bold text-xl shadow-xs shrink-0">
+                                <i class="fa-solid fa-user-pen text-sun-yellow"></i>
+                            </div>
+                            <div class="min-w-0">
+                                <h3 class="font-extrabold text-deep-green text-lg md:text-xl">Konfirmasi Usulan Perubahan Data Keluarga Sasaran</h3>
+                                <p class="text-xs text-earth-brown font-medium">Daftar permohonan penambahan / pengurangan / perbaikan data dari Web Sasaran yang membutuhkan persetujuan Kader &amp; Admin Web.</p>
+                            </div>
                         </div>
                     </div>
 
@@ -1571,19 +1606,21 @@
                     <p class="ft-desc">Portal resmi Web Kader Integrasi Layanan Primer (ILP) Posyandu Desa Gonoharjo. Pencatatan rekam data posyandu presisi, aman, &amp; terstruktur sepanjang siklus hidup.</p>
                 </div>
 
-                <nav class="ft-col" aria-label="Navigasi Kader">
+                <nav class="ft-col ft-nav" aria-label="Navigasi Kader">
                     <h4 class="ft-h">Navigasi Kader</h4>
-                    <ul class="ft-list">
+                    <ul class="ft-list ft-2col">
                         <li><a href="javascript:void(0)" onclick="switchTab('beranda')" data-tab="beranda" class="ft-link is-active" aria-current="page">Beranda Utama</a></li>
                         <li><a href="javascript:void(0)" onclick="switchTab('absen')" data-tab="absen" class="ft-link">Input Absen Kehadiran</a></li>
                         <li><a href="javascript:void(0)" onclick="switchTab('pemeriksaan')" data-tab="pemeriksaan" class="ft-link">Input Data Pemeriksaan</a></li>
                         <li><a href="javascript:void(0)" onclick="switchTab('pemeriksaan-khusus')" data-tab="pemeriksaan-khusus" class="ft-link">Input Pemeriksaan Khusus</a></li>
                         <li><a href="javascript:void(0)" onclick="switchTab('cek-sasaran')" data-tab="cek-sasaran" class="ft-link">Cek &amp; Edit Data Sasaran</a></li>
                         <li><a href="javascript:void(0)" onclick="switchTab('konfirmasi')" data-tab="konfirmasi" class="ft-link">Konfirmasi Usulan Sasaran</a></li>
+                                            <li><a href="javascript:void(0)" onclick="switchTab('kartu')" data-tab="kartu" class="ft-link">Kartu Karta</a></li>
+                        <li><a href="javascript:void(0)" onclick="switchTab('kontak')" data-tab="kontak" class="ft-link">Kontak</a></li>
                     </ul>
                 </nav>
 
-                <div class="ft-col">
+                <div class="ft-col ft-siklus">
                     <h4 class="ft-h">Siklus Hidup ILP</h4>
                     <ul class="ft-list">
                         <li class="ft-dot" style="--c:#0891B2">Balita</li>
@@ -4039,11 +4076,13 @@ usulanDataMock.forEach(u => { if (u.adminStatus === undefined) u.adminStatus = u
 })();
 
 // ---- tab Kartu Karta ----
-$('content-konfirmasi').insertAdjacentHTML('afterend', `<section id="content-kartu" class="hidden space-y-5"><div class="white-card p-5 md:p-7 space-y-5 border-t-4 border-cyan-600">
-<div class="flex items-start gap-4"><span class="ico-badge" style="background:linear-gradient(135deg,#06B6D4,#0E7490)"><i class="fa-solid fa-id-card-clip"></i></span><div class="min-w-0"><span class="font-extrabold text-deep-green text-xl md:text-2xl leading-tight mt-1">Kartu Karta</span><p class="text-xs md:text-sm text-earth-brown font-medium mt-1">KARTA adalah Kartu Akses dan Rekam Terpadu Warga, identitas resmi warga untuk pelayanan terpadu desa dan posyandu.</p></div></div>
-<div class="grid sm:grid-cols-2 gap-3"><a href="${KARTA_URL}" class="btn-primary px-5 py-3.5 text-sm font-extrabold flex items-center justify-center gap-2 cursor-pointer"><i class="fa-solid fa-id-card-clip"></i><span>Portal Kartu Karta</span></a><button type="button" onclick="salinKarta()" class="px-5 py-3.5 text-sm font-extrabold bg-white border-2 border-cyan-600/40 rounded-xl text-cyan-800 flex items-center justify-center gap-2 cursor-pointer"><i class="fa-regular fa-copy"></i>Salin Tautan</button></div>
-<p class="text-[11px] font-semibold text-earth-brown break-all"><i class="fa-solid fa-link mr-1 text-cyan-600"></i>${KARTA_URL}</p></div>
-<div class="grid md:grid-cols-3 gap-4">${[['fa-qrcode', '#0891B2', 'Isi Kartu', 'Kartu memuat ID Akses Web (contoh GP-0001) dan QR untuk dipindai kader. PIN default diberikan terpisah kepada warga.'], ['fa-people-arrows', '#16A34A', 'Kegunaan', 'Dipindai kader saat absen dan pemeriksaan. Warga memakai ID dan PIN untuk layanan mandiri di Web Posyandu dan Web Pelayanan Desa.'], ['fa-screwdriver-wrench', '#D97706', 'Di Aplikasi Kartu Karta', 'Buat dan desain kartu baru, cari data warga untuk cetak ulang, ubah data dan anggota keluarga, lalu cetak atau ekspor PNG dan PDF.']].map(([ic, c, t, d]) => `<div class="al-b" style="--c:${c}"><div class="flex items-center gap-2"><span class="al-i"><i class="fa-solid ${ic}"></i></span><p class="font-extrabold text-sm text-deep-green">${t}</p></div><p class="text-[12px] text-earth-brown font-medium mt-2.5 leading-relaxed">${d}</p></div>`).join('')}</div></section>`);
+$('content-konfirmasi').insertAdjacentHTML('afterend', `<section id="content-kartu" class="hidden space-y-6"><div class="white-card p-6 md:p-8 space-y-6 border-2 border-olive-green/20 shadow-md">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-olive-green/15 pb-4"><div class="flex items-center space-x-3"><div class="w-11 h-11 rounded-2xl bg-soft-yellow text-earth-brown flex items-center justify-center font-bold text-xl shadow-xs shrink-0"><i class="fa-solid fa-id-card-clip text-sun-yellow"></i></div><div class="min-w-0"><h3 class="font-extrabold text-deep-green text-lg md:text-xl">Kartu Karta</h3><p class="text-xs text-earth-brown font-medium">KARTA adalah Kartu Akses dan Rekam Terpadu Warga, identitas resmi warga untuk pelayanan terpadu desa dan posyandu.</p></div></div></div>
+<div class="kk-stage"><div class="kk-card">
+<div class="kk-top"><span class="kk-chip"><i class="fa-solid fa-id-card-clip"></i></span><div class="kk-ttl"><b>KARTA</b><span>Kartu Akses dan Rekam Terpadu Warga</span></div><span class="kk-qr" aria-hidden="true"><i class="fa-solid fa-qrcode"></i></span></div>
+<div class="kk-act"><a href="${KARTA_URL}" class="kk-btn kk-btn-main"><i class="fa-solid fa-id-card-clip"></i><span>Portal Kartu Karta</span></a><button type="button" onclick="salinKarta()" class="kk-btn kk-btn-ghost"><i class="fa-regular fa-copy"></i><span>Salin Tautan</span></button></div>
+<p class="kk-url"><i class="fa-solid fa-link"></i>${KARTA_URL}</p></div></div>
+<div class="grid md:grid-cols-3 gap-4">${[['fa-qrcode', '#2F7FB5', 'Isi Kartu', 'Kartu memuat ID Akses Web (contoh GP-0001) dan QR untuk dipindai kader. PIN default diberikan terpisah kepada warga.'], ['fa-people-arrows', '#3E9AA8', 'Kegunaan', 'Dipindai kader saat absen dan pemeriksaan. Warga memakai ID dan PIN untuk layanan mandiri di Web Posyandu dan Web Pelayanan Desa.'], ['fa-screwdriver-wrench', '#6F86C4', 'Di Aplikasi Kartu Karta', 'Buat dan desain kartu baru, cari data warga untuk cetak ulang, ubah data dan anggota keluarga, lalu cetak atau ekspor PNG dan PDF.']].map(([ic, c, t, d]) => `<div class="al-b" style="--c:${c}"><div class="flex items-center gap-2"><span class="al-i"><i class="fa-solid ${ic}"></i></span><p class="font-extrabold text-sm text-deep-green">${t}</p></div><p class="text-[12px] text-earth-brown font-medium mt-2.5 leading-relaxed">${d}</p></div>`).join('')}</div></div></section>`);
 function salinKarta() { (navigator.clipboard ? navigator.clipboard.writeText(KARTA_URL) : Promise.reject()).then(() => showToast('Tautan Kartu Karta disalin.', 'success')).catch(() => showToast('Salin manual: ' + KARTA_URL, 'info')); }
 boxRender(); renderRingkasan(); renderRekapKhusus(); renderTabelKonfirmasi();
 </script>
