@@ -373,6 +373,48 @@
         /* ===== V14: ASTI & Kartu Karta ===== */
         .asti-warn { background: #FEF3C7; border: 1px solid #FCD34D; border-left: 5px solid #D97706; border-radius: 12px; padding: 8px 10px; color: #92400E; }
         #chat-input:disabled, #btn-chat-send:disabled { opacity: .55; cursor: not-allowed; }
+            /* ===== V15: lebar konten seragam, footer ringkas 4 kolom, menu footer aktif ===== */
+        :root { --shell-max: 1600px; --shell-gutter: clamp(14px, 2.4vw, 40px); }
+        #main-app > header.sticky { padding-left: var(--shell-gutter); padding-right: var(--shell-gutter); }
+        #main-app > header.sticky > div { max-width: var(--shell-max); }
+        #main-app > main { max-width: calc(var(--shell-max) + 2 * var(--shell-gutter)); padding: clamp(16px, 2.2vw, 28px) var(--shell-gutter) clamp(20px, 2.6vw, 32px); }
+        #main-app > footer.ft { margin-top: 0; padding: clamp(20px, 2.4vw, 30px) var(--shell-gutter) calc(76px + env(safe-area-inset-bottom, 0px)); }
+        #main-app > footer.ft > div { max-width: var(--shell-max); margin-inline: auto; }
+        .ft-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 20px; padding-bottom: 18px; border-bottom: 1px solid rgba(124,146,70,.16); font-size: 12px; }
+        .ft-col { min-width: 0; }
+        .ft-brand, .ft-kontak { grid-column: 1 / -1; }
+        .ft-desc { margin-top: 10px; max-width: 44ch; color: var(--earth-brown); font-weight: 500; line-height: 1.6; }
+        .ft-h { margin: 0 0 8px; padding-bottom: 6px; border-bottom: 1px solid rgba(124,146,70,.18); font-size: 13px; font-weight: 800; color: var(--deep-green); }
+        .ft-list { display: flex; flex-direction: column; gap: 2px; margin: 0; padding: 0; list-style: none; }
+        .ft-link { display: flex; align-items: center; gap: 9px; margin-inline: -8px; padding: 5px 8px; border-radius: 9px; color: var(--earth-brown); font-weight: 600; line-height: 1.35; transition: background .15s, color .15s; }
+        .ft-link::before { content: "\f054"; font-family: "Font Awesome 6 Free"; font-weight: 900; font-size: 8px; color: var(--olive-green); flex: 0 0 auto; transition: transform .15s, color .15s; }
+        .ft-link:hover { background: rgba(235,242,223,.85); color: var(--deep-green); }
+        .ft-link:hover::before { transform: translateX(2px); }
+        .ft-link.is-active { color: #fff; font-weight: 800; background: linear-gradient(180deg, #3B8140, #1E4620); box-shadow: 0 4px 10px -6px rgba(30,70,32,.7); }
+        .ft-link.is-active::before { color: #F3A94B; }
+        .ft-dot { display: flex; align-items: center; gap: 10px; padding: 5px 0; color: var(--earth-brown); font-weight: 600; line-height: 1.35; }
+        .ft-dot::before { content: ""; flex: 0 0 auto; width: 8px; height: 8px; border-radius: 50%; background: var(--c, #7C9246); box-shadow: 0 0 0 3px color-mix(in srgb, var(--c, #7C9246) 22%, transparent); }
+        .ft-info { display: flex; align-items: flex-start; gap: 9px; margin: 0 0 8px; color: var(--earth-brown); font-weight: 600; line-height: 1.5; }
+        .ft-info i { width: 14px; margin-top: 3px; text-align: center; color: var(--olive-green); }
+        .ft-map { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 800; color: var(--olive-green); }
+        .ft-map:hover { text-decoration: underline; }
+        .ft-dev { padding: 14px 0; border-bottom: 1px solid rgba(124,146,70,.16); }
+        .ft-bottom { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2px 12px; padding-top: 12px; font-size: 11px; font-weight: 500; color: var(--earth-brown); }
+        @media (min-width: 768px) { .ft-grid { grid-template-columns: 1.4fr 1.2fr 1fr 1.3fr; gap: 20px clamp(16px, 2.4vw, 40px); } .ft-brand, .ft-kontak { grid-column: auto; } }
+        @media (max-width: 639px) { .ft-bottom { flex-direction: column; align-items: center; text-align: center; } }
+        @media (pointer: coarse) { .ft-link { min-height: 40px; } }
+            /* ===== V16: tombol keluar melayang, hanya ikon merah berdenyut ===== */
+        .kd-out-wrap { position: fixed; z-index: 40; right: max(16px, env(safe-area-inset-right, 0px)); bottom: max(16px, env(safe-area-inset-bottom, 0px)); }
+        .kd-out { position: relative; display: block; width: 60px; height: 60px; padding: 0; border: 0; border-radius: 50%; background: transparent; cursor: pointer; -webkit-tap-highlight-color: transparent; filter: drop-shadow(0 6px 12px rgba(153,27,27,.4)); animation: kdPulse 2.2s ease-in-out infinite; }
+        .kd-out svg { display: block; width: 100%; height: 100%; transition: transform .2s; }
+        .kd-out svg text { font-family: Rockwell, "Rockwell Extra Bold", "Roboto Slab", Georgia, serif; }
+        .kd-out::after { content: ""; position: absolute; inset: 0; border-radius: 50%; border: 2px solid rgba(248,113,113,.8); pointer-events: none; animation: kdRing 2.2s ease-out infinite; }
+        .kd-out:hover svg, .kd-out:focus-visible svg { transform: scale(1.08); }
+        .kd-out:hover { animation-duration: 1.2s; }
+        .kd-out:hover::after { animation-duration: 1.2s; }
+        .kd-sr { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+        @keyframes kdPulse { 0%, 100% { filter: brightness(.76) saturate(.9) drop-shadow(0 3px 6px rgba(153,27,27,.25)); } 50% { filter: brightness(1.22) saturate(1.15) drop-shadow(0 0 16px rgba(248,113,113,.95)); } }
+        @keyframes kdRing { 0% { transform: scale(1); opacity: .85; } 70%, 100% { transform: scale(1.7); opacity: 0; } }
     </style>
 </head>
 
@@ -1490,31 +1532,34 @@
         </main>
 
         <!-- FLOATING LOGOUT BAR -->
-        <aside class="fixed bottom-4 right-4 z-40 max-w-sm w-[calc(100%-2rem)] md:w-auto">
-            <div class="p-3 rounded-2xl bg-white/95 backdrop-blur-md border-2 border-olive-green/30 shadow-2xl flex items-center justify-between gap-3 text-xs text-deep-green">
-                <div class="flex items-center space-x-2.5">
-                    <div class="w-8 h-8 rounded-xl bg-soft-green text-deep-green flex items-center justify-center font-bold flex-shrink-0">
-                        <i class="fa-solid fa-user-check text-olive-green"></i>
-                    </div>
-                    <div class="space-y-0.5">
-                        <p class="text-[11px] font-black leading-tight" id="floating-kader-name">Kader Ani Setyowati</p>
-                        <p class="text-[10px] text-emerald-700 font-bold leading-none">Status: Sesi Kader Aktif</p>
-                    </div>
-                </div>
-
-                <button onclick="confirmLogout()" class="px-3 py-1.5 bg-red-600 text-white text-[11px] font-bold rounded-xl hover:bg-red-700 transition flex items-center gap-1 shadow-xs cursor-pointer">
-                    <i class="fa-solid fa-right-from-bracket"></i>
-                    <span>Keluar</span>
-                </button>
-            </div>
+        <!-- TOMBOL KELUAR MELAYANG (V16: hanya ikon merah berdenyut) -->
+        <aside class="kd-out-wrap">
+            <button type="button" onclick="confirmLogout()" class="kd-out" aria-label="Keluar dari sesi kader" title="Keluar (Sesi Kader Aktif)">
+                <svg viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+                    <defs>
+                        <radialGradient id="kdG" cx="35%" cy="28%" r="85%">
+                            <stop offset="0" stop-color="#F87171"/>
+                            <stop offset=".55" stop-color="#DC2626"/>
+                            <stop offset="1" stop-color="#991B1B"/>
+                        </radialGradient>
+                    </defs>
+                    <circle cx="50" cy="50" r="50" fill="url(#kdG)"/>
+                    <path d="M60 41V36a10 10 0 0 1 20 0V41" fill="none" stroke="#fff" stroke-width="4.5" stroke-linecap="round"/>
+                    <rect x="50" y="40" width="40" height="28" rx="4" fill="#fff"/>
+                    <text x="53.5" y="59.5" font-size="15" font-weight="900" fill="#DC2626" textLength="33" lengthAdjust="spacingAndGlyphs">OUT</text>
+                    <text x="9" y="59.5" font-size="16" font-weight="900" fill="#fff" textLength="38" lengthAdjust="spacingAndGlyphs">LOG</text>
+                </svg>
+                <span class="kd-sr" id="floating-kader-name">Kader</span>
+                <span class="kd-sr">Status: Sesi Kader Aktif</span>
+            </button>
         </aside>
 
-        <!-- FOOTER RESMI -->
-        <footer class="bg-white/90 backdrop-blur-md border-t border-olive-green/20 pt-8 sm:pt-10 pb-6 px-4 lg:px-8 mt-12 bg-cover bg-center" style="background-image: linear-gradient(rgba(255, 255, 255, 0.90), rgba(255, 255, 255, 0.90)), url('https://lh3.googleusercontent.com/d/1BUX21ccxQ7HkC2VWsya914pOrcSWE851');">
-            <div class="max-w-7xl mx-auto grid sm:grid-cols-2 lg:grid-cols-4 gap-8 pb-8 border-b border-olive-green/10 text-xs">
-                
-                <div class="space-y-3">
-                    <div class="flex items-center space-x-3">
+        <!-- FOOTER RESMI (V15: ringkas, 4 kolom, menu aktif) -->
+        <footer class="ft bg-white/90 backdrop-blur-md border-t border-olive-green/20 bg-cover bg-center" style="background-image: linear-gradient(rgba(255, 255, 255, 0.90), rgba(255, 255, 255, 0.90)), url('https://lh3.googleusercontent.com/d/1BUX21ccxQ7HkC2VWsya914pOrcSWE851');">
+            <div class="ft-grid">
+
+                <div class="ft-col ft-brand">
+                    <div class="flex items-center gap-3">
                         <div class="w-10 h-10 rounded-xl bg-white p-1 shadow-sm border border-olive-green/20 flex items-center justify-center overflow-hidden flex-shrink-0">
                             <img src="https://lh3.googleusercontent.com/d/1r5Z3o71WH4mpF5qn1Dfeav_V7qNnYldv" alt="Logo GO-Positif Gonoharjo" class="w-full h-full object-contain">
                         </div>
@@ -1523,45 +1568,37 @@
                             <p class="text-[10px] text-earth-brown font-bold">Web Kader Desa Gonoharjo</p>
                         </div>
                     </div>
-                    <p class="text-earth-brown text-xs font-medium leading-relaxed">
-                        Portal resmi Web Kader Integrasi Layanan Primer (ILP) Posyandu Desa Gonoharjo. Pencatatan rekam data posyandu presisi, aman, & terstruktur sepanjang siklus hidup.
-                    </p>
+                    <p class="ft-desc">Portal resmi Web Kader Integrasi Layanan Primer (ILP) Posyandu Desa Gonoharjo. Pencatatan rekam data posyandu presisi, aman, &amp; terstruktur sepanjang siklus hidup.</p>
                 </div>
 
-                <div class="space-y-3">
-                    <h4 class="font-extrabold text-sm text-deep-green border-b border-olive-green/10 pb-1">Navigasi Kader</h4>
-                    <ul class="space-y-2 text-earth-brown font-medium">
-                        <li><a href="javascript:void(0)" onclick="switchTab('beranda')" class="hover:text-olive-green transition">Beranda Utama</a></li>
-                        <li><a href="javascript:void(0)" onclick="switchTab('absen')" class="hover:text-olive-green transition">Input Absen Kehadiran</a></li>
-                        <li><a href="javascript:void(0)" onclick="switchTab('pemeriksaan')" class="hover:text-olive-green transition">Input Data Pemeriksaan</a></li>
-                        <li><a href="javascript:void(0)" onclick="switchTab('pemeriksaan-khusus')" class="hover:text-olive-green transition">Input Pemeriksaan Khusus</a></li>
-                        <li><a href="javascript:void(0)" onclick="switchTab('cek-sasaran')" class="hover:text-olive-green transition">Cek & Edit Data Sasaran</a></li>
-                        <li><a href="javascript:void(0)" onclick="switchTab('konfirmasi')" class="hover:text-olive-green transition">Konfirmasi Usulan Sasaran</a></li>
+                <nav class="ft-col" aria-label="Navigasi Kader">
+                    <h4 class="ft-h">Navigasi Kader</h4>
+                    <ul class="ft-list">
+                        <li><a href="javascript:void(0)" onclick="switchTab('beranda')" data-tab="beranda" class="ft-link is-active" aria-current="page">Beranda Utama</a></li>
+                        <li><a href="javascript:void(0)" onclick="switchTab('absen')" data-tab="absen" class="ft-link">Input Absen Kehadiran</a></li>
+                        <li><a href="javascript:void(0)" onclick="switchTab('pemeriksaan')" data-tab="pemeriksaan" class="ft-link">Input Data Pemeriksaan</a></li>
+                        <li><a href="javascript:void(0)" onclick="switchTab('pemeriksaan-khusus')" data-tab="pemeriksaan-khusus" class="ft-link">Input Pemeriksaan Khusus</a></li>
+                        <li><a href="javascript:void(0)" onclick="switchTab('cek-sasaran')" data-tab="cek-sasaran" class="ft-link">Cek &amp; Edit Data Sasaran</a></li>
+                        <li><a href="javascript:void(0)" onclick="switchTab('konfirmasi')" data-tab="konfirmasi" class="ft-link">Konfirmasi Usulan Sasaran</a></li>
+                    </ul>
+                </nav>
+
+                <div class="ft-col">
+                    <h4 class="ft-h">Siklus Hidup ILP</h4>
+                    <ul class="ft-list">
+                        <li class="ft-dot" style="--c:#0891B2">Balita</li>
+                        <li class="ft-dot" style="--c:#7C3AED">Remaja</li>
+                        <li class="ft-dot" style="--c:#DB2777">Ibu Hamil &amp; Menyusui</li>
+                        <li class="ft-dot" style="--c:#0D9488">Usia Produktif</li>
+                        <li class="ft-dot" style="--c:#D97706">Lanjut Usia</li>
                     </ul>
                 </div>
 
-                <div class="space-y-3">
-                    <h4 class="font-extrabold text-sm text-deep-green border-b border-olive-green/10 pb-1">Siklus Hidup ILP</h4>
-                    <ul class="space-y-2 text-earth-brown font-medium">
-                        <li>Balita</li>
-                        <li>Remaja</li>
-                        <li>Ibu Hamil & Menyusui</li>
-                        <li>Usia Produktif</li>
-                        <li>Lanjut Usia</li>
-                    </ul>
-                </div>
-
-                <div class="space-y-3">
-                    <h4 class="font-extrabold text-sm text-deep-green border-b border-olive-green/10 pb-1">Sekretariat & Peta</h4>
-                    <p class="text-earth-brown font-medium leading-relaxed">
-                        <i class="fa-solid fa-location-dot text-olive-green mr-1.5"></i>
-                        Balai Desa Gonoharjo, Kec. Limbangan, Kab. Kendal, Jawa Tengah 51381
-                    </p>
-                    <p class="text-earth-brown font-medium">
-                        <i class="fa-solid fa-phone text-olive-green mr-1.5"></i>
-                        +62 812-3456-7890
-                    </p>
-                    <a href="https://maps.app.goo.gl/NmTfdSzSU8gGeZUMA" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-olive-green hover:underline font-bold text-[11px] gap-1 mt-1">
+                <div class="ft-col ft-kontak">
+                    <h4 class="ft-h">Sekretariat &amp; Peta</h4>
+                    <p class="ft-info"><i class="fa-solid fa-location-dot"></i><span>Balai Desa Gonoharjo, Kec. Limbangan, Kab. Kendal, Jawa Tengah 51381</span></p>
+                    <p class="ft-info"><i class="fa-solid fa-phone"></i><span>+62 812-3456-7890</span></p>
+                    <a href="https://maps.app.goo.gl/NmTfdSzSU8gGeZUMA" target="_blank" rel="noopener noreferrer" class="ft-map">
                         <i class="fa-solid fa-map-location-dot"></i>
                         <span>Buka Google Maps Resmi ↗</span>
                     </a>
@@ -1570,30 +1607,30 @@
             </div>
 
             <!-- PENGEMBANG SISTEM & DISKLAIMER -->
-<div class="max-w-7xl mx-auto py-6 border-b border-olive-green/10">
-    <div class="rounded-2xl border border-olive-green/20 bg-soft-green/60 p-4 sm:p-5 flex flex-col md:flex-row md:items-center gap-4 md:gap-6">
-        <div class="flex items-center gap-3 md:w-72 lg:w-80 flex-shrink-0">
-            <div class="w-11 h-11 rounded-xl bg-deep-green text-white flex items-center justify-center flex-shrink-0 shadow-sm">
-                <i class="fa-solid fa-code text-sm"></i>
+            <div class="ft-dev">
+                <div class="rounded-2xl border border-olive-green/20 bg-soft-green/60 p-3 sm:p-4 flex flex-col md:flex-row md:items-center gap-3 md:gap-5">
+                    <div class="flex items-center gap-3 md:w-72 lg:w-80 flex-shrink-0">
+                        <div class="w-10 h-10 rounded-xl bg-deep-green text-white flex items-center justify-center flex-shrink-0 shadow-sm">
+                            <i class="fa-solid fa-code text-sm"></i>
+                        </div>
+                        <div class="min-w-0">
+                            <h4 class="font-extrabold text-sm text-deep-green">Pengembang Sistem</h4>
+                            <span class="text-[10px] font-black text-deep-green uppercase tracking-wider block">Inovasi Digital Posyandu</span>
+                            <p class="font-extrabold text-earth-brown text-xs break-words">@KreasiCahNdeso</p>
+                            <p class="text-[10px] text-earth-brown/70 font-medium leading-snug">Sistem Informasi Posyandu ILP Desa Gonoharjo</p>
+                        </div>
+                    </div>
+                    <div class="min-w-0 md:flex-1 md:border-l md:border-olive-green/25 md:pl-5 pt-3 md:pt-0 border-t border-olive-green/20 md:border-t-0">
+                        <p class="text-[11px] sm:text-xs font-extrabold text-deep-green mb-1">© 2026 GO-POSITIF by @KreasiCahNdeso</p>
+                        <p class="text-[11px] sm:text-xs text-earth-brown/80 font-medium leading-relaxed">Murni dikembangkan untuk kemajuan digitalisasi akses di desa secara mandiri, non-komersial, non-politis, dan tidak dapat diklaim atau direplikasi oleh pihak manapun tanpa izin tertulis dari pemilik @KreasiCahNdeso.</p>
+                    </div>
+                </div>
             </div>
-            <div class="min-w-0">
-                <h4 class="font-extrabold text-sm text-deep-green">Pengembang Sistem</h4>
-                <span class="text-[10px] font-black text-deep-green uppercase tracking-wider block">Inovasi Digital Posyandu</span>
-                <p class="font-extrabold text-earth-brown text-xs break-words">@KreasiCahNdeso</p>
-                <p class="text-[10px] text-earth-brown/70 font-medium leading-snug">Sistem Informasi Posyandu ILP Desa Gonoharjo</p>
-            </div>
-        </div>
-        <div class="min-w-0 md:flex-1 md:border-l md:border-olive-green/25 md:pl-6 pt-4 md:pt-0 border-t border-olive-green/20 md:border-t-0">
-            <p class="text-[11px] sm:text-xs font-extrabold text-deep-green mb-1">© 2026 GO-POSITIF by @KreasiCahNdeso</p>
-            <p class="text-[11px] sm:text-xs text-earth-brown/80 font-medium leading-relaxed">Murni dikembangkan untuk kemajuan digitalisasi akses di desa secara mandiri, non-komersial, non-politis, dan tidak dapat diklaim atau direplikasi oleh pihak manapun tanpa izin tertulis dari pemilik @KreasiCahNdeso.</p>
-        </div>
-    </div>
-</div>
 
-<div class="max-w-7xl mx-auto pt-6 flex flex-col sm:flex-row items-center justify-between text-[11px] text-earth-brown font-medium gap-1 sm:gap-2 text-center sm:text-left">
-    <p>All rights reserved.</p>
-    <p class="text-olive-green font-bold">Kecamatan Limbangan, Kabupaten Kendal, Jawa Tengah</p>
-</div>
+            <div class="ft-bottom">
+                <p>All rights reserved.</p>
+                <p class="text-olive-green font-bold">Kecamatan Limbangan, Kabupaten Kendal, Jawa Tengah</p>
+            </div>
         </footer>
 
     </div>
@@ -3881,7 +3918,8 @@ async function ksUnggah(inp) { const f = inp.files && inp.files[0]; inp.value = 
 // ---- tab Kartu di menu, perilaku tab ----
 $('tab-konfirmasi').insertAdjacentHTML('afterend', '<button onclick="switchTab(\'kartu\')" id="tab-kartu" class="nav-tab flex items-center whitespace-nowrap text-[11px] md:text-xs px-2.5 py-1.5"><i class="fa-solid fa-id-card-clip mr-1"></i>Kartu Karta</button>');
 const _sw12 = switchTab;
-switchTab = function (t) { _sw12(t); if (t === 'beranda') { boxRender(); renderRingkasan(); } const b = $('tab-' + t); if (b && b.scrollIntoView) b.scrollIntoView({inline: 'center', block: 'nearest', behavior: 'smooth'}); };
+function syncFooterNav(t) { document.querySelectorAll('.ft-link[data-tab]').forEach(a => { const on = a.dataset.tab === t; a.classList.toggle('is-active', on); if (on) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); }); }
+switchTab = function (t) { _sw12(t); syncFooterNav(t); if (t === 'beranda') { boxRender(); renderRingkasan(); } const b = $('tab-' + t); if (b && b.scrollIntoView) b.scrollIntoView({inline: 'center', block: 'nearest', behavior: 'smooth'}); };
 document.addEventListener('keydown', e => { if (e.key === 'Escape') crudTutup(); });
 renderTabelKonfirmasi(); initKehadiranChart();
 </script>
